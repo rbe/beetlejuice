@@ -1,4 +1,19 @@
+# IntelliJ #
+*.iml
+.idea/
+atlassian-ide-plugin.xml
+/lib/
+odisee-api/lib/
+odisee-console/lib/
+odisee-enterprise/lib/
+odisee-repository/lib/
+odisee-resource/lib/
+odisee-workflow/lib/
+
+# Compiler #
 *.class
+out/
+target/
 
 # Package Files #
 *.jar
