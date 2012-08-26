@@ -46,4 +46,11 @@
             </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>public.maven.repository</id>
+            <name>Public Local Repository</name>
+            <url>file:../../public.maven.repository/</url>
+        </repository>
+    </distributionManagement>
 </project>
