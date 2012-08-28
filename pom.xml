@@ -28,11 +28,19 @@
             <name>JBoss Repository</name>
             <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
         </repository>
+        <!-- art of coding's Public Maven Repository -->
+        <repository>
+            <id>aoc.public.maven.repository</id>
+            <name>art of coding's public.maven.repository on GitHub</name>
+            <url>https://raw.github.com/artofcoding/public.maven.repository/master</url>
+            <layout>default</layout>
+        </repository>
     </repositories>
     <modules>
         <module>beetlejuice-api</module>
         <module>beetlejuice-persistence</module>
         <module>beetlejuice-template</module>
+        <module>beetlejuice-web</module>
     </modules>
     <build>
         <plugins>
@@ -46,7 +54,11 @@
             </plugin>
         </plugins>
     </build>
+    <!--
+        Distribution Management.
+    -->
     <distributionManagement>
+        <!-- art of coding's Public Maven Repository -->
         <repository>
             <id>public.maven.repository</id>
             <name>Public Local Repository</name>
