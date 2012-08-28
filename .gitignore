@@ -19,3 +19,6 @@ target/
 *.jar
 *.war
 *.ear
+
+# oXygen XML Editor #
+*.xpr
