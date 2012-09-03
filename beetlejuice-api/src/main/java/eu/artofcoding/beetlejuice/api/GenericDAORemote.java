@@ -61,7 +61,7 @@ public interface GenericDAORemote<T extends Serializable> {
 
     /**
      * Find a single entity by a parameterized named query.
-     * @param namedQuery Name of named query, {@link javax.persistence.EntityManager#createNamedQuery(String)}.
+     * @param namedQuery  Name of named query, {@link javax.persistence.EntityManager#createNamedQuery(String)}.
      * @param parameters  Map with name and value of parameter(s) for query.
      * @param firstResult Offset: number of first row to include in result set.
      * @param pageSize    Size of a page: number of rows to include in result.
@@ -108,5 +108,14 @@ public interface GenericDAORemote<T extends Serializable> {
      * @return long Count of entites.
      */
     long countAll();
+
+    /**
+     * Count all entities matching a certain condition.
+     * Values of parameters are used with LIKE operator.
+     * @param parameters      Map with name and value of parameter(s) for query.
+     * @param clauseConnector Connect different conditions via ... e.g. AND, OR.
+     * @return long Count of entites.
+     */
+    long countAllWithCondition(Map<String, Object> parameters, String clauseConnector);
 
 }

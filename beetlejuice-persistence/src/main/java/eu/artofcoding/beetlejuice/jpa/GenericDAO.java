@@ -94,9 +94,9 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         } catch (Exception e) {
             StringBuilder builder = new StringBuilder();
             if (null != parameters) {
-            for (String k : parameters.keySet()) {
-                builder.append(k).append("=").append(parameters.get(k));
-            }
+                for (String k : parameters.keySet()) {
+                    builder.append(k).append("=").append(parameters.get(k));
+                }
             }
             logger.log(Level.WARNING, String.format("%s,findAll(%s, {%s}): %s", entityClass, namedQuery, builder.toString(), e.getMessage()));
         }
@@ -140,9 +140,9 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         } catch (Exception e) {
             StringBuilder builder = new StringBuilder();
             if (null != parameters) {
-            for (String k : parameters.keySet()) {
-                builder.append(k).append("=").append(parameters.get(k));
-            }
+                for (String k : parameters.keySet()) {
+                    builder.append(k).append("=").append(parameters.get(k));
+                }
             }
             logger.log(Level.WARNING, String.format("%s,findOne(%s, {%s}): %s", entityClass, namedQuery, builder.toString(), e.getMessage()));
         }
@@ -162,26 +162,26 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         builder.append("SELECT o FROM ").append(entityClass.getSimpleName()).append(" o");
         // Add conditionals
         if (null != parameters) {
-        int keyCount = parameters.size();
-        if (keyCount > 0) {
-            builder.append(" WHERE");
-            int i = 0;
-            for (String k : parameters.keySet()) {
-                // o.<property> LIKE :<named parameter>
-                builder.append(" o.").append(k).append(" LIKE :").append(k);
-                if (i++ < keyCount - 1) {
-                    builder.append(" ").append(clauseConnector);
+            int keyCount = parameters.size();
+            if (keyCount > 0) {
+                builder.append(" WHERE");
+                int i = 0;
+                for (String k : parameters.keySet()) {
+                    // o.<property> LIKE :<named parameter>
+                    builder.append(" o.").append(k).append(" LIKE :").append(k);
+                    if (i++ < keyCount - 1) {
+                        builder.append(" ").append(clauseConnector);
+                    }
                 }
             }
-        }
         }
         // Build query
         query = entityManager.createQuery(builder.toString(), entityClass);
         // Set parameters
         if (null != parameters) {
-        for (String k : parameters.keySet()) {
-            query.setParameter(k, parameters.get(k));
-        }
+            for (String k : parameters.keySet()) {
+                query.setParameter(k, parameters.get(k));
+            }
         }
         // Pagination: set first result and page size
         query.setFirstResult(firstResult);
@@ -203,6 +203,38 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         builder.append("SELECT COUNT(o) FROM ").append(entityClass.getSimpleName()).append(" o");
         // Build query
         TypedQuery<Long> query = entityManager.createQuery(builder.toString(), Long.class);
+        return query.getSingleResult();
+    }
+
+    @Override
+    public long countAllWithCondition(Map<String, Object> parameters, String clauseConnector) {
+        // Build JQL query
+        StringBuilder builder = new StringBuilder();
+        builder.append("SELECT COUNT(o) FROM ").append(entityClass.getSimpleName()).append(" o");
+        // Add conditionals
+        if (null != parameters) {
+            int keyCount = parameters.size();
+            if (keyCount > 0) {
+                builder.append(" WHERE");
+                int i = 0;
+                for (String k : parameters.keySet()) {
+                    // o.<property> LIKE :<named parameter>
+                    builder.append(" o.").append(k).append(" LIKE :").append(k);
+                    if (i++ < keyCount - 1) {
+                        builder.append(" ").append(clauseConnector);
+                    }
+                }
+            }
+        }
+        // Build query
+        TypedQuery<Long> query = entityManager.createQuery(builder.toString(), Long.class);
+        // Set parameters
+        if (null != parameters) {
+            for (String k : parameters.keySet()) {
+                query.setParameter(k, parameters.get(k));
+            }
+        }
+        // Execute query
         return query.getSingleResult();
     }
 
