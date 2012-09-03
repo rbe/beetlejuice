@@ -54,10 +54,20 @@ public interface GenericDAORemote<T extends Serializable> {
     /**
      * Find a single entity by a parameterized named query.
      * @param namedQuery Name of named query, {@link javax.persistence.EntityManager#createNamedQuery(String)}.
-     * @param parameters Parameters.
+     * @param parameters Map with name and value of parameter(s) for query.
      * @return Result, see {@link javax.persistence.TypedQuery#getResultList()}.
      */
     List<T> findAll(String namedQuery, Map<String, Object> parameters);
+
+    /**
+     * Find a single entity by a parameterized named query.
+     * @param namedQuery Name of named query, {@link javax.persistence.EntityManager#createNamedQuery(String)}.
+     * @param parameters  Map with name and value of parameter(s) for query.
+     * @param firstResult Offset: number of first row to include in result set.
+     * @param pageSize    Size of a page: number of rows to include in result.
+     * @return Result, see {@link javax.persistence.TypedQuery#getResultList()}.
+     */
+    List<T> findAll(String namedQuery, Map<String, Object> parameters, int firstResult, int pageSize);
 
     /**
      * Find a single entity by a parameterized named query.
@@ -75,18 +85,23 @@ public interface GenericDAORemote<T extends Serializable> {
     T findOne(String namedQuery);
 
     /**
-     * Dynamically create a query with WHERE ... <clauseConnector> ... clauses of all parameters.
-     * @param parameters
-     * @return
-     */
-    List<T> dynamicFindWith(Map<String, Object> parameters, String clauseConnector);
-
-    /**
-     * Dynamically create a query with WHERE ... <clauseConnector> ... clauses of all parameters.
-     * @param parameters Map with parameters.
+     * Dynamically create a query with WHERE ... <clauseConnector> ... clauses of all parameters and paginate result.
+     * Values of parameters are used with LIKE operator.
+     * @param parameters      Map with name and value of parameter(s) for query.
+     * @param clauseConnector Connect different conditions via ... e.g. AND, OR.
+     * @param firstResult     Offset: number of first row to include in result set.
+     * @param pageSize        Size of a page: number of rows to include in result.
      * @return Result, see {@link javax.persistence.TypedQuery#getResultList()}.
      */
     List<T> dynamicFindWith(Map<String, Object> parameters, String clauseConnector, int firstResult, int pageSize);
+
+    /**
+     * Convenience method for {@link #dynamicFindWith(java.util.Map, String, int, int)} where int, int == 0, 1000.
+     * @param parameters      Map with name and value of parameter(s) for query.
+     * @param clauseConnector Connect different conditions via ... e.g. AND, OR.
+     * @return
+     */
+    List<T> dynamicFindWith(Map<String, Object> parameters, String clauseConnector);
 
     /**
      * Count all entities.
