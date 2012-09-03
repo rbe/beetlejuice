@@ -93,10 +93,37 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
             result = query.getResultList();
         } catch (Exception e) {
             StringBuilder builder = new StringBuilder();
+            if (null != parameters) {
             for (String k : parameters.keySet()) {
                 builder.append(k).append("=").append(parameters.get(k));
             }
-            logger.log(Level.WARNING, entityClass + ",findAll(" + namedQuery + ", {" + builder.toString() + "}): " + e.getMessage());
+            }
+            logger.log(Level.WARNING, String.format("%s,findAll(%s, {%s}): %s", entityClass, namedQuery, builder.toString(), e.getMessage()));
+        }
+        return result;
+    }
+
+    @Override
+    public List<T> findAll(String namedQuery, Map<String, Object> parameters, int firstResult, int pageSize) {
+        List<T> result = null;
+        try {
+            TypedQuery<T> query = entityManager.createNamedQuery(namedQuery, entityClass);
+            if (parameters != null && !parameters.isEmpty()) {
+                populateQueryParameters(query, parameters);
+            }
+            // Pagination: set first result and page size
+            query.setFirstResult(firstResult);
+            query.setMaxResults(pageSize);
+            // Execute query
+            result = query.getResultList();
+        } catch (Exception e) {
+            StringBuilder builder = new StringBuilder();
+            if (null != parameters) {
+                for (String k : parameters.keySet()) {
+                    builder.append(k).append("=").append(parameters.get(k));
+                }
+            }
+            logger.log(Level.WARNING, String.format("%s,findAll(%s, {%s}): %s", entityClass, namedQuery, builder.toString(), e.getMessage()));
         }
         return result;
     }
@@ -112,10 +139,12 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
             result = query.getSingleResult();
         } catch (Exception e) {
             StringBuilder builder = new StringBuilder();
+            if (null != parameters) {
             for (String k : parameters.keySet()) {
                 builder.append(k).append("=").append(parameters.get(k));
             }
-            logger.log(Level.WARNING, entityClass + ",findOne(" + namedQuery + ", {" + builder.toString() + "}): " + e.getMessage());
+            }
+            logger.log(Level.WARNING, String.format("%s,findOne(%s, {%s}): %s", entityClass, namedQuery, builder.toString(), e.getMessage()));
         }
         return result;
     }
@@ -131,6 +160,8 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         TypedQuery<T> query = null;
         StringBuilder builder = new StringBuilder();
         builder.append("SELECT o FROM ").append(entityClass.getSimpleName()).append(" o");
+        // Add conditionals
+        if (null != parameters) {
         int keyCount = parameters.size();
         if (keyCount > 0) {
             builder.append(" WHERE");
@@ -143,16 +174,19 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
                 }
             }
         }
+        }
         // Build query
         query = entityManager.createQuery(builder.toString(), entityClass);
         // Set parameters
+        if (null != parameters) {
         for (String k : parameters.keySet()) {
             query.setParameter(k, parameters.get(k));
+        }
         }
         // Pagination: set first result and page size
         query.setFirstResult(firstResult);
         query.setMaxResults(pageSize);
-        // Execute and return result list
+        // Execute query and return result list
         List<T> entities = query.getResultList();
         return entities;
     }
