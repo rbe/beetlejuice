@@ -25,7 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @param <T>
+ * @param <T> {@link GenericEntity} to act as DAO for
  */
 @SuppressWarnings({"EjbInterceptorInspection"})
 public abstract class GenericDAO<T extends GenericEntity> implements GenericDAORemote<T> {
