@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>eu.artofcoding.beetlejuice</groupId>
+    <artifactId>beetlejuice-web-primefaces</artifactId>
+    <name>beetlejuice Web PrimeFaces</name>
+    <url>http://www.art-of-coding.eu/beetlejuice/web/primefaces/</url>
+    <version>1.0.0-SNAPSHOT</version>
+    <parent>
+        <groupId>eu.artofcoding.beetlejuice</groupId>
+        <artifactId>beetlejuice</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>..</relativePath>
+    </parent>
+    <packaging>jar</packaging>
+    <properties>
+        <!-- JavaServer Faces -->
+        <version.javax.faces-api>2.1</version.javax.faces-api>
+        <version.org.primefaces>3.4</version.org.primefaces>
+        <version.org.apache.commons.io>2.4</version.org.apache.commons.io>
+        <version.org.apache.commons.fileupload>1.2.2</version.org.apache.commons.fileupload>
+    </properties>
+    <dependencies>
+        <!--
+            Java EE
+        -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>${version.javaee-api}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <version>${version.javax.enterprise.cdi-api}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--
+            JavaServer Faces
+        -->
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>javax.faces-api</artifactId>
+            <version>${version.javax.faces-api}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Primefaces -->
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>${version.org.primefaces}</version>
+        </dependency>
+        <!--
+            Beetlejuice
+        -->
+        <!-- Beetlejuice API -->
+        <dependency>
+            <groupId>eu.artofcoding.beetlejuice</groupId>
+            <artifactId>beetlejuice-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- Beetlejuice Persistence -->
+        <dependency>
+            <groupId>eu.artofcoding.beetlejuice</groupId>
+            <artifactId>beetlejuice-persistence</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <plugins>
+            <!-- maven-compiler-plugin -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${version.org.apache.maven.plugins.maven-compiler-plugin}</version>
+                <configuration>
+                    <source>${project.java.version}</source>
+                    <target>${project.java.version}</target>
+                    <verbose/>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <!-- -->
+    <repositories>
+        <repository>
+            <id>prime-repo</id>
+            <name>PrimeFaces Maven Repository</name>
+            <url>http://repository.primefaces.org</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+</project>
