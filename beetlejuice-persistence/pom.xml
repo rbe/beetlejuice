@@ -19,13 +19,13 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>${project.javaee-api.version}</version>
+            <version>${version.javaee-api}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
-            <version>${project.javax.enterprise.cdi-api.version}</version>
+            <version>${version.javax.enterprise.cdi-api}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

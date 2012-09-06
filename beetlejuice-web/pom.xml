@@ -16,18 +16,25 @@
     </parent>
     <packaging>jar</packaging>
     <dependencies>
+        <!--
+            Java EE
+        -->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>${project.javaee-api.version}</version>
+            <version>${version.javaee-api}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
-            <version>${project.javax.enterprise.cdi-api.version}</version>
+            <version>${version.javax.enterprise.cdi-api}</version>
             <scope>provided</scope>
         </dependency>
+        <!--
+            Beetlejuice
+        -->
+        <!-- Beetlejuice API -->
         <dependency>
             <groupId>eu.artofcoding.beetlejuice</groupId>
             <artifactId>beetlejuice-api</artifactId>
@@ -43,6 +50,16 @@
         </resources>
         <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
+            <!-- maven-compiler-plugin -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${version.org.apache.maven.plugins.maven-compiler-plugin}</version>
+                <configuration>
+                    <source>${project.java.version}</source>
+                    <target>${project.java.version}</target>
+                    <verbose/>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
