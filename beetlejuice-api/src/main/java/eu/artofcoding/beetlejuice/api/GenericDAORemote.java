@@ -118,4 +118,12 @@ public interface GenericDAORemote<T extends Serializable> {
      */
     long countAllWithCondition(Map<String, Object> parameters, String clauseConnector);
 
+    /**
+     * 
+     * @param namedQuery
+     * @param parameters
+     * @return
+     */
+    int countNamedQuery(String namedQuery, Map<String, Object> parameters);
+
 }

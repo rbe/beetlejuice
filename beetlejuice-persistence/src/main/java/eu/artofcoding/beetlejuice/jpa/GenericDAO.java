@@ -14,10 +14,7 @@ package eu.artofcoding.beetlejuice.jpa;
 import eu.artofcoding.beetlejuice.api.GenericDAORemote;
 import eu.artofcoding.beetlejuice.api.GenericEntity;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 import java.util.Map;
@@ -238,14 +235,32 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         return query.getSingleResult();
     }
 
+    @Override
+    public int countNamedQuery(String namedQuery, Map<String, Object> parameters) {
+        // Build query
+        TypedQuery<T> query = entityManager.createNamedQuery(namedQuery, entityClass);
+        if (parameters != null && !parameters.isEmpty()) {
+            populateQueryParameters(query, parameters);
+        }
+        // Execute query and get size of result
+        int size = query.getResultList().size();
+        return size;
+    }
+
     /**
      * Method that will populate parameters if they are passed not null and empty.
      * @param query      Previously created {@link javax.persistence.Query}.
      * @param parameters Map with parameters.
      */
     protected void populateQueryParameters(Query query, Map<String, Object> parameters) {
+        Object val;
         for (Map.Entry<String, Object> entry : parameters.entrySet()) {
-            query.setParameter(entry.getKey(), entry.getValue());
+            val = entry.getValue();
+            if (val instanceof java.util.Date) {
+                query.setParameter(entry.getKey(), (java.util.Date) val, TemporalType.DATE);
+            } else {
+                query.setParameter(entry.getKey(), val);
+            }
         }
     }
 

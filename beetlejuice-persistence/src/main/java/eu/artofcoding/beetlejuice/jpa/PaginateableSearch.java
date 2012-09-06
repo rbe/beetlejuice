@@ -12,7 +12,6 @@
 package eu.artofcoding.beetlejuice.jpa;
 
 import eu.artofcoding.beetlejuice.api.GenericEntity;
-import eu.artofcoding.beetlejuice.jpa.GenericDAO;
 
 import java.io.Serializable;
 import java.util.List;
@@ -123,7 +122,8 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
         offset = 0;
         currentPage = dao.findAll(namedQuery, parameters, offset, pageSize);
         // Count rows, pages
-        totalRowCount = dao.countAllWithCondition(parameters, countConditionOperator);
+        //totalRowCount = dao.countAllWithCondition(parameters, countConditionOperator);
+        totalRowCount = dao.countNamedQuery(namedQuery, parameters);
         pageCount = Math.max(1, (int) Math.ceil(1.0 * totalRowCount / pageSize));
         // Return first page
         return currentPage;
