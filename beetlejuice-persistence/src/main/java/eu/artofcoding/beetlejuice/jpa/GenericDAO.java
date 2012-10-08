@@ -16,6 +16,7 @@ import eu.artofcoding.beetlejuice.api.GenericEntity;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -89,12 +90,7 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
             }
             result = query.getResultList();
         } catch (Exception e) {
-            StringBuilder builder = new StringBuilder();
-            if (null != parameters && !parameters.isEmpty()) {
-                for (String k : parameters.keySet()) {
-                    builder.append(k).append("=").append(parameters.get(k));
-                }
-            }
+            StringBuilder builder = listQueryParameters(parameters);
             logger.log(Level.WARNING, String.format("%s#findAll(%s, {%s}): %s", entityClass, namedQuery, builder.toString(), e.getMessage()), e);
         }
         return result;
@@ -114,12 +110,7 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
             // Execute query
             result = query.getResultList();
         } catch (Exception e) {
-            StringBuilder builder = new StringBuilder();
-            if (null != parameters && !parameters.isEmpty()) {
-                for (String k : parameters.keySet()) {
-                    builder.append(k).append("=").append(parameters.get(k));
-                }
-            }
+            StringBuilder builder = listQueryParameters(parameters);
             logger.log(Level.WARNING, String.format("%s#findAll(%s, {%s}, %d, %d): %s", entityClass, namedQuery, builder.toString(), firstResult, pageSize, e.getMessage()), e);
         }
         return result;
@@ -135,12 +126,7 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
             }
             result = query.getSingleResult();
         } catch (Exception e) {
-            StringBuilder builder = new StringBuilder();
-            if (null != parameters && !parameters.isEmpty()) {
-                for (String k : parameters.keySet()) {
-                    builder.append(k).append("=").append(parameters.get(k));
-                }
-            }
+            StringBuilder builder = listQueryParameters(parameters);
             logger.log(Level.WARNING, String.format("%s#findOne(%s, {%s}): %s", entityClass, namedQuery, builder.toString(), e.getMessage()), e);
         }
         return result;
@@ -262,6 +248,25 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
                 query.setParameter(entry.getKey(), val);
             }
         }
+    }
+
+    /**
+     * Build String with list of query parameters, used for logging.
+     * @param parameters
+     * @return StringBuilder.
+     */
+    private StringBuilder listQueryParameters(Map<String, Object> parameters) {
+        StringBuilder builder = new StringBuilder();
+        if (null != parameters && !parameters.isEmpty()) {
+            for (Iterator<String> iterator = parameters.keySet().iterator(); iterator.hasNext(); ) {
+                String k = iterator.next();
+                builder.append(k).append("=").append(parameters.get(k));
+                if (builder.length() > 0 && iterator.hasNext()) {
+                    builder.append(" ");
+                }
+            }
+        }
+        return builder;
     }
 
 }
