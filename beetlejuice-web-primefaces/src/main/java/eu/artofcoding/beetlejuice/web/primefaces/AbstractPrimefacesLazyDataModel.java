@@ -43,7 +43,7 @@ public abstract class AbstractPrimefacesLazyDataModel<T extends GenericEntity> e
 
     @Override
     public Object getRowKey(GenericEntity entity) {
-        logger.info("getRowKey(" + entity.getId() + ")");
+        logger.fine("getRowKey(" + entity.getId() + ")");
         return entity;
     }
 
