@@ -49,6 +49,10 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         this.entityClass = entityClass;
     }
 
+    public Class<T> getEntityClass() {
+        return entityClass;
+    }
+
     @Override
     public T create(T entity) {
         entityManager.persist(entity);

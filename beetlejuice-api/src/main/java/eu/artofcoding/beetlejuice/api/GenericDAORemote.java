@@ -20,6 +20,12 @@ import java.util.Map;
 public interface GenericDAORemote<T extends Serializable> {
 
     /**
+     * Get class of entity.
+     * @return Class of the entity.
+     */
+    Class<T> getEntityClass();
+
+    /**
      * Create an entity.
      * @param entity Entity to persist.
      * @return T The entity.
