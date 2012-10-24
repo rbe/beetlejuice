@@ -165,8 +165,8 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         }
         // Build query
         query = entityManager.createQuery(builder.toString(), entityClass);
-        // TODO populateQueryParameters
         // Set parameters
+        // TODO populateQueryParameters
         /*
         if (null != parameters && !parameters.isEmpty()) {
             for (String k : parameters.keySet()) {
@@ -220,8 +220,8 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         }
         // Build query
         TypedQuery<Long> query = entityManager.createQuery(builder.toString(), Long.class);
-        // TODO populateQueryParameters
         // Set parameters
+        // TODO populateQueryParameters
         /*
         if (null != parameters && !parameters.isEmpty()) {
             for (String k : parameters.keySet()) {
@@ -259,7 +259,7 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
                 query.setParameter(entry.getKey(), (java.util.Date) value, TemporalType.DATE);
             } else if (value instanceof String) {
                 // Check for special literal to denote boolean value
-                // Needed because of parameter Map<String, String> filter
+                // Needed because of parameter Map<String, String> filter in org.primefaces.model.LazyDataModel#load()
                 if (value.equals(BeetlejuiceConstant.BEETLEJUICE_BOOL_TRUE)) {
                     query.setParameter(entry.getKey(), Boolean.TRUE);
                 } else if (value.equals(BeetlejuiceConstant.BEETLEJUICE_BOOL_FALSE)) {
