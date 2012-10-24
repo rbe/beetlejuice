@@ -64,7 +64,7 @@ public abstract class AbstractPrimefacesLazyDataModel<T extends GenericEntity> e
                 map.put(k, value);
             }
         }
-        List<T> entities = genericDAO.dynamicFindWith(map, "AND", first, pageSize);
+        List<T> entities = genericDAO.dynamicFindWith(map, BeetlejuiceConstant.AND, first, pageSize);
         return entities;
     }
 

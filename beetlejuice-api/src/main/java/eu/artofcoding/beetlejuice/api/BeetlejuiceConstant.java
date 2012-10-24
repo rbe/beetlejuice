@@ -16,6 +16,7 @@ public class BeetlejuiceConstant {
     public static final String SPACE = " ".intern();
     public static final String EQUAL_SIGN = "=".intern();
     public static final String REFERER = "referer".intern();
+    public static final String AND = "AND";
     public static final String BEETLEJUICE_BOOL_TRUE = "beetlejuice:BOOL:true".intern();
     public static final String BEETLEJUICE_BOOL_FALSE = "beetlejuice:BOOL:false".intern();
     public static final String SQL_SPACE_WHERE = " WHERE".intern();
