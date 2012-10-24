@@ -15,5 +15,6 @@ public class BeetlejuiceConstant {
 
     public static final String BEETLEJUICE_BOOL_TRUE = "beetlejuice:BOOL:true";
     public static final String BEETLEJUICE_BOOL_FALSE = "beetlejuice:BOOL:false";
+    public static final String REFERER = "referer";
 
 }
