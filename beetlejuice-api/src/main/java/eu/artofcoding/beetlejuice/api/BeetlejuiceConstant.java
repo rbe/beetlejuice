@@ -15,8 +15,14 @@ public class BeetlejuiceConstant {
 
     public static final String SPACE = " ".intern();
     public static final String EQUAL_SIGN = "=".intern();
+    public static final String REFERER = "referer".intern();
     public static final String BEETLEJUICE_BOOL_TRUE = "beetlejuice:BOOL:true".intern();
     public static final String BEETLEJUICE_BOOL_FALSE = "beetlejuice:BOOL:false".intern();
-    public static final String REFERER = "referer".intern();
+    public static final String SQL_SPACE_WHERE = " WHERE".intern();
+    public static final String SQL_SELECT_O_FROM_SPACE = "SELECT o FROM ".intern();
+    public static final String JQL_LIKE_COLON = " LIKE :".intern();
+    public static final String JQL_SELECT_COUNT_O_FROM = "SELECT COUNT(o) FROM ";
+    public static final String JQL_SPACE_O = " o".intern();
+    public static final String JQL_SPACE_O_DOT = " o.".intern();
 
 }

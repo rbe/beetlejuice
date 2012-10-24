@@ -147,16 +147,16 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         // Build JQL query
         TypedQuery<T> query = null;
         StringBuilder builder = new StringBuilder();
-        builder.append("SELECT o FROM ").append(entityClass.getSimpleName()).append(" o");
+        builder.append(BeetlejuiceConstant.SQL_SELECT_O_FROM_SPACE).append(entityClass.getSimpleName()).append(BeetlejuiceConstant.JQL_SPACE_O);
         // Add conditionals
         if (null != parameters) {
             int keyCount = parameters.size();
             if (keyCount > 0) {
-                builder.append(" WHERE");
+                builder.append(BeetlejuiceConstant.SQL_SPACE_WHERE);
                 int i = 0;
                 for (String k : parameters.keySet()) {
                     // o.<property> LIKE :<named parameter>
-                    builder.append(" o.").append(k).append(" LIKE :").append(k);
+                    builder.append(BeetlejuiceConstant.JQL_SPACE_O_DOT).append(k).append(BeetlejuiceConstant.JQL_LIKE_COLON).append(k);
                     if (i++ < keyCount - 1) {
                         builder.append(BeetlejuiceConstant.SPACE).append(clauseConnector);
                     }
@@ -168,7 +168,7 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         // Set parameters
         if (null != parameters && !parameters.isEmpty()) {
             for (String k : parameters.keySet()) {
-                query.setParameter(k, parameters.get(k));
+                query.setParameter(k, parameters.get(k)); // TODO populateQueryParameters
             }
         }
         // Pagination: set first result and page size
@@ -188,8 +188,8 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
     public long countAll() {
         // Build JQL query
         StringBuilder builder = new StringBuilder();
-        builder.append("SELECT COUNT(o) FROM ").append(entityClass.getSimpleName()).append(" o");
-        // Build query
+        builder.append(BeetlejuiceConstant.JQL_SELECT_COUNT_O_FROM).append(entityClass.getSimpleName()).append(BeetlejuiceConstant.JQL_SPACE_O);
+        // Create and execute query
         TypedQuery<Long> query = entityManager.createQuery(builder.toString(), Long.class);
         return query.getSingleResult();
     }
@@ -198,16 +198,16 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
     public long countAllWithCondition(Map<String, Object> parameters, String clauseConnector) {
         // Build JQL query
         StringBuilder builder = new StringBuilder();
-        builder.append("SELECT COUNT(o) FROM ").append(entityClass.getSimpleName()).append(" o");
+        builder.append(BeetlejuiceConstant.JQL_SELECT_COUNT_O_FROM).append(entityClass.getSimpleName()).append(BeetlejuiceConstant.JQL_SPACE_O);
         // Add conditionals
         if (null != parameters && !parameters.isEmpty()) {
             int keyCount = parameters.size();
             if (keyCount > 0) {
-                builder.append(" WHERE");
+                builder.append(BeetlejuiceConstant.SQL_SPACE_WHERE);
                 int i = 0;
                 for (String k : parameters.keySet()) {
                     // o.<property> LIKE :<named parameter>
-                    builder.append(" o.").append(k).append(" LIKE :").append(k);
+                    builder.append(BeetlejuiceConstant.JQL_SPACE_O_DOT).append(k).append(BeetlejuiceConstant.JQL_LIKE_COLON).append(k);
                     if (i++ < keyCount - 1) {
                         builder.append(BeetlejuiceConstant.SPACE).append(clauseConnector);
                     }
@@ -219,7 +219,7 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         // Set parameters
         if (null != parameters && !parameters.isEmpty()) {
             for (String k : parameters.keySet()) {
-                query.setParameter(k, parameters.get(k));
+                query.setParameter(k, parameters.get(k)); // TODO populateQueryParameters
             }
         }
         // Execute query
