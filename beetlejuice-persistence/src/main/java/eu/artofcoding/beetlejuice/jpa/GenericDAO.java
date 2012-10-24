@@ -158,7 +158,7 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
                     // o.<property> LIKE :<named parameter>
                     builder.append(" o.").append(k).append(" LIKE :").append(k);
                     if (i++ < keyCount - 1) {
-                        builder.append(" ").append(clauseConnector);
+                        builder.append(BeetlejuiceConstant.SPACE).append(clauseConnector);
                     }
                 }
             }
@@ -209,7 +209,7 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
                     // o.<property> LIKE :<named parameter>
                     builder.append(" o.").append(k).append(" LIKE :").append(k);
                     if (i++ < keyCount - 1) {
-                        builder.append(" ").append(clauseConnector);
+                        builder.append(BeetlejuiceConstant.SPACE).append(clauseConnector);
                     }
                 }
             }
@@ -267,7 +267,7 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
                 String k = iterator.next();
                 builder.append(k).append(BeetlejuiceConstant.EQUAL_SIGN).append(parameters.get(k));
                 if (builder.length() > 0 && iterator.hasNext()) {
-                    builder.append(" ");
+                    builder.append(BeetlejuiceConstant.SPACE);
                 }
             }
         }

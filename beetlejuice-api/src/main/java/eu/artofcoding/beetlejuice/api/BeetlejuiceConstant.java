@@ -13,6 +13,7 @@ package eu.artofcoding.beetlejuice.api;
 
 public class BeetlejuiceConstant {
 
+    public static final String SPACE = " ";
     public static final String EQUAL_SIGN = "=";
     public static final String BEETLEJUICE_BOOL_TRUE = "beetlejuice:BOOL:true";
     public static final String BEETLEJUICE_BOOL_FALSE = "beetlejuice:BOOL:false";
