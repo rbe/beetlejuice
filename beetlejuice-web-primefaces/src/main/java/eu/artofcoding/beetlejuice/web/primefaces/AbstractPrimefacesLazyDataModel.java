@@ -10,6 +10,7 @@
  */
 package eu.artofcoding.beetlejuice.web.primefaces;
 
+import eu.artofcoding.beetlejuice.api.BeetlejuiceConstant;
 import eu.artofcoding.beetlejuice.api.GenericDAORemote;
 import eu.artofcoding.beetlejuice.api.GenericEntity;
 import org.primefaces.model.LazyDataModel;
@@ -55,9 +56,9 @@ public abstract class AbstractPrimefacesLazyDataModel<T extends GenericEntity> e
             String value = filter.get(k);
             // Check for special literal to denote boolean value
             // Needed because of parameter Map<String, String> filter
-            if (value.equals("beetlejuice:BOOL:true")) {
+            if (value.equals(BeetlejuiceConstant.BEETLEJUICE_BOOL_TRUE)) {
                 map.put(k, Boolean.TRUE);
-            } else if (value.equals("beetlejuice:BOOL:false")) {
+            } else if (value.equals(BeetlejuiceConstant.BEETLEJUICE_BOOL_FALSE)) {
                 map.put(k, Boolean.FALSE);
             } else {
                 map.put(k, value);
