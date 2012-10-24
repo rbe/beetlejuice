@@ -11,6 +11,7 @@
 
 package eu.artofcoding.beetlejuice.jpa;
 
+import eu.artofcoding.beetlejuice.api.BeetlejuiceConstant;
 import eu.artofcoding.beetlejuice.api.GenericDAORemote;
 import eu.artofcoding.beetlejuice.api.GenericEntity;
 
@@ -264,7 +265,7 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         if (null != parameters && !parameters.isEmpty()) {
             for (Iterator<String> iterator = parameters.keySet().iterator(); iterator.hasNext(); ) {
                 String k = iterator.next();
-                builder.append(k).append("=").append(parameters.get(k));
+                builder.append(k).append(BeetlejuiceConstant.EQUAL_SIGN).append(parameters.get(k));
                 if (builder.length() > 0 && iterator.hasNext()) {
                     builder.append(" ");
                 }
