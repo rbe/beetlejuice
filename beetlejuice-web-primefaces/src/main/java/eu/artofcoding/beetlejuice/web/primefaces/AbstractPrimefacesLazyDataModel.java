@@ -49,10 +49,19 @@ public abstract class AbstractPrimefacesLazyDataModel<T extends GenericEntity> e
 
     @Override
     public List<T> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filter) {
-        logger.info("load(first=" + first + ", pageSize=" + pageSize + ", sortField=" + sortField + ", sortOrder=" + sortField + ", filter=" + filter + ")");
+        logger.fine("Entity " + genericDAO.getEntityClass().getName() + " " + this.getClass().getName() + "#load(first=" + first + ", pageSize=" + pageSize + ", sortField=" + sortField + ", sortOrder=" + sortField + ", filter=" + filter + ")");
         Map<String, Object> map = new HashMap<>();
         for (String k : filter.keySet()) {
-            map.put(k, filter.get(k));
+            String value = filter.get(k);
+            // Check for special literal to denote boolean value
+            // Needed because of parameter Map<String, String> filter
+            if (value.equals("beetlejuice:BOOL:true")) {
+                map.put(k, Boolean.TRUE);
+            } else if (value.equals("beetlejuice:BOOL:false")) {
+                map.put(k, Boolean.FALSE);
+            } else {
+                map.put(k, value);
+            }
         }
         List<T> entities = genericDAO.dynamicFindWith(map, "AND", first, pageSize);
         return entities;
