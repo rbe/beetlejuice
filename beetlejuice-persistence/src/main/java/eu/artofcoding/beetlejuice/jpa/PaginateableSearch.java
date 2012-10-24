@@ -115,14 +115,13 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
         this.searchTerm = searchTerm;
     }
 
-    public List<T> executeSearch(String namedQuery, Map<String, Object> parameters, String countConditionOperator) {
+    public List<T> executeSearch(String namedQuery, Map<String, Object> parameters) {
         this.namedQuery = namedQuery;
         this.queryParameters = parameters;
         // Execute query (first page)
         offset = 0;
         currentPage = dao.findAll(namedQuery, parameters, offset, pageSize);
         // Count rows, pages
-        //totalRowCount = dao.countAllWithCondition(parameters, countConditionOperator);
         totalRowCount = dao.countNamedQuery(namedQuery, parameters);
         pageCount = Math.max(1, (int) Math.ceil(1.0 * totalRowCount / pageSize));
         // Return first page
