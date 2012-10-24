@@ -54,15 +54,7 @@ public abstract class AbstractPrimefacesLazyDataModel<T extends GenericEntity> e
         Map<String, Object> map = new HashMap<>();
         for (String k : filter.keySet()) {
             String value = filter.get(k);
-            // Check for special literal to denote boolean value
-            // Needed because of parameter Map<String, String> filter
-            if (value.equals(BeetlejuiceConstant.BEETLEJUICE_BOOL_TRUE)) {
-                map.put(k, Boolean.TRUE);
-            } else if (value.equals(BeetlejuiceConstant.BEETLEJUICE_BOOL_FALSE)) {
-                map.put(k, Boolean.FALSE);
-            } else {
-                map.put(k, value);
-            }
+            map.put(k, value);
         }
         List<T> entities = genericDAO.dynamicFindWith(map, BeetlejuiceConstant.AND, first, pageSize);
         return entities;

@@ -165,12 +165,16 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         }
         // Build query
         query = entityManager.createQuery(builder.toString(), entityClass);
+        // TODO populateQueryParameters
         // Set parameters
+        /*
         if (null != parameters && !parameters.isEmpty()) {
             for (String k : parameters.keySet()) {
-                query.setParameter(k, parameters.get(k)); // TODO populateQueryParameters
+                query.setParameter(k, parameters.get(k));
             }
         }
+        */
+        populateQueryParameters(query, parameters);
         // Pagination: set first result and page size
         query.setFirstResult(firstResult);
         query.setMaxResults(pageSize);
@@ -216,12 +220,16 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         }
         // Build query
         TypedQuery<Long> query = entityManager.createQuery(builder.toString(), Long.class);
+        // TODO populateQueryParameters
         // Set parameters
+        /*
         if (null != parameters && !parameters.isEmpty()) {
             for (String k : parameters.keySet()) {
-                query.setParameter(k, parameters.get(k)); // TODO populateQueryParameters
+                query.setParameter(k, parameters.get(k));
             }
         }
+        */
+        populateQueryParameters(query, parameters);
         // Execute query
         return query.getSingleResult();
     }
@@ -244,13 +252,23 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
      * @param parameters Map with parameters.
      */
     protected void populateQueryParameters(Query query, Map<String, Object> parameters) {
-        Object val;
+        Object value;
         for (Map.Entry<String, Object> entry : parameters.entrySet()) {
-            val = entry.getValue();
-            if (val instanceof java.util.Date) {
-                query.setParameter(entry.getKey(), (java.util.Date) val, TemporalType.DATE);
+            value = entry.getValue();
+            if (value instanceof java.util.Date) {
+                query.setParameter(entry.getKey(), (java.util.Date) value, TemporalType.DATE);
+            } else if (value instanceof String) {
+                // Check for special literal to denote boolean value
+                // Needed because of parameter Map<String, String> filter
+                if (value.equals(BeetlejuiceConstant.BEETLEJUICE_BOOL_TRUE)) {
+                    query.setParameter(entry.getKey(), Boolean.TRUE);
+                } else if (value.equals(BeetlejuiceConstant.BEETLEJUICE_BOOL_FALSE)) {
+                    query.setParameter(entry.getKey(), Boolean.FALSE);
+                } else {
+                    query.setParameter(entry.getKey(), value);
+                }
             } else {
-                query.setParameter(entry.getKey(), val);
+                query.setParameter(entry.getKey(), value);
             }
         }
     }
