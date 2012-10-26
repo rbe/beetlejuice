@@ -9,9 +9,10 @@
  * rbe, 7/10/12 4:24 PM
  */
 
-package eu.artofcoding.beetlejuice.api;
+package eu.artofcoding.beetlejuice.api.persistence;
 
 import javax.ejb.Remote;
+import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -94,7 +95,7 @@ public interface GenericDAORemote<T extends Serializable> {
      * Dynamically create a query with WHERE ... <clauseConnector> ... clauses of all parameters and paginate result.
      * Values of parameters are used with LIKE operator.
      * @param parameters      Map with name and value of parameter(s) for query.
-     * @param clauseConnector Connect different conditions via ... e.g. AND, OR.
+     * @param clauseConnector Connect different conditions via AND or OR.
      * @param firstResult     Offset: number of first row to include in result set.
      * @param pageSize        Size of a page: number of rows to include in result.
      * @return Result, see {@link javax.persistence.TypedQuery#getResultList()}.
@@ -102,12 +103,38 @@ public interface GenericDAORemote<T extends Serializable> {
     List<T> dynamicFindWith(Map<String, Object> parameters, String clauseConnector, int firstResult, int pageSize);
 
     /**
-     * Convenience method for {@link #dynamicFindWith(java.util.Map, String, int, int)} where int, int == 0, 1000.
+     * Convenience method for {@link #dynamicFindWith(java.util.Map, String, int, int)} where
+     * int firstResult, int pageSize == 0, 1000.
      * @param parameters      Map with name and value of parameter(s) for query.
-     * @param clauseConnector Connect different conditions via ... e.g. AND, OR.
+     * @param clauseConnector Connect different conditions via AND or OR.
      * @return
      */
     List<T> dynamicFindWith(Map<String, Object> parameters, String clauseConnector);
+
+    /**
+     * Count all entities matching a certain condition.
+     * Values of parameters are used with LIKE operator.
+     * @param parameters      Map with name and value of parameter(s) for query.
+     * @param clauseConnector Connect different conditions via AND or OR.
+     * @return long Count of entites.
+     */
+    long dynamicCountWith(Map<String, Object> parameters, String clauseConnector);
+
+    /**
+     * @param queryParameters List with QueryParameters.
+     * @param clauseConnector
+     * @param firstResult
+     * @param pageSize
+     * @return
+     */
+    List<T> dynamicFindWith(List<QueryParameter> queryParameters, String clauseConnector, int firstResult, int pageSize);
+
+    /**
+     * @param queryParameters
+     * @param clauseConnector
+     * @return
+     */
+    long dynamicCountWith(List<QueryParameter> queryParameters, String clauseConnector);
 
     /**
      * Count all entities.
@@ -116,20 +143,17 @@ public interface GenericDAORemote<T extends Serializable> {
     long countAll();
 
     /**
-     * Count all entities matching a certain condition.
-     * Values of parameters are used with LIKE operator.
-     * @param parameters      Map with name and value of parameter(s) for query.
-     * @param clauseConnector Connect different conditions via ... e.g. AND, OR.
-     * @return long Count of entites.
-     */
-    long countAllWithCondition(Map<String, Object> parameters, String clauseConnector);
-
-    /**
-     * 
      * @param namedQuery
      * @param parameters
      * @return
      */
     int countNamedQuery(String namedQuery, Map<String, Object> parameters);
+
+    /**
+     * Method that will populate parameters if they are passed not null and empty.
+     * @param query      Previously created {@link javax.persistence.Query}.
+     * @param parameters Map with parameters.
+     */
+    void populateQueryParameters(Query query, Map<String, Object> parameters);
 
 }

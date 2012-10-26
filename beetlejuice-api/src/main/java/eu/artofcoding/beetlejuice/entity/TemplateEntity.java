@@ -11,7 +11,7 @@
 
 package eu.artofcoding.beetlejuice.entity;
 
-import eu.artofcoding.beetlejuice.api.GenericEntity;
+import eu.artofcoding.beetlejuice.api.persistence.GenericEntity;
 
 import java.util.Calendar;
 

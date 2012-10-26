@@ -9,9 +9,10 @@
  * rbe, 03.09.12 10:20
  */
 
-package eu.artofcoding.beetlejuice.jpa;
+package eu.artofcoding.beetlejuice.persistence;
 
-import eu.artofcoding.beetlejuice.api.GenericEntity;
+import eu.artofcoding.beetlejuice.api.persistence.GenericEntity;
+import eu.artofcoding.beetlejuice.api.persistence.QueryParameter;
 
 import java.io.Serializable;
 import java.util.List;
@@ -37,7 +38,7 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
     /**
      * Parameters for named query.
      */
-    private Map<String, Object> queryParameters;
+    private Map<String, Object> queryParameterMap;
 
     /**
      * Offset.
@@ -91,6 +92,10 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
      */
     private T selectedEntity;
 
+    private List<QueryParameter> queryParameters;
+
+    private String clauseConnector;
+
     /**
      * Constructor.
      * @param dao DAO to use for queries, <code>instanceof GenericDAO&lt;T></code>.
@@ -117,12 +122,29 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
 
     public List<T> executeSearch(String namedQuery, Map<String, Object> parameters) {
         this.namedQuery = namedQuery;
-        this.queryParameters = parameters;
+        this.queryParameterMap = parameters;
+        this.queryParameters = null;
+        this.clauseConnector = null;
         // Execute query (first page)
         offset = 0;
         currentPage = dao.findAll(namedQuery, parameters, offset, pageSize);
         // Count rows, pages
         totalRowCount = dao.countNamedQuery(namedQuery, parameters);
+        pageCount = Math.max(1, (int) Math.ceil(1.0 * totalRowCount / pageSize));
+        // Return first page
+        return currentPage;
+    }
+
+    public List<T> executeSearch(List<QueryParameter> queryParameters, String clauseConnector) {
+        this.namedQuery = null;
+        this.queryParameterMap = null;
+        this.queryParameters = (List<QueryParameter>) queryParameters;
+        this.clauseConnector = clauseConnector;
+        // Execute query (first page)
+        offset = 0;
+        currentPage = dao.dynamicFindWith(queryParameters, clauseConnector, offset, pageSize);
+        // Count rows, pages
+        totalRowCount = dao.dynamicCountWith(queryParameters, clauseConnector);
         pageCount = Math.max(1, (int) Math.ceil(1.0 * totalRowCount / pageSize));
         // Return first page
         return currentPage;
@@ -134,7 +156,11 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
         // Calculate offset in result set
         offset = currentPageIndex * pageSize;
         // Execute query for page
-        currentPage = dao.findAll(namedQuery, queryParameters, offset, pageSize);
+        if (null != namedQuery && null != queryParameterMap) {
+            currentPage = dao.findAll(namedQuery, queryParameterMap, offset, pageSize);
+        } else if (null != queryParameters && null != clauseConnector) {
+            currentPage = dao.dynamicFindWith(queryParameters, clauseConnector, offset, pageSize);
+        }
         // Reset pointer
         indexOnCurrentPage = 0;
         selectedEntityTotalIndex = offset;

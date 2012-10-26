@@ -10,8 +10,8 @@
  */
 package eu.artofcoding.beetlejuice.template;
 
-import eu.artofcoding.beetlejuice.api.GenericDAORemote;
-import eu.artofcoding.beetlejuice.api.GenericEntity;
+import eu.artofcoding.beetlejuice.api.persistence.GenericDAORemote;
+import eu.artofcoding.beetlejuice.api.persistence.GenericEntity;
 import eu.artofcoding.beetlejuice.entity.TemplateEntity;
 import freemarker.cache.TemplateLoader;
 

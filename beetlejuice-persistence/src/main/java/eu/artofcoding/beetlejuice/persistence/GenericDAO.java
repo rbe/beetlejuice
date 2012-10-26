@@ -9,22 +9,25 @@
  * rbe, 13.07.12 15:05
  */
 
-package eu.artofcoding.beetlejuice.jpa;
+package eu.artofcoding.beetlejuice.persistence;
 
-import eu.artofcoding.beetlejuice.api.BeetlejuiceConstant;
-import eu.artofcoding.beetlejuice.api.GenericDAORemote;
-import eu.artofcoding.beetlejuice.api.GenericEntity;
+import eu.artofcoding.beetlejuice.api.*;
+import eu.artofcoding.beetlejuice.api.persistence.DynamicQuery;
+import eu.artofcoding.beetlejuice.api.persistence.GenericDAORemote;
+import eu.artofcoding.beetlejuice.api.persistence.GenericEntity;
+import eu.artofcoding.beetlejuice.api.persistence.QueryParameter;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @param <T> {@link GenericEntity} to act as DAO for
+ * @param <T> Subtype {@link eu.artofcoding.beetlejuice.api.persistence.GenericEntity} to act as DAO for.
  */
 @SuppressWarnings({"EjbInterceptorInspection"})
 public abstract class GenericDAO<T extends GenericEntity> implements GenericDAORemote<T> {
@@ -144,10 +147,9 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
 
     @Override
     public List<T> dynamicFindWith(Map<String, Object> parameters, String clauseConnector, int firstResult, int pageSize) {
-        // Build JQL query
-        TypedQuery<T> query = null;
+        // Build JPA query
         StringBuilder builder = new StringBuilder();
-        builder.append(BeetlejuiceConstant.SQL_SELECT_O_FROM_SPACE).append(entityClass.getSimpleName()).append(BeetlejuiceConstant.JQL_SPACE_O);
+        builder.append(BeetlejuiceConstant.SQL_SELECT_O_FROM_SPACE).append(entityClass.getSimpleName()).append(BeetlejuiceConstant.JPA_SPACE_O);
         // Add conditionals
         if (null != parameters) {
             int keyCount = parameters.size();
@@ -155,18 +157,31 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
                 builder.append(BeetlejuiceConstant.SQL_SPACE_WHERE);
                 int i = 0;
                 for (String k : parameters.keySet()) {
-                    // o.<property> LIKE :<named parameter>
-                    builder.append(BeetlejuiceConstant.JQL_SPACE_O_DOT).append(k).append(BeetlejuiceConstant.JQL_LIKE_COLON).append(k);
-                    if (i++ < keyCount - 1) {
-                        builder.append(BeetlejuiceConstant.SPACE).append(clauseConnector);
+                    Object o = parameters.get(k);
+                    if (o instanceof QueryParameter) {
+                        QueryParameter q = (QueryParameter) o;
+                        int valueCount = q.getValues().length;
+                        for (Object v : q.getValues()) {
+                            // o.<property> LIKE :<named parameter>
+                            builder.append(BeetlejuiceConstant.JPA_SPACE_O_DOT).append(k).append(BeetlejuiceConstant.JPA_LIKE_COLON).append(k);
+                            if (i++ < valueCount - 1) {
+                                builder.append(BeetlejuiceConstant.SPACE).append(q.getConnector());
+                            }
+                        }
+                    } else {
+                        // o.<property> LIKE :<named parameter>
+                        builder.append(BeetlejuiceConstant.JPA_SPACE_O_DOT).append(k).append(BeetlejuiceConstant.JPA_LIKE_COLON).append(k);
+                        if (i++ < keyCount - 1) {
+                            builder.append(BeetlejuiceConstant.SPACE).append(clauseConnector);
+                        }
                     }
                 }
             }
         }
         // Build query
-        query = entityManager.createQuery(builder.toString(), entityClass);
-        // Set parameters
+        TypedQuery<T> query = entityManager.createQuery(builder.toString(), entityClass);
         // TODO populateQueryParameters
+        // Set parameters
         /*
         if (null != parameters && !parameters.isEmpty()) {
             for (String k : parameters.keySet()) {
@@ -189,20 +204,10 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
     }
 
     @Override
-    public long countAll() {
-        // Build JQL query
+    public long dynamicCountWith(Map<String, Object> parameters, String clauseConnector) {
+        // Build JPA query
         StringBuilder builder = new StringBuilder();
-        builder.append(BeetlejuiceConstant.JQL_SELECT_COUNT_O_FROM).append(entityClass.getSimpleName()).append(BeetlejuiceConstant.JQL_SPACE_O);
-        // Create and execute query
-        TypedQuery<Long> query = entityManager.createQuery(builder.toString(), Long.class);
-        return query.getSingleResult();
-    }
-
-    @Override
-    public long countAllWithCondition(Map<String, Object> parameters, String clauseConnector) {
-        // Build JQL query
-        StringBuilder builder = new StringBuilder();
-        builder.append(BeetlejuiceConstant.JQL_SELECT_COUNT_O_FROM).append(entityClass.getSimpleName()).append(BeetlejuiceConstant.JQL_SPACE_O);
+        builder.append(BeetlejuiceConstant.JPA_SELECT_COUNT_O_FROM).append(entityClass.getSimpleName()).append(BeetlejuiceConstant.JPA_SPACE_O);
         // Add conditionals
         if (null != parameters && !parameters.isEmpty()) {
             int keyCount = parameters.size();
@@ -211,7 +216,7 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
                 int i = 0;
                 for (String k : parameters.keySet()) {
                     // o.<property> LIKE :<named parameter>
-                    builder.append(BeetlejuiceConstant.JQL_SPACE_O_DOT).append(k).append(BeetlejuiceConstant.JQL_LIKE_COLON).append(k);
+                    builder.append(BeetlejuiceConstant.JPA_SPACE_O_DOT).append(k).append(BeetlejuiceConstant.JPA_LIKE_COLON).append(k);
                     if (i++ < keyCount - 1) {
                         builder.append(BeetlejuiceConstant.SPACE).append(clauseConnector);
                     }
@@ -220,8 +225,8 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         }
         // Build query
         TypedQuery<Long> query = entityManager.createQuery(builder.toString(), Long.class);
-        // Set parameters
         // TODO populateQueryParameters
+        // Set parameters
         /*
         if (null != parameters && !parameters.isEmpty()) {
             for (String k : parameters.keySet()) {
@@ -231,6 +236,40 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         */
         populateQueryParameters(query, parameters);
         // Execute query
+        return query.getSingleResult();
+    }
+
+    @Override
+    public List<T> dynamicFindWith(List<QueryParameter> queryParameters, String clauseConnector, int firstResult, int pageSize) {
+        // Build query from list of QueryParameters
+        String selectClause = String.format("%s%s%s", BeetlejuiceConstant.SQL_SELECT_O_FROM_SPACE, entityClass.getSimpleName(), BeetlejuiceConstant.JPA_SPACE_O);
+        DynamicQuery<T> dynamicQuery = new DynamicQuery<T>(entityManager, entityClass, queryParameters, clauseConnector);
+        TypedQuery<T> query = dynamicQuery.getQuery(selectClause);
+        // Pagination: set first result and page size
+        query.setFirstResult(firstResult);
+        query.setMaxResults(pageSize);
+        // Execute query and return result list
+        List<T> entities = query.getResultList();
+        return entities;
+    }
+
+    @Override
+    public long dynamicCountWith(List<QueryParameter> queryParameters, String clauseConnector) {
+        // Build query from list of QueryParameters
+        String selectClause = String.format("%s%s%s", BeetlejuiceConstant.JPA_SELECT_COUNT_O_FROM, entityClass.getSimpleName(), BeetlejuiceConstant.JPA_SPACE_O);
+        DynamicQuery<T> dynamicQuery = new DynamicQuery<T>(entityManager, entityClass, queryParameters, clauseConnector);
+        // Execute query
+        Long count = dynamicQuery.getCountQuery(selectClause).getSingleResult();
+        return count;
+    }
+
+    @Override
+    public long countAll() {
+        // Build JPA query
+        StringBuilder builder = new StringBuilder();
+        builder.append(BeetlejuiceConstant.JPA_SELECT_COUNT_O_FROM).append(entityClass.getSimpleName()).append(BeetlejuiceConstant.JPA_SPACE_O);
+        // Create and execute query
+        TypedQuery<Long> query = entityManager.createQuery(builder.toString(), Long.class);
         return query.getSingleResult();
     }
 
@@ -246,29 +285,32 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         return size;
     }
 
-    /**
-     * Method that will populate parameters if they are passed not null and empty.
-     * @param query      Previously created {@link javax.persistence.Query}.
-     * @param parameters Map with parameters.
-     */
-    protected void populateQueryParameters(Query query, Map<String, Object> parameters) {
-        Object value;
-        for (Map.Entry<String, Object> entry : parameters.entrySet()) {
-            value = entry.getValue();
-            if (value instanceof java.util.Date) {
-                query.setParameter(entry.getKey(), (java.util.Date) value, TemporalType.DATE);
-            } else if (value instanceof String) {
-                // Check for special literal to denote boolean value
-                // Needed because of parameter Map<String, String> filter in org.primefaces.model.LazyDataModel#load()
-                if (value.equals(BeetlejuiceConstant.BEETLEJUICE_BOOL_TRUE)) {
-                    query.setParameter(entry.getKey(), Boolean.TRUE);
-                } else if (value.equals(BeetlejuiceConstant.BEETLEJUICE_BOOL_FALSE)) {
-                    query.setParameter(entry.getKey(), Boolean.FALSE);
-                } else {
-                    query.setParameter(entry.getKey(), value);
+    @Override
+    public void populateQueryParameters(Query query, Map<String, Object> parameters) {
+        // Check arguments
+        if (null != parameters && !parameters.isEmpty()) {
+            // Populate query parameters
+            Set<Map.Entry<String, Object>> entries = parameters.entrySet();
+            if (null != entries) {
+                Object value;
+                for (Map.Entry<String, Object> entry : entries) {
+                    value = entry.getValue();
+                    if (value instanceof java.util.Date) {
+                        query.setParameter(entry.getKey(), (java.util.Date) value, TemporalType.DATE);
+                    } else if (value instanceof String) {
+                        // Check for special literal to denote boolean value
+                        // Needed because of parameter Map<String, String> filter in org.primefaces.model.LazyDataModel#load()
+                        if (value.equals(BeetlejuiceConstant.BEETLEJUICE_BOOL_TRUE)) {
+                            query.setParameter(entry.getKey(), Boolean.TRUE);
+                        } else if (value.equals(BeetlejuiceConstant.BEETLEJUICE_BOOL_FALSE)) {
+                            query.setParameter(entry.getKey(), Boolean.FALSE);
+                        } else {
+                            query.setParameter(entry.getKey(), value);
+                        }
+                    } else {
+                        query.setParameter(entry.getKey(), value);
+                    }
                 }
-            } else {
-                query.setParameter(entry.getKey(), value);
             }
         }
     }

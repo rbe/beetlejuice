@@ -11,9 +11,9 @@
 
 package eu.artofcoding.beetlejuice.web.primefaces;
 
-import eu.artofcoding.beetlejuice.api.GenericDAORemote;
-import eu.artofcoding.beetlejuice.api.GenericEntity;
-import eu.artofcoding.beetlejuice.jpa.GenericDAOResult;
+import eu.artofcoding.beetlejuice.api.persistence.GenericDAORemote;
+import eu.artofcoding.beetlejuice.api.persistence.GenericEntity;
+import eu.artofcoding.beetlejuice.api.persistence.GenericDAOResult;
 import org.primefaces.event.SelectEvent;
 
 import javax.faces.application.ConfigurableNavigationHandler;
