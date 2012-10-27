@@ -107,7 +107,7 @@ public interface GenericDAORemote<T extends Serializable> {
      * int firstResult, int pageSize == 0, 1000.
      * @param parameters      Map with name and value of parameter(s) for query.
      * @param clauseConnector Connect different conditions via AND or OR.
-     * @return
+     * @return Result, see {@link javax.persistence.TypedQuery#getResultList()}.
      */
     List<T> dynamicFindWith(Map<String, Object> parameters, String clauseConnector);
 
@@ -125,7 +125,7 @@ public interface GenericDAORemote<T extends Serializable> {
      * @param clauseConnector
      * @param firstResult
      * @param pageSize
-     * @return
+     * @return Result, see {@link javax.persistence.TypedQuery#getResultList()}.
      */
     List<T> dynamicFindWith(List<QueryParameter> queryParameters, String clauseConnector, int firstResult, int pageSize);
 
