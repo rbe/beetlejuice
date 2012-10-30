@@ -20,6 +20,8 @@ import java.util.Map;
 
 public class PaginateableSearch<T extends GenericEntity> implements Serializable {
 
+    //<editor-fold desc="Members">
+
     /**
      * DAO.
      */
@@ -96,6 +98,8 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
 
     private String clauseConnector;
 
+    //</editor-fold>
+
     /**
      * Constructor.
      * @param dao DAO to use for queries, <code>instanceof GenericDAO&lt;T></code>.
@@ -171,6 +175,7 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
     }
 
     //<editor-fold desc="Pagination">
+
     public int getOffset() {
         return offset;
     }
@@ -340,6 +345,7 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
         selectedEntity = currentPage.get(indexOnCurrentPage);
         return selectedEntity;
     }
+
     //</editor-fold>
 
 }
