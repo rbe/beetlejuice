@@ -15,6 +15,7 @@ import eu.artofcoding.beetlejuice.api.persistence.GenericEntity;
 import eu.artofcoding.beetlejuice.entity.TemplateEntity;
 import freemarker.cache.TemplateLoader;
 
+import javax.inject.Named;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -37,6 +38,7 @@ Template template = cfg.getTemplate(firstTemplate);
  * Connect FreeMarker's TemplateProcessor with our database through an EJB/DAO.
  * http://nurkiewicz.blogspot.de/2010/01/writing-custom-freemarker-template.html
  */
+@Named
 public class DatabaseTemplateLoader<T extends GenericDAORemote> implements TemplateLoader {
 
     private T templateDAO;
