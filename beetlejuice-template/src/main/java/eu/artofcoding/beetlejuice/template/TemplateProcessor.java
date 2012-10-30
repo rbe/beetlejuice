@@ -30,6 +30,21 @@ import java.util.Map;
 
 /**
  * This template processor acts as a facade to FreeMarker template engine.
+ * <pre>
+ * // Create the root hash
+ * Map<String, Object> root = new HashMap<String, Object>();
+ * root.put("user", "Big Joe");
+ * root.put("registrationUrl", "http://www.example.com/registration/complete/abc123");
+ * // Locate directory with template
+ * URL[] templateDirectory = new URL[]{TemplateProcessor.class.getResource(".")};
+ * // Create instance of TemplateProcessor
+ * TemplateProcessor templateProcessor = new TemplateProcessor();
+ * templateProcessor.addTemplateLoader(templateDirectory);
+ * // Render template
+ * OutputStreamWriter out = new OutputStreamWriter(System.out, Charset.forName("UTF-8"));
+ * templateProcessor.renderTemplate("test_de.ftl", root, out);
+ * out.flush();
+ * </pre>
  */
 public class TemplateProcessor {
 
@@ -117,26 +132,26 @@ public class TemplateProcessor {
     /**
      * Render template (UTF-8), output will be accessible through provided Writer instance.
      * @param templateName
-     * @param root
+     * @param root         Data for FreeMarker, e.g. Map<String, Object> or SimpleHash.
      * @param out
      * @throws IOException
      * @throws TemplateException
      */
-    public void renderTemplate(String templateName, Locale locale, Map<String, Object> root, Writer out) throws IOException, TemplateException {
+    public void renderTemplate(String templateName, Locale locale, Object root, Writer out) throws IOException, TemplateException {
         makeTemplateLoader();
         Template temp = configuration.getTemplate(templateName, locale, "UTF-8");
         temp.process(root, out);
     }
 
     /**
-     * Render a template, see {@link #renderTemplate(String, java.util.Locale, java.util.Map, java.io.Writer)} and return a String.
+     * Render a template, see {@link #renderTemplate(String, java.util.Locale, java.lang.Object, java.io.Writer)} and return a String.
      * @param templateName
-     * @param root
+     * @param root         Data for FreeMarker, e.g. Map<String, Object> or SimpleHash.
      * @return
      * @throws IOException
      * @throws TemplateException
      */
-    public String renderTemplateToString(String templateName, Locale locale, Map<String, Object> root) throws IOException, TemplateException {
+    public String renderTemplateToString(String templateName, Locale locale, Object root) throws IOException, TemplateException {
         Writer o = new StringWriter();
         renderTemplate(templateName, locale, root, o);
         o.flush();
