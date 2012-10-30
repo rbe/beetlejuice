@@ -66,7 +66,11 @@ public class TemplateProcessor {
         // Create FreeMarker configuration
         configuration = new Configuration();
         // Specify how templates will see the data-model. This is an advanced topic...
-        configuration.setObjectWrapper(new DefaultObjectWrapper());
+        //configuration.setObjectWrapper(new DefaultObjectWrapper());
+    }
+
+    public Configuration getConfiguration() {
+        return configuration;
     }
 
     /**
