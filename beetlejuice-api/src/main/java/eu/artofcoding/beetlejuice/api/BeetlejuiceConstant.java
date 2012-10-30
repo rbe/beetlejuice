@@ -13,7 +13,10 @@ package eu.artofcoding.beetlejuice.api;
 
 public class BeetlejuiceConstant {
 
+    public static final String TRUE = "true";
+    public static final String FALSE = "false";
     public static final String SPACE = " ".intern();
+    public static final String COMMA = ",".intern();
     public static final String EQUAL_SIGN = "=".intern();
     public static final String GREATER_EQUAL = ">=".intern();
     public static final String COLON = ":".intern();
