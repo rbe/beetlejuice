@@ -13,6 +13,7 @@ package eu.artofcoding.beetlejuice.api.persistence;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,33 +123,37 @@ public class DynamicQuery<T> {
             int size = queryParameters.size();
             if (size > 0) {
                 builder.append(SQL_SPACE_WHERE);
-                int queryParameterCounter = 0;
-                int queryValueCounter;
-                for (QueryParameter q : queryParameters) {
-                    int valueCount = q.getValues().length;
+                //int queryValueCounter;
+                for (int queryParameterIdx = 0, queryParametersSize = queryParameters.size(); queryParameterIdx < queryParametersSize; queryParameterIdx++) {
+                    QueryParameter q = queryParameters.get(queryParameterIdx);
+                    int valueCount = q.getValuesCount();
+                    String op = LIKE;
+                    if (null != q.getOperator()) {
+                        op = q.getOperator();
+                    }
                     if (valueCount > 0) {
                         // Append clauseConnector between different QueryParameter
-                        if (queryParameterCounter > 0 && queryParameterCounter < size) {
+                        if (queryParameterIdx > 0 && queryParameterIdx < size) {
                             builder.append(SPACE).append(clauseConnector);
                         }
                         //
-                        queryValueCounter = 0;
+                        //queryValueCounter = 0;
                         builder.append(SPACE_LEFT_PARANTHESIS);
-                        for (Object v : q.getValues()) {
+                        Object[] values = q.getValues();
+                        for (int queryValueIdx = 0, valuesLength = values.length; queryValueIdx < valuesLength; queryValueIdx++) {
+                            Object v = values[queryValueIdx];
                             // Create named parameter and add it to parameter-map
-                            String paramName = String.format("%s%d", q.getParameterName(), queryValueCounter);
+                            String paramName = String.format("%s%d", q.getParameterName(), queryValueIdx);
                             parameters.put(paramName, v);
                             //
                             if (v instanceof String) {
-                                String op = LIKE;
-                                if (null != q.getOperator()) {
-                                    op = q.getOperator();
+                                if (op.equals(LIKE)) {
+                                    // LOWER(o.<property>) LIKE :<named parameter>
+                                    builder.append(JPA_LOWER).append(JPA_O_DOT).append(q.getParameterName()).append(RIGHT_PARANTHESIS).
+                                            append(SPACE).append(op).append(SPACE_COLON).append(paramName);
                                 }
-                                // LOWER(o.<property>) LIKE :<named parameter>
-                                builder.append(JPA_LOWER).append(JPA_O_DOT).append(q.getParameterName()).append(RIGHT_PARANTHESIS).
-                                        append(SPACE).append(op).append(SPACE_COLON).append(paramName);
-                            } else if (v instanceof java.util.Date) {
-                                String op = EQUAL_SIGN;
+                            } else if (v instanceof Date) {
+                                op = EQUAL_SIGN;
                                 if (null != q.getOperator()) {
                                     op = q.getOperator();
                                 }
@@ -156,17 +161,20 @@ public class DynamicQuery<T> {
                                 builder.append(JPA_O_DOT).append(q.getParameterName()).append(RIGHT_PARANTHESIS).
                                         append(SPACE).append(op).append(SPACE_COLON).append(paramName);
                             }
-                            if (queryValueCounter < valueCount - 1) {
+                            if (queryValueIdx < valueCount - 1) {
                                 builder.append(SPACE).append(q.getConnector()).append(SPACE);
                             }
-                            queryValueCounter++;
+                            //queryValueIdx++;
                         }
-                        builder.append(RIGHT_PARANTHESIS);
-                        // Increase counter
-                        queryParameterCounter++;
+                        if (q.isAddIsNotNull()) {
+                            // OR o.<property> IS NOT NULL
+                            builder.append(SPACE).append(OR).append(SPACE).append(JPA_O_DOT).append(q.getParameterName()).append(SPACE).append(SPACE_IS_NOT_NULL);
+                        }
                     }
+                    builder.append(RIGHT_PARANTHESIS);
                 }
             }
+        }
         // ORDER BY
         if (builder.length() > 0 && null != orderBy) {
             builder.append(SPACE).append(ORDER_BY).append(SPACE);

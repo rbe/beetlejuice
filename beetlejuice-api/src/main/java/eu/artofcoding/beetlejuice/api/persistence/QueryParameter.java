@@ -23,6 +23,8 @@ public class QueryParameter implements Serializable {
 
     private String connector;
 
+    private boolean addIsNotNull;
+
     public QueryParameter(String parameterName, Object[] values, String operator, String connector) {
         this.parameterName = parameterName;
         this.values = values;
@@ -46,6 +48,14 @@ public class QueryParameter implements Serializable {
         this.values = values;
     }
 
+    public int getValuesCount() {
+        int i = 0;
+        if (null != values) {
+            i = values.length;
+        }
+        return i;
+    }
+
     public String getOperator() {
         return operator;
     }
@@ -60,6 +70,14 @@ public class QueryParameter implements Serializable {
 
     public void setConnector(String connector) {
         this.connector = connector;
+    }
+
+    public boolean isAddIsNotNull() {
+        return addIsNotNull;
+    }
+
+    public void setAddIsNotNull(boolean addIsNotNull) {
+        this.addIsNotNull = addIsNotNull;
     }
 
 }
