@@ -16,6 +16,9 @@
     </parent>
     <packaging>jar</packaging>
     <dependencies>
+        <!--
+            Java EE.
+        -->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
@@ -28,6 +31,9 @@
             <version>${version.javax.enterprise.cdi-api}</version>
             <scope>provided</scope>
         </dependency>
+        <!--
+            Beetlejuice.
+        -->
         <dependency>
             <groupId>eu.artofcoding.beetlejuice</groupId>
             <artifactId>beetlejuice-api</artifactId>

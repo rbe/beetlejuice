@@ -39,7 +39,7 @@
             <version>1.4.5</version>
         </dependency>
         <!--
-            Beetlejuice API.
+            Beetlejuice.
         -->
         <dependency>
             <groupId>eu.artofcoding.beetlejuice</groupId>
