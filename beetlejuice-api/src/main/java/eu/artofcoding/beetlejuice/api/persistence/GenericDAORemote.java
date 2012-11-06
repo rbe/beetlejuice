@@ -127,7 +127,7 @@ public interface GenericDAORemote<T extends Serializable> {
      * @param pageSize
      * @return Result, see {@link javax.persistence.TypedQuery#getResultList()}.
      */
-    List<T> dynamicFindWith(List<QueryParameter> queryParameters, String clauseConnector, int firstResult, int pageSize);
+    List<T> dynamicFindWith(List<QueryParameter> queryParameters, String clauseConnector, String[] orderBy, int firstResult, int pageSize);
 
     /**
      * @param queryParameters

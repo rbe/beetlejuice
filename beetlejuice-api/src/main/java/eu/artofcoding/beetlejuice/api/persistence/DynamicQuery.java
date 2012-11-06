@@ -51,6 +51,11 @@ public class DynamicQuery<T> {
      */
     private Map<String, Object> parameters;
 
+    /**
+     * ORDER BY
+     */
+    private String[] orderBy;
+
     //</editor-fold>
 
     //<editor-fold desc="Constructors">
@@ -67,6 +72,22 @@ public class DynamicQuery<T> {
         this.entityClass = entityClass;
         this.queryParameters = queryParameters;
         this.clauseConnector = clauseConnector;
+    }
+
+    /**
+     * Constructor.
+     * @param entityManager   EntityManager.
+     * @param entityClass     Type of entity.
+     * @param queryParameters List with QueryParameters of type &lt;O>.
+     * @param clauseConnector Connector between queries against a field, can be AND or OR.
+     * @param orderBy         ORDER BY.
+     */
+    public DynamicQuery(EntityManager entityManager, Class<T> entityClass, List<QueryParameter> queryParameters, String clauseConnector, String[] orderBy) {
+        this.entityManager = entityManager;
+        this.entityClass = entityClass;
+        this.queryParameters = queryParameters;
+        this.clauseConnector = clauseConnector;
+        this.orderBy = orderBy;
     }
 
     //</editor-fold>
@@ -144,6 +165,16 @@ public class DynamicQuery<T> {
                         // Increase counter
                         queryParameterCounter++;
                     }
+                }
+            }
+        // ORDER BY
+        if (builder.length() > 0 && null != orderBy) {
+            builder.append(SPACE).append(ORDER_BY).append(SPACE);
+            for (int i = 0, orderByLength = orderBy.length; i < orderByLength; i++) {
+                String o = orderBy[i];
+                builder.append(o);
+                if (i < orderByLength - 1) {
+                    builder.append(COMMA).append(SPACE);
                 }
             }
         }

@@ -98,6 +98,8 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
 
     private String clauseConnector;
 
+    private String[] orderBy;
+
     //</editor-fold>
 
     /**
@@ -139,19 +141,24 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
         return currentPage;
     }
 
-    public List<T> executeSearch(List<QueryParameter> queryParameters, String clauseConnector) {
+    public List<T> executeSearch(List<QueryParameter> queryParameters, String clauseConnector, String[] orderBy) {
         this.namedQuery = null;
         this.queryParameterMap = null;
         this.queryParameters = (List<QueryParameter>) queryParameters;
         this.clauseConnector = clauseConnector;
+        this.orderBy = orderBy;
         // Execute query (first page)
         offset = 0;
-        currentPage = dao.dynamicFindWith(queryParameters, clauseConnector, offset, pageSize);
+        currentPage = dao.dynamicFindWith(queryParameters, clauseConnector, orderBy, offset, pageSize);
         // Count rows, pages
         totalRowCount = dao.dynamicCountWith(queryParameters, clauseConnector);
         pageCount = Math.max(1, (int) Math.ceil(1.0 * totalRowCount / pageSize));
         // Return first page
         return currentPage;
+    }
+
+    public List<T> executeSearch(List<QueryParameter> queryParameters, String clauseConnector) {
+        return executeSearch(queryParameters, clauseConnector, null);
     }
 
     public void gotoPage(int page) {
@@ -163,7 +170,7 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
         if (null != namedQuery && null != queryParameterMap) {
             currentPage = dao.findAll(namedQuery, queryParameterMap, offset, pageSize);
         } else if (null != queryParameters && null != clauseConnector) {
-            currentPage = dao.dynamicFindWith(queryParameters, clauseConnector, offset, pageSize);
+            currentPage = dao.dynamicFindWith(queryParameters, clauseConnector, orderBy, offset, pageSize);
         }
         // Reset pointer
         indexOnCurrentPage = 0;

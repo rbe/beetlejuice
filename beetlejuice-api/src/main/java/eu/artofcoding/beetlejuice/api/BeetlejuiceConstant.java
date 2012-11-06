@@ -41,5 +41,6 @@ public class BeetlejuiceConstant {
     public static final String JPA_SPACE_O_DOT = " o.".intern();
     public static final String JPA_LOWER = "LOWER(";
     public static final String JPA_SPACE_LOWER = " LOWER(";
+    public static final String ORDER_BY = "ORDER BY";
 
 }

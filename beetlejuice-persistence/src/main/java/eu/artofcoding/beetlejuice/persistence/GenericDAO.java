@@ -240,10 +240,10 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
     }
 
     @Override
-    public List<T> dynamicFindWith(List<QueryParameter> queryParameters, String clauseConnector, int firstResult, int pageSize) {
+    public List<T> dynamicFindWith(List<QueryParameter> queryParameters, String clauseConnector, String[] orderBy, int firstResult, int pageSize) {
         // Build query from list of QueryParameters
         String selectClause = String.format("%s%s%s", BeetlejuiceConstant.SQL_SELECT_O_FROM_SPACE, entityClass.getSimpleName(), BeetlejuiceConstant.JPA_SPACE_O);
-        DynamicQuery<T> dynamicQuery = new DynamicQuery<T>(entityManager, entityClass, queryParameters, clauseConnector);
+        DynamicQuery<T> dynamicQuery = new DynamicQuery<T>(entityManager, entityClass, queryParameters, clauseConnector, orderBy);
         TypedQuery<T> query = dynamicQuery.getQuery(selectClause);
         // Pagination: set first result and page size
         query.setFirstResult(firstResult);
