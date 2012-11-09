@@ -137,7 +137,6 @@ public class DynamicQuery<T> {
                             builder.append(SPACE).append(clauseConnector);
                         }
                         //
-                        //queryValueCounter = 0;
                         builder.append(SPACE_LEFT_PARANTHESIS);
                         Object[] values = q.getValues();
                         for (int queryValueIdx = 0, valuesLength = values.length; queryValueIdx < valuesLength; queryValueIdx++) {
@@ -164,7 +163,6 @@ public class DynamicQuery<T> {
                             if (queryValueIdx < valueCount - 1) {
                                 builder.append(SPACE).append(q.getConnector()).append(SPACE);
                             }
-                            //queryValueIdx++;
                         }
                         if (q.isAddIsNotNull()) {
                             // OR o.<property> IS NOT NULL
