@@ -20,21 +20,15 @@ public class BeetlejuiceConstant {
     public static final String EQUAL_SIGN = "=".intern();
     public static final String GREATER_EQUAL = ">=".intern();
     public static final String COLON = ":".intern();
-    public static final String SPACE_COLON = " :".intern();
     public static final String LEFT_PARANTHESIS = "(".intern();
-    public static final String SPACE_LEFT_PARANTHESIS = " (".intern();
     public static final String RIGHT_PARANTHESIS = ")".intern();
-    public static final String RIGHT_PARANTHESIS_SPACE = ") ".intern();
-    public static final String REFERER = "referer".intern();
     public static final String AND = "AND".intern();
     public static final String OR = "OR".intern();
     public static final String BEETLEJUICE_BOOL_TRUE = "beetlejuice:BOOL:true".intern();
     public static final String BEETLEJUICE_BOOL_FALSE = "beetlejuice:BOOL:false".intern();
     public static final String SQL_SPACE_WHERE = " WHERE".intern();
     public static final String SQL_SELECT_O_FROM_SPACE = "SELECT o FROM ".intern();
-    public static final String SPACE_LIKE = " LIKE".intern();
     public static final String LIKE = "LIKE".intern();
-    public static final String SPACE_IS_NOT_NULL = " IS NOT NULL".intern();
     public static final String IS_NOT_NULL = "IS NOT NULL".intern();
     public static final String JPA_LIKE_COLON = " LIKE :".intern();
     public static final String JPA_SELECT_COUNT_O_FROM = "SELECT COUNT(o) FROM ".intern();
@@ -43,7 +37,6 @@ public class BeetlejuiceConstant {
     public static final String JPA_SPACE_O = " o".intern();
     public static final String JPA_SPACE_O_DOT = " o.".intern();
     public static final String JPA_LOWER = "LOWER(";
-    public static final String JPA_SPACE_LOWER = " LOWER(";
     public static final String ORDER_BY = "ORDER BY";
 
 }
