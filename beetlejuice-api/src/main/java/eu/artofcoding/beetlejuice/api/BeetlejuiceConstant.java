@@ -39,4 +39,6 @@ public class BeetlejuiceConstant {
     public static final String JPA_LOWER = "LOWER(";
     public static final String ORDER_BY = "ORDER BY";
 
+    public static final String REFERER = "referer".intern();
+
 }
