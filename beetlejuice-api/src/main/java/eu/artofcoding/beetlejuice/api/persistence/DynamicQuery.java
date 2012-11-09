@@ -176,6 +176,12 @@ public class DynamicQuery<T> {
             }
         }
         // ORDER BY
+        addOrderBy(builder);
+        return builder;
+    }
+
+    private void addOrderBy(StringBuilder builder) {
+        // ORDER BY
         if (builder.length() > 0 && null != orderBy) {
             builder.append(SPACE).append(ORDER_BY).append(SPACE);
             for (int i = 0, orderByLength = orderBy.length; i < orderByLength; i++) {
@@ -186,7 +192,6 @@ public class DynamicQuery<T> {
                 }
             }
         }
-        return builder;
     }
 
     /**
