@@ -134,9 +134,10 @@ public class DynamicQuery<T> {
                     if (valueCount > 0) {
                         // Append clauseConnector between different QueryParameter
                         if (queryParameterIdx > 0 && queryParameterIdx < size) {
+                            // " OP"
                             builder.append(SPACE).append(clauseConnector);
                         }
-                        //
+                        // " ("
                         builder.append(SPACE).append(LEFT_PARANTHESIS);
                         Object[] values = q.getValues();
                         for (int queryValueIdx = 0, valuesLength = values.length; queryValueIdx < valuesLength; queryValueIdx++) {
@@ -147,7 +148,7 @@ public class DynamicQuery<T> {
                             //
                             if (v instanceof String) {
                                 if (op.equals(LIKE)) {
-                                    // LOWER(o.<property>) LIKE :<named parameter>
+                                    // "LOWER(o.<property>) LIKE :<named parameter>"
                                     builder.append(JPA_LOWER).append(JPA_O_DOT).append(q.getParameterName()).append(RIGHT_PARANTHESIS).
                                             append(SPACE).append(op).append(SPACE).append(COLON).append(paramName);
                                 }
@@ -156,16 +157,17 @@ public class DynamicQuery<T> {
                                 if (null != q.getOperator()) {
                                     op = q.getOperator();
                                 }
-                                // o.<property> = :<named parameter>
+                                // "o.<property> = :<named parameter>) OP :<named parameter>"
                                 builder.append(JPA_O_DOT).append(q.getParameterName()).append(RIGHT_PARANTHESIS).
                                         append(SPACE).append(op).append(SPACE).append(COLON).append(paramName);
                             }
+                            // " OP "
                             if (queryValueIdx < valueCount - 1) {
                                 builder.append(SPACE).append(q.getConnector()).append(SPACE);
                             }
                         }
                         if (q.isAddIsNotNull()) {
-                            // OR o.<property> IS NOT NULL
+                            // " OR o.<property> IS NOT NULL"
                             builder.append(SPACE).append(OR).append(SPACE).
                                     append(JPA_O_DOT).append(q.getParameterName()).append(SPACE).append(IS_NOT_NULL);
                         }
