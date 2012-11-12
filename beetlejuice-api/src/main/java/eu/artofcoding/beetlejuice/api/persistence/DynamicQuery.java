@@ -348,8 +348,8 @@ public class DynamicQuery<T> {
      * @param entityAlias Alias for entity, e.g. "o" or "o1".
      */
     private void buildVariant1Condition(StringBuilder builder, QueryParameter q, String entityAlias) {
-        // " ("
-        builder.append(SPACE).append(LEFT_PARANTHESIS);
+        // " WHERE ("
+        builder.append(SPACE).append(WHERE).append(SPACE).append(LEFT_PARANTHESIS);
         //
         String op;
         Object[] values = q.getValues();
