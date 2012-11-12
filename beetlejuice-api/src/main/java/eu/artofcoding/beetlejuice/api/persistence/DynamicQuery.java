@@ -12,11 +12,9 @@
 package eu.artofcoding.beetlejuice.api.persistence;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.*;
 
@@ -38,9 +36,9 @@ public class DynamicQuery<T> {
     private Class<T> entityClass;
 
     /**
-     * Parameters for query.
+     * Configuration of query.
      */
-    private List<QueryParameter> queryParameters;
+    private QueryConfiguration queryConfiguration;
 
     /**
      * Connector (AND, OR) between different queries against a field.
@@ -48,14 +46,19 @@ public class DynamicQuery<T> {
     private String clauseConnector;
 
     /**
-     * Generated parameters, used to bind values to query.
-     */
-    private Map<String, Object> parameters;
-
-    /**
      * ORDER BY
      */
     private String[] orderBy;
+
+    /**
+     * Generated parameters, used to bind values to query.
+     */
+    private Map<String, Object> parameters = new HashMap<>();
+
+    /**
+     * Maximum number of rows to return.
+     */
+    private long maxRows;
 
     //</editor-fold>
 
@@ -63,30 +66,30 @@ public class DynamicQuery<T> {
 
     /**
      * Constructor.
-     * @param entityManager   EntityManager.
-     * @param entityClass     Type of entity.
-     * @param queryParameters List with QueryParameters of type &lt;O>.
-     * @param clauseConnector Connector between queries against a field, can be AND or OR.
+     * @param entityManager      EntityManager.
+     * @param entityClass        Type of entity.
+     * @param queryConfiguration Configuration for query.
+     * @param clauseConnector    Connector between queries against a field, can be AND or OR.
      */
-    public DynamicQuery(EntityManager entityManager, Class<T> entityClass, List<QueryParameter> queryParameters, String clauseConnector) {
+    public DynamicQuery(EntityManager entityManager, Class<T> entityClass, QueryConfiguration queryConfiguration, String clauseConnector) {
         this.entityManager = entityManager;
         this.entityClass = entityClass;
-        this.queryParameters = queryParameters;
+        this.queryConfiguration = queryConfiguration;
         this.clauseConnector = clauseConnector;
     }
 
     /**
      * Constructor.
-     * @param entityManager   EntityManager.
-     * @param entityClass     Type of entity.
-     * @param queryParameters List with QueryParameters of type &lt;O>.
-     * @param clauseConnector Connector between queries against a field, can be AND or OR.
-     * @param orderBy         ORDER BY.
+     * @param entityManager      EntityManager.
+     * @param entityClass        Type of entity.
+     * @param queryConfiguration Configuration for query.
+     * @param clauseConnector    Connector between queries against a field, can be AND or OR.
+     * @param orderBy            ORDER BY.
      */
-    public DynamicQuery(EntityManager entityManager, Class<T> entityClass, List<QueryParameter> queryParameters, String clauseConnector, String[] orderBy) {
+    public DynamicQuery(EntityManager entityManager, Class<T> entityClass, QueryConfiguration queryConfiguration, String clauseConnector, String[] orderBy) {
         this.entityManager = entityManager;
         this.entityClass = entityClass;
-        this.queryParameters = queryParameters;
+        this.queryConfiguration = queryConfiguration;
         this.clauseConnector = clauseConnector;
         this.orderBy = orderBy;
     }
@@ -95,8 +98,8 @@ public class DynamicQuery<T> {
 
     //<editor-fold desc="Getters">
 
-    public List<QueryParameter> getQueryParameters() {
-        return queryParameters;
+    public QueryConfiguration getQueryConfiguration() {
+        return queryConfiguration;
     }
 
     public String getClauseConnector() {
@@ -107,7 +110,123 @@ public class DynamicQuery<T> {
         return parameters;
     }
 
+    public long getMaxRows() {
+        return maxRows;
+    }
+
+    public void setMaxRows(long maxRows) {
+        this.maxRows = maxRows;
+    }
+
     //</editor-fold>
+
+    /**
+     * Variant 2.<br/>
+     * <pre>
+     * SELECT o
+     *   FROM aTable
+     *        INNER JOIN aTable o2 ON o.id = o2.id
+     *        INNER JOIN aTable o3 ON o.id = o3.id
+     *  WHERE
+     *        (
+     *             LOWER(b1.field1) LIKE '%schiff%'
+     *          OR LOWER(b1.field2) LIKE '%schiff%'
+     *          OR LOWER(b1.field3) LIKE '%schiff%'
+     *        )
+     *        AND
+     *        (
+     *             LOWER(b2.field1) LIKE '%haus%'
+     *          OR LOWER(b2.field2) LIKE '%haus%'
+     *          OR LOWER(b2.field3) LIKE '%haus%'
+     *        )
+     * </pre>
+     * @param builder StringBuilder for JPA query.
+     */
+    private void buildQueryVariant2(StringBuilder builder) {
+        List<QueryParameter> queryParameters = queryConfiguration.getQueryParameters();
+        // Count values
+        Set<Object> _values = new HashSet<Object>();
+        for (QueryParameter queryParameter : queryParameters) {
+            Collections.addAll(_values, queryParameter.getValues());
+        }
+        Object[] values = _values.toArray(new Object[_values.size()]);
+        int valueCount = values.length;
+        // IDs for inner join, where condition
+        List<String> ids = new ArrayList<String>();
+        for (int i = 0, valuesSize = values.length; i < valuesSize; i++) {
+            ids.add(String.format("o%d", i));
+        }
+        // INNER JOIN
+        for (String id : ids) {
+            builder.append(SPACE)
+                    .append(INNER_JOIN).append(SPACE).append(queryConfiguration.getTableName()).append(SPACE).append(id)
+                    .append(SPACE).append("ON o.id = ").append(id).append(".id");
+        }
+        // " WHERE"
+        builder.append(SPACE).append(WHERE);
+        // QueryParameters
+        for (int valueCountIdx = 0; valueCountIdx < valueCount; valueCountIdx++) {
+            // " ("
+            builder.append(SPACE).append(LEFT_PARANTHESIS);
+            for (int i = 0, queryParametersSize = queryParameters.size(); i < queryParametersSize; i++) {
+                // Create named parameter and add it to parameter-map
+                String paramName = String.format("value%d", valueCountIdx);
+                parameters.put(paramName, values[valueCountIdx]);
+                // "LOWER(<parameter name>) = LIKE :<paramName>"
+                QueryParameter q = queryParameters.get(i);
+                builder.append(JPA_LOWER).append(LEFT_PARANTHESIS).append(JPA_O_DOT).append(q.getParameterName()).append(RIGHT_PARANTHESIS)
+                        .append(SPACE).append(LIKE).append(SPACE).append(COLON).append(paramName);
+                // Add connector
+                if (i < queryParametersSize - 1) {
+                    builder.append(SPACE).append(OR).append(SPACE);
+                }
+            }
+            // ")"
+            builder.append(RIGHT_PARANTHESIS);
+            // " OP"
+            if (valueCountIdx < valueCount - 1) {
+                builder.append(SPACE).append(AND);
+            }
+        }
+    }
+
+    /**
+     * Variant 1.<br/>
+     * <pre>
+     * SELECT o
+     *  FROM AnEntity o
+     * WHERE
+     *       (
+     *                LOWER(o.field1) LIKE :field10
+     *         AND/OR LOWER(o.field1) LIKE :field11
+     *         AND/OR o.field1 IS NOT NULL
+     *       )
+     *       AND/OR
+     *       (
+     *                LOWER(o.field2) LIKE :field20
+     *         AND/OR LOWER(o.field2) LIKE :field21
+     *       )
+     *       AND/OR ...
+     * </pre>
+     * @param builder StringBuilder for JPA query.
+     */
+    private void buildQueryVariant1(StringBuilder builder) {
+        List<QueryParameter> queryParameters = queryConfiguration.getQueryParameters();
+        int size = queryParameters.size();
+        // QueryParameters
+        for (int queryParameterIdx = 0, queryParametersSize = queryParameters.size(); queryParameterIdx < queryParametersSize; queryParameterIdx++) {
+            QueryParameter q = queryParameters.get(queryParameterIdx);
+            int valueCount = q.getValuesCount();
+            if (valueCount > 0) {
+                // Append clauseConnector between different QueryParameter
+                if (queryParameterIdx > 0 && queryParameterIdx < size) {
+                    // " OP"
+                    builder.append(SPACE).append(clauseConnector);
+                }
+                buildVariant1Condition(builder, q, JPA_O);
+            }
+        }
+    }
 
     /**
      * Build a JPA query based on list of QueryParameters.
@@ -118,62 +237,19 @@ public class DynamicQuery<T> {
         // Build JPA query
         StringBuilder builder = new StringBuilder(selectClause);
         // Add conditionals
-        parameters = new HashMap<>();
+        List<QueryParameter> queryParameters = queryConfiguration.getQueryParameters();
         if (null != queryParameters) {
             int size = queryParameters.size();
             if (size > 0) {
-                builder.append(SQL_SPACE_WHERE);
-                //int queryValueCounter;
-                for (int queryParameterIdx = 0, queryParametersSize = queryParameters.size(); queryParameterIdx < queryParametersSize; queryParameterIdx++) {
-                    QueryParameter q = queryParameters.get(queryParameterIdx);
-                    int valueCount = q.getValuesCount();
-                    String op = LIKE;
-                    if (null != q.getOperator()) {
-                        op = q.getOperator();
-                    }
-                    if (valueCount > 0) {
-                        // Append clauseConnector between different QueryParameter
-                        if (queryParameterIdx > 0 && queryParameterIdx < size) {
-                            // " OP"
-                            builder.append(SPACE).append(clauseConnector);
-                        }
-                        // " ("
-                        builder.append(SPACE).append(LEFT_PARANTHESIS);
-                        Object[] values = q.getValues();
-                        for (int queryValueIdx = 0, valuesLength = values.length; queryValueIdx < valuesLength; queryValueIdx++) {
-                            Object v = values[queryValueIdx];
-                            // Create named parameter and add it to parameter-map
-                            String paramName = String.format("%s%d", q.getParameterName(), queryValueIdx);
-                            parameters.put(paramName, v);
-                            //
-                            if (v instanceof String) {
-                                if (op.equals(LIKE)) {
-                                    // "LOWER(o.<property>) LIKE :<named parameter>"
-                                    builder.append(JPA_LOWER).append(JPA_O_DOT).append(q.getParameterName()).append(RIGHT_PARANTHESIS).
-                                            append(SPACE).append(op).append(SPACE).append(COLON).append(paramName);
-                                }
-                            } else if (v instanceof Date) {
-                                op = EQUAL_SIGN;
-                                if (null != q.getOperator()) {
-                                    op = q.getOperator();
-                                }
-                                // "o.<property> = :<named parameter>) OP :<named parameter>"
-                                builder.append(JPA_O_DOT).append(q.getParameterName()).append(RIGHT_PARANTHESIS).
-                                        append(SPACE).append(op).append(SPACE).append(COLON).append(paramName);
-                            }
-                            // " OP "
-                            if (queryValueIdx < valueCount - 1) {
-                                builder.append(SPACE).append(q.getConnector()).append(SPACE);
-                            }
-                        }
-                        if (q.isAddIsNotNull()) {
-                            // " OR o.<property> IS NOT NULL"
-                            builder.append(SPACE).append(OR).append(SPACE).
-                                    append(JPA_O_DOT).append(q.getParameterName()).append(SPACE).append(IS_NOT_NULL);
-                        }
-                    }
-                    builder.append(RIGHT_PARANTHESIS);
+                switch (queryConfiguration.getQueryVariant()) {
+                    case Variant1:
+                        buildQueryVariant1(builder);
+                        break;
+                    case Variant2:
+                        buildQueryVariant2(builder);
+                        break;
                 }
+
             }
         }
         // ORDER BY
@@ -181,6 +257,70 @@ public class DynamicQuery<T> {
         return builder;
     }
 
+    /**
+     * Generate a JPA query to query for entities.
+     * @param selectClause SELECT-clause to start with.
+     * @return {@link TypedQuery}
+     */
+    public TypedQuery<T> getQuery(String selectClause) {
+        TypedQuery<T> query = null;
+        if (!queryConfiguration.isNativeQuery()) {
+            StringBuilder builder = buildQuery(selectClause);
+            query = entityManager.createQuery(builder.toString(), entityClass);
+            bindQueryParameter(query);
+        }
+        return query;
+    }
+
+    /**
+     * Generate a native query to query for entities.
+     * @param selectClause SELECT-clause to start with.
+     * @return {@link Query}
+     */
+    public Query getNativeQuery(String selectClause) {
+        Query query = null;
+        if (queryConfiguration.isNativeQuery()) {
+            StringBuilder builder = buildQuery(selectClause);
+            query = entityManager.createNativeQuery(builder.toString(), entityClass);
+            bindQueryParameter(query);
+        }
+        return query;
+    }
+
+    /**
+     * Generate a JPA query to count entities.
+     * @param selectClause SELECT-clause to start with.
+     * @return {@link TypedQuery}
+     */
+    public TypedQuery<Long> getCountQuery(String selectClause) {
+        TypedQuery<Long> countQuery = null;
+        if (!queryConfiguration.isNativeQuery()) {
+            StringBuilder builder = buildQuery(selectClause);
+            countQuery = entityManager.createQuery(builder.toString(), Long.class);
+            bindQueryParameter(countQuery);
+        }
+        return countQuery;
+    }
+
+    /**
+     * Generate a native query to count entities.
+     * @param selectClause SELECT-clause to start with.
+     * @return {@link Query}
+     */
+    public Query getNativeCountQuery(String selectClause) {
+        Query countQuery = null;
+        if (queryConfiguration.isNativeQuery()) {
+            StringBuilder builder = buildQuery(selectClause);
+            countQuery = entityManager.createNativeQuery(builder.toString());
+            bindQueryParameter(countQuery);
+        }
+        return countQuery;
+    }
+
+    /**
+     * Add ORDER BY clause.
+     * @param builder StringBuilder for JPA query.
+     */
     private void addOrderBy(StringBuilder builder) {
         // ORDER BY
         if (builder.length() > 0 && null != orderBy) {
@@ -196,40 +336,71 @@ public class DynamicQuery<T> {
     }
 
     /**
-     * Generate a JPA query to query for entities.
-     * @param selectClause SELECT-clause to start with.
-     * @return
+     * <pre>
+     * (
+     *          LOWER(o.field1) LIKE :field10
+     *   AND/OR LOWER(o.field1) LIKE :field11
+     *   AND/OR o.field1 IS NOT NULL
+     * )
+     * </pre>
+     * @param builder     StringBuilder for JPA query.
+     * @param q           {@link QueryParameter}.
+     * @param entityAlias Alias for entity, e.g. "o" or "o1".
      */
-    public TypedQuery<T> getQuery(String selectClause) {
-        StringBuilder builder = buildQuery(selectClause);
-        TypedQuery<T> query = entityManager.createQuery(builder.toString(), entityClass);
-        bindQueryParameter(query);
-        return query;
-    }
-
-    /**
-     * Generate a JPA query to count entities.
-     * @param selectClause SELECT-clause to start with.
-     * @return
-     */
-    public TypedQuery<Long> getCountQuery(String selectClause) {
-        StringBuilder builder = buildQuery(selectClause);
-        TypedQuery<Long> countQuery = entityManager.createQuery(builder.toString(), Long.class);
-        bindQueryParameter(countQuery);
-        return countQuery;
+    private void buildVariant1Condition(StringBuilder builder, QueryParameter q, String entityAlias) {
+        // " ("
+        builder.append(SPACE).append(LEFT_PARANTHESIS);
+        //
+        String op;
+        Object[] values = q.getValues();
+        int valueCount = q.getValuesCount();
+        for (int queryValueIdx = 0, valuesLength = values.length; queryValueIdx < valuesLength; queryValueIdx++) {
+            Object v = values[queryValueIdx];
+            // Create named parameter and add it to parameter-map
+            String paramName = String.format("%s%d", q.getParameterName(), queryValueIdx);
+            parameters.put(paramName, v);
+            //
+            if (v instanceof String) {
+                op = null != q.getOperator() ? q.getOperator() : LIKE;
+                if (op.equals(LIKE)) {
+                    // "LOWER(<entityAlias>.<property>) LIKE :<named parameter>"
+                    builder.append(JPA_LOWER).append(LEFT_PARANTHESIS).
+                            append(entityAlias).append(DOT).append(q.getParameterName()).
+                            append(RIGHT_PARANTHESIS).
+                            append(SPACE).append(op).append(SPACE).append(COLON).append(paramName);
+                }
+            } else if (v instanceof Date) {
+                op = null != q.getOperator() ? q.getOperator() : EQUAL_SIGN;
+                // "<entityAlias>.<property> = :<named parameter>) OP :<named parameter>"
+                builder.append(entityAlias).append(DOT).append(q.getParameterName()).
+                        append(RIGHT_PARANTHESIS).
+                        append(SPACE).append(op).append(SPACE).append(COLON).append(paramName);
+            }
+            // " OP "
+            if (queryValueIdx < valueCount - 1) {
+                builder.append(SPACE).append(q.getConnector()).append(SPACE);
+            }
+        }
+        if (q.isAddIsNotNull()) {
+            // " OR <entityAlias>.<property> IS NOT NULL"
+            builder.append(SPACE).append(OR).append(SPACE).
+                    append(entityAlias).append(DOT).append(q.getParameterName()).append(SPACE).append(IS_NOT_NULL);
+        }
+        // ")"
+        builder.append(RIGHT_PARANTHESIS);
     }
 
     /**
      * Bind QueryParameter to previously generated JPA query.
-     * @param query The JPA query.
+     * @param query {@link Query}, the JPA query.
      */
-    private void bindQueryParameter(TypedQuery<?> query) {
+    private void bindQueryParameter(Query query) {
         if (parameters.size() > 0) {
             for (String k : parameters.keySet()) {
                 Object val = parameters.get(k);
                 if (val instanceof String) {
                     // TODO Make wildcards configurable for LIKE
-                    query.setParameter(k, "%" + val + "%");
+                    query.setParameter(k, String.format("%%%s%%", val));
                 } else {
                     query.setParameter(k, val);
                 }

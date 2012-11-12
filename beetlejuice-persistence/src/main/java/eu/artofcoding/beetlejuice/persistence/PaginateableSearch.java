@@ -12,6 +12,7 @@
 package eu.artofcoding.beetlejuice.persistence;
 
 import eu.artofcoding.beetlejuice.api.persistence.GenericEntity;
+import eu.artofcoding.beetlejuice.api.persistence.QueryConfiguration;
 import eu.artofcoding.beetlejuice.api.persistence.QueryParameter;
 
 import java.io.Serializable;
@@ -70,6 +71,11 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
     private long totalRowCount;
 
     /**
+     * Maximum number of rows to show.
+     */
+    private long maxRowCount;
+
+    /**
      * Index of current page in relation to total result set.
      */
     private int currentPageIndex;
@@ -94,6 +100,8 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
      */
     private T selectedEntity;
 
+    private QueryConfiguration queryConfiguration;
+    
     private List<QueryParameter> queryParameters;
 
     private String clauseConnector;
@@ -131,7 +139,7 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
         this.queryParameterMap = parameters;
         this.queryParameters = null;
         this.clauseConnector = null;
-        // Execute query (first page)
+        // Execute named query (first page)
         offset = 0;
         currentPage = dao.findAll(namedQuery, parameters, offset, pageSize);
         // Count rows, pages
@@ -141,24 +149,28 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
         return currentPage;
     }
 
-    public List<T> executeSearch(List<QueryParameter> queryParameters, String clauseConnector, String[] orderBy) {
+    public List<T> executeSearch(QueryConfiguration queryConfiguration, String clauseConnector, String[] orderBy) {
         this.namedQuery = null;
         this.queryParameterMap = null;
-        this.queryParameters = (List<QueryParameter>) queryParameters;
+        this.queryConfiguration = queryConfiguration;
         this.clauseConnector = clauseConnector;
         this.orderBy = orderBy;
         // Execute query (first page)
         offset = 0;
-        currentPage = dao.dynamicFindWith(queryParameters, clauseConnector, orderBy, offset, pageSize);
+        if (queryConfiguration.isNativeQuery()) {
+            currentPage = dao.dynamicFindWith(queryConfiguration, clauseConnector, orderBy, offset, pageSize);
+        } else {
+            currentPage = dao.dynamicFindWith(queryConfiguration, clauseConnector, orderBy, offset, pageSize);
+        }
         // Count rows, pages
-        totalRowCount = dao.dynamicCountWith(queryParameters, clauseConnector);
+        totalRowCount = dao.dynamicCountWith(queryConfiguration, clauseConnector);
         pageCount = Math.max(1, (int) Math.ceil(1.0 * totalRowCount / pageSize));
         // Return first page
         return currentPage;
     }
 
-    public List<T> executeSearch(List<QueryParameter> queryParameters, String clauseConnector) {
-        return executeSearch(queryParameters, clauseConnector, null);
+    public List<T> executeSearch(QueryConfiguration queryConfiguration, String clauseConnector) {
+        return executeSearch(queryConfiguration, clauseConnector, null);
     }
 
     public void gotoPage(int page) {
@@ -167,10 +179,15 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
         // Calculate offset in result set
         offset = currentPageIndex * pageSize;
         // Execute query for page
-        if (null != namedQuery && null != queryParameterMap) {
-            currentPage = dao.findAll(namedQuery, queryParameterMap, offset, pageSize);
-        } else if (null != queryParameters && null != clauseConnector) {
-            currentPage = dao.dynamicFindWith(queryParameters, clauseConnector, orderBy, offset, pageSize);
+        if (queryConfiguration.isNativeQuery()) {
+            currentPage = dao.dynamicFindWith(queryConfiguration, clauseConnector, orderBy, offset, pageSize);
+        } else {
+            // Named query
+            if (null != namedQuery && null != queryParameterMap) {
+                currentPage = dao.findAll(namedQuery, queryParameterMap, offset, pageSize);
+            } else if (null != queryParameters && null != clauseConnector) {
+                currentPage = dao.dynamicFindWith(queryConfiguration, clauseConnector, orderBy, offset, pageSize);
+            }
         }
         // Reset pointer
         indexOnCurrentPage = 0;
@@ -179,6 +196,14 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
 
     public long getTotalRowCount() {
         return totalRowCount;
+    }
+
+    public long getMaxRowCount() {
+        return maxRowCount;
+    }
+
+    public void setMaxRowCount(long maxRowCount) {
+        this.maxRowCount = maxRowCount;
     }
 
     //<editor-fold desc="Pagination">

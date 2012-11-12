@@ -121,20 +121,20 @@ public interface GenericDAORemote<T extends Serializable> {
     long dynamicCountWith(Map<String, Object> parameters, String clauseConnector);
 
     /**
-     * @param queryParameters List with QueryParameters.
+     * @param queryConfiguration Configuration of query.
      * @param clauseConnector
      * @param firstResult
      * @param pageSize
      * @return Result, see {@link javax.persistence.TypedQuery#getResultList()}.
      */
-    List<T> dynamicFindWith(List<QueryParameter> queryParameters, String clauseConnector, String[] orderBy, int firstResult, int pageSize);
+    List<T> dynamicFindWith(QueryConfiguration queryConfiguration, String clauseConnector, String[] orderBy, int firstResult, int pageSize);
 
     /**
-     * @param queryParameters
+     * @param queryConfiguration Configuration of query.
      * @param clauseConnector
      * @return
      */
-    long dynamicCountWith(List<QueryParameter> queryParameters, String clauseConnector);
+    long dynamicCountWith(QueryConfiguration queryConfiguration, String clauseConnector);
 
     /**
      * Count all entities.
