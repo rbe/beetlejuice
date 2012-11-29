@@ -13,16 +13,19 @@ package eu.artofcoding.beetlejuice.api;
 
 public class BeetlejuiceConstant {
 
-    public static final String TRUE = "true";
-    public static final String FALSE = "false";
     public static final String SPACE = " ".intern();
     public static final String COMMA = ",".intern();
     public static final String DOT = ".".intern();
+    public static final String ASTERISK = "*".intern();
     public static final String EQUAL_SIGN = "=".intern();
     public static final String GREATER_EQUAL = ">=".intern();
     public static final String COLON = ":".intern();
     public static final String LEFT_PARANTHESIS = "(".intern();
     public static final String RIGHT_PARANTHESIS = ")".intern();
+
+    public static final String S_TRUE = "true";
+    public static final String S_FALSE = "false";
+
     public static final String AND = "AND".intern();
     public static final String OR = "OR".intern();
     public static final String BEETLEJUICE_BOOL_TRUE = "beetlejuice:BOOL:true".intern();
