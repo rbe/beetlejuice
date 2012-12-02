@@ -14,9 +14,11 @@ package eu.artofcoding.beetlejuice.entity;
 import eu.artofcoding.beetlejuice.api.persistence.GenericEntity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
-public class EmailEntity implements GenericEntity {
+public class Email implements GenericEntity {
 
     private Long id;
 
@@ -32,11 +34,15 @@ public class EmailEntity implements GenericEntity {
 
     private String body;
 
-    private String contentType;
+    private MimeType mimeType;
+
+    private List<Attachment> attachments = new ArrayList<>();
 
     private Timestamp sentDate;
 
     private boolean sentSuccessfully;
+
+    //<editor-fold desc="Getter and Setter">
 
     public Long getId() {
         return id;
@@ -98,12 +104,20 @@ public class EmailEntity implements GenericEntity {
         this.body = body;
     }
 
-    public String getContentType() {
-        return contentType;
+    public MimeType getMimeType() {
+        return mimeType;
     }
 
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
+    public void setMimeType(MimeType mimeType) {
+        this.mimeType = mimeType;
+    }
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
     }
 
     public Timestamp getSentDate() {
@@ -122,18 +136,24 @@ public class EmailEntity implements GenericEntity {
         this.sentSuccessfully = sentSuccessfully;
     }
 
+    //</editor-fold>
+
+    public void addAttachment(Attachment attachment) {
+        attachments.add(attachment);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        EmailEntity that = (EmailEntity) o;
+        Email that = (Email) o;
 
         if (id != that.id) return false;
         if (sentSuccessfully != that.sentSuccessfully) return false;
         if (version != that.version) return false;
         if (body != null ? !body.equals(that.body) : that.body != null) return false;
-        if (contentType != null ? !contentType.equals(that.contentType) : that.contentType != null) return false;
+        if (mimeType != null ? !mimeType.equals(that.mimeType) : that.mimeType != null) return false;
         if (fromAddress != null ? !fromAddress.equals(that.fromAddress) : that.fromAddress != null) return false;
         if (sentDate != null ? !sentDate.equals(that.sentDate) : that.sentDate != null) return false;
         if (subject != null ? !subject.equals(that.subject) : that.subject != null) return false;
@@ -150,10 +170,19 @@ public class EmailEntity implements GenericEntity {
         result = 31 * result + (toAddress != null ? toAddress.hashCode() : 0);
         result = 31 * result + (subject != null ? subject.hashCode() : 0);
         result = 31 * result + (body != null ? body.hashCode() : 0);
-        result = 31 * result + (contentType != null ? contentType.hashCode() : 0);
+        result = 31 * result + (mimeType != null ? mimeType.hashCode() : 0);
         result = 31 * result + (sentDate != null ? sentDate.hashCode() : 0);
         result = 31 * result + (sentSuccessfully ? 1 : 0);
         return result.intValue();
+    }
+
+    @Override
+    public String toString() {
+        return "Email{" +
+                "fromAddress='" + fromAddress + '\'' +
+                ", toAddress='" + toAddress + '\'' +
+                ", subject='" + subject + '\'' +
+                '}';
     }
 
 }
