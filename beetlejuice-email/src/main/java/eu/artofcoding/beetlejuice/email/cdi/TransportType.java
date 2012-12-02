@@ -6,11 +6,11 @@
  * Alle Rechte vorbehalten. Nutzung unterliegt Lizenzbedingungen.
  * All rights reserved. Use is subject to license terms.
  *
- * rbe, 29.10.12 14:02
+ * rbe, 24.11.12 13:05
  */
 
-package eu.artofcoding.beetlejuice.email;
+package eu.artofcoding.beetlejuice.email.cdi;
 
-public enum SmtpProtocol {
-    SMTP, SMTPS;
+public enum TransportType {
+    SIMPLE, SSL_TLS
 }

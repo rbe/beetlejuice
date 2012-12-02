@@ -13,13 +13,15 @@ package eu.artofcoding.beetlejuice.email;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
+import java.io.Serializable;
 
-public class MailAuth {
+public class MailAuth implements Serializable {
 
     private String username;
-    private String password;
 
-    private Authenticator authenticator;
+    private transient String password;
+
+    private transient Authenticator authenticator;
 
     public MailAuth(String username, String password) {
         this.username = username;
