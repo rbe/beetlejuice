@@ -101,8 +101,6 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
     private T selectedEntity;
 
     private QueryConfiguration queryConfiguration;
-    
-    private List<QueryParameter> queryParameters;
 
     private String clauseConnector;
 
@@ -137,7 +135,6 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
     public List<T> executeSearch(String namedQuery, Map<String, Object> parameters) {
         this.namedQuery = namedQuery;
         this.queryParameterMap = parameters;
-        this.queryParameters = null;
         this.clauseConnector = null;
         // Execute named query (first page)
         offset = 0;
@@ -185,7 +182,7 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
             // Named query
             if (null != namedQuery && null != queryParameterMap) {
                 currentPage = dao.findAll(namedQuery, queryParameterMap, offset, pageSize);
-            } else if (null != queryParameters && null != clauseConnector) {
+            } else if (null != queryConfiguration.getQueryParameters() && null != clauseConnector) {
                 currentPage = dao.dynamicFindWith(queryConfiguration, clauseConnector, orderBy, offset, pageSize);
             }
         }
