@@ -314,7 +314,7 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         if (null != parameters && !parameters.isEmpty()) {
             // Populate query parameters
             Set<Map.Entry<String, Object>> entries = parameters.entrySet();
-            if (null != entries) {
+            if (!entries.isEmpty()) {
                 Object value;
                 for (Map.Entry<String, Object> entry : entries) {
                     value = entry.getValue();
