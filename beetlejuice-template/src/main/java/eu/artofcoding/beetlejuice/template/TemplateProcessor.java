@@ -1,26 +1,23 @@
 /*
- * app1
- * app1ea-cdi
- * Copyright (C) 2011-2012 art of coding UG, http://www.art-of-coding.eu
+ * beetlejuice
+ * beetlejuice-template
+ * Copyright (C) 2011-2012 art of coding UG, http://www.art-of-coding.eu/
  *
  * Alle Rechte vorbehalten. Nutzung unterliegt Lizenzbedingungen.
  * All rights reserved. Use is subject to license terms.
  *
- * rbe, 6/13/12 6:41 PM
+ * rbe, 06.11.12 17:05
  */
 package eu.artofcoding.beetlejuice.template;
 
 import freemarker.cache.*;
 import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
+import javax.inject.Named;
 import javax.servlet.ServletContext;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -46,7 +43,8 @@ import java.util.Map;
  * out.flush();
  * </pre>
  */
-public class TemplateProcessor {
+@Named("template")
+public class TemplateProcessor implements Serializable {
 
     /**
      * FreeMarker configuration.
@@ -119,7 +117,7 @@ public class TemplateProcessor {
 
     /**
      * Just add a TemplateLoader.
-     * @param templateLoader
+     * @param templateLoader {@link TemplateLoader}
      */
     public void addTemplateLoader(TemplateLoader templateLoader) {
         templateLoaders.add(templateLoader);
@@ -135,31 +133,38 @@ public class TemplateProcessor {
 
     /**
      * Render template (UTF-8), output will be accessible through provided Writer instance.
-     * @param templateName
+     * @param templateName Name of template.
      * @param root         Data for FreeMarker, e.g. Map<String, Object> or SimpleHash.
-     * @param out
-     * @throws IOException
+     * @param out          {@link Writer}
      * @throws TemplateException
      */
-    public void renderTemplate(String templateName, Locale locale, Object root, Writer out) throws IOException, TemplateException {
+    public void renderTemplate(String templateName, Locale locale, Object root, Writer out) throws TemplateException {
         makeTemplateLoader();
-        Template temp = configuration.getTemplate(templateName, locale, "UTF-8");
-        temp.process(root, out);
+        Template temp = null;
+        try {
+            temp = configuration.getTemplate(templateName, locale, "UTF-8");
+            temp.process(root, out);
+        } catch (IOException e) {
+            throw new TemplateException("Cannot render template", e, null);
+        }
     }
 
     /**
      * Render a template, see {@link #renderTemplate(String, java.util.Locale, java.lang.Object, java.io.Writer)} and return a String.
-     * @param templateName
+     * @param templateName Name of template.
      * @param root         Data for FreeMarker, e.g. Map<String, Object> or SimpleHash.
-     * @return
-     * @throws IOException
+     * @return String
      * @throws TemplateException
      */
-    public String renderTemplateToString(String templateName, Locale locale, Object root) throws IOException, TemplateException {
+    public String renderTemplateToString(String templateName, Locale locale, Object root) throws TemplateException {
         Writer o = new StringWriter();
         renderTemplate(templateName, locale, root, o);
-        o.flush();
-        return o.toString();
+        try {
+            o.flush();
+            return o.toString();
+        } catch (IOException e) {
+            throw new TemplateException("Cannot render template", e, null);
+        }
     }
 
     /*
