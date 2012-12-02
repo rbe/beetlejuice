@@ -25,6 +25,9 @@
             <version>${version.javaee-api}</version>
             <scope>provided</scope>
         </dependency>
+        <!--
+            CDI
+        -->
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>

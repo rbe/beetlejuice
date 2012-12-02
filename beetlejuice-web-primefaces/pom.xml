@@ -19,6 +19,7 @@
         <!-- JavaServer Faces -->
         <version.javax.faces-api>2.1</version.javax.faces-api>
         <version.org.primefaces>3.4</version.org.primefaces>
+        <!-- Apache Commons -->
         <version.org.apache.commons.io>2.4</version.org.apache.commons.io>
         <version.org.apache.commons.fileupload>1.2.2</version.org.apache.commons.fileupload>
     </properties>
@@ -90,8 +91,9 @@
             </plugin>
         </plugins>
     </build>
-    <!-- -->
+        <!-- -->
     <repositories>
+        <!-- PrimeFaces -->
         <repository>
             <id>prime-repo</id>
             <name>PrimeFaces Maven Repository</name>

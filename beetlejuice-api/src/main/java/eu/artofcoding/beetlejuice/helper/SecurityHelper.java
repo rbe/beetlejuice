@@ -29,6 +29,7 @@ public class SecurityHelper {
      * @param password
      * @return
      * @throws java.security.NoSuchAlgorithmException
+     *
      */
     public static byte[] makeHashedPassword(String algorithm, String password) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance(algorithm);
@@ -52,6 +53,7 @@ public class SecurityHelper {
      * @param password
      * @return
      * @throws java.security.NoSuchAlgorithmException
+     *
      */
     public static String makeBase64EncodedMD5Password(String password) throws NoSuchAlgorithmException {
         byte[] passwordHash = makeMD5Password(password);
@@ -63,6 +65,7 @@ public class SecurityHelper {
      * @param args
      * @throws java.io.IOException
      * @throws java.security.NoSuchAlgorithmException
+     *
      */
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
         String password;

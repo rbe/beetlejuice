@@ -19,12 +19,18 @@
         <project.picketbox.version>4.0.7.Final</project.picketbox.version>
     </properties>
     <dependencies>
+        <!--
+            Java EE
+        -->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>${version.javaee-api}</version>
             <scope>provided</scope>
         </dependency>
+        <!--
+            CDI
+        -->
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
