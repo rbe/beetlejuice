@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:component>
+
+    <cc:interface>
+        <cc:attribute name="vendor" type="java.lang.String" required="true"/>
+        <cc:attribute name="url" type="java.lang.String" required="false" default="http://www.art-of-coding.eu/beetlejuice"/>
+        <cc:attribute name="linkTitle" type="java.lang.String" required="false" default="http://www.art-of-coding.eu/beetlejuice"/>
+        <cc:attribute name="imageTitle" type="java.lang.String" required="false" default=""/>
+        <cc:attribute name="blackWhite" type="java.lang.Boolean" required="false" default="false"/>
+    </cc:interface>
+
+    <cc:implementation>
+        <h:panelGroup rendered="#{cc.attrs.vendor.toLowerCase() eq 'beetlejuice'}">
+            <h2 class="logo">
+                <strong>beetlejuice</strong>
+                <a href="#{cc.attrs.url}" title="#{cc.attrs.linkTitle}" class="logo">
+                    <img src="http://www.art-of-coding.eu/logo.jpg" alt="#{cc.attrs.imageTitle}"/>
+                </a>
+            </h2>
+        </h:panelGroup>
+        <h:panelGroup>
+            <a href="#{cc.attrs.url}" title="#{cc.attrs.linkTitle}" class="#{cc.attrs.vendor}-logo">
+                <h:graphicImage rendered="#{cc.attrs.blackWhite}"  library="images/beetlejuice" name="logo_facebook.gif"    width="32" height="32" alt="#{cc.attrs.imageTitle}"/>
+                <h:graphicImage rendered="#{!cc.attrs.blackWhite}" library="images/beetlejuice" name="logo_facebook_sw.gif" width="32" height="32" alt="#{cc.attrs.imageTitle}"/>
+            </a>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{cc.attrs.vendor.toLowerCase() eq 'linkedin'}">
+            <a href="#{cc.attrs.url}" title="#{cc.attrs.linkTitle}" class="logo">
+                <h:graphicImage rendered="#{cc.attrs.blackWhite}"  library="images/beetlejuice" name="logo_linkedin.gif"    width="32" height="32" alt="#{cc.attrs.imageTitle}"/>
+                <h:graphicImage rendered="#{!cc.attrs.blackWhite}" library="images/beetlejuice" name="logo_linkedin_sw.gif" width="32" height="32" alt="#{cc.attrs.imageTitle}"/>
+            </a>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{cc.attrs.vendor.toLowerCase() eq 'posterous'}">
+            <a href="#{cc.attrs.url}" title="#{cc.attrs.linkTitle}" class="logo">
+                <h:graphicImage rendered="#{cc.attrs.blackWhite}"  library="images/beetlejuice" name="logo_posterous.gif"    width="32" height="32" alt="#{cc.attrs.imageTitle}"/>
+                <h:graphicImage rendered="#{!cc.attrs.blackWhite}" library="images/beetlejuice" name="logo_posterous_sw.gif" width="32" height="32" alt="#{cc.attrs.imageTitle}"/>
+            </a>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{cc.attrs.vendor.toLowerCase() eq 'skype'}">
+            <a href="#{cc.attrs.url}" title="#{cc.attrs.linkTitle}" class="logo">
+                <h:graphicImage rendered="#{cc.attrs.blackWhite}"  library="images/beetlejuice" name="logo_skype.gif"    width="32" height="32" alt="#{cc.attrs.imageTitle}"/>
+                <h:graphicImage rendered="#{!cc.attrs.blackWhite}" library="images/beetlejuice" name="logo_skype_sw.gif" width="32" height="32" alt="#{cc.attrs.imageTitle}"/>
+            </a>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{cc.attrs.vendor.toLowerCase() eq 'twitter'}">
+            <a href="#{cc.attrs.url}" title="#{cc.attrs.linkTitle}" class="logo">
+                <h:graphicImage rendered="#{cc.attrs.blackWhite}"  library="images/beetlejuice" name="logo_twitter.gif"    width="32" height="32" alt="#{cc.attrs.imageTitle}"/>
+                <h:graphicImage rendered="#{!cc.attrs.blackWhite}" library="images/beetlejuice" name="logo_twitter_sw.gif" width="32" height="32" alt="#{cc.attrs.imageTitle}"/>
+            </a>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{cc.attrs.vendor.toLowerCase() eq 'xing'}">
+            <a href="#{cc.attrs.url}" title="#{cc.attrs.linkTitle}" class="logo">
+                <h:graphicImage rendered="#{cc.attrs.blackWhite}"  library="images/beetlejuice" name="logo_xing.gif"    width="32" height="32" alt="#{cc.attrs.imageTitle}"/>
+                <h:graphicImage rendered="#{!cc.attrs.blackWhite}" library="images/beetlejuice" name="logo_xing_sw.gif" width="32" height="32" alt="#{cc.attrs.imageTitle}"/>
+            </a>
+        </h:panelGroup>
+    </cc:implementation>
+
+</ui:component>
+
+</html>

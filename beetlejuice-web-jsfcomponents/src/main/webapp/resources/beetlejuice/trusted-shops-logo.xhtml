@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:component>
+
+    <cc:interface>
+        <cc:attribute name="shopId" type="java.lang.String" required="true"/>
+        <cc:attribute name="profileId" type="java.lang.String" required="true"/>
+        <cc:attribute name="imageText" type="java.lang.String" required="false" default="Klicken Sie auf das G&uuml;tesiegel, um die G&uuml;ltigkeit zu pr&uuml;fen!"/>
+        <cc:attribute name="linkText" type="java.lang.String" required="false" default="Wir sind ein von Trusted Shops gepr&uuml;fter H&auml;ndler mit G&uuml;tesiegel und K&auml;uferschutz."/>
+    </cc:interface>
+
+    <cc:implementation>
+        <div class="trusted-shops-logo">
+            <a jsfc="h:outputLink" href="https://www.trustedshops.com/shop/certificate.php?shop_id=#{cc.attrs.shopId}" target="_blank">
+                <img jsfc="h:graphicImage"
+                     title="#{cc.attrs.imageText}" alt="Trusted Shops"
+                     src="http://www.aktivshop.de/images/trustedshops_m.png"/>
+            </a>
+            <p>
+                <a jsfc="h:outputLink"
+                   title="Mehr Informationen zu Trusted Shops"
+                   href="http://www.trustedshops.de/profil/#{cc.attrs.profileId}.html"
+                   target="_blank">#{cc.attrs.linkTitle}</a>
+            </p>
+        </div>
+    </cc:implementation>
+
+</ui:component>
+
+</html>

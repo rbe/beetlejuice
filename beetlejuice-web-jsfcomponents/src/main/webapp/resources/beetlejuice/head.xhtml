@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:cc="http://java.sun.com/jsf/composite">
+
+<ui:component>
+
+    <cc:interface>
+        <cc:attribute name="contentType" type="java.lang.String" required="false" default="text/html; charset=UTF-8"/>
+        <cc:attribute name="title" type="java.lang.String" required="false" default="beetlejuice-web-jsfcomponents"/>
+        <cc:attribute name="description" type="java.lang.String" required="false" default="beetlejuice"/>
+        <cc:attribute name="faviconUrl" type="java.lang.String" required="false" default="favicon.ico"/>
+        <cc:attribute name="robots" type="java.lang.String" required="false" default="INDEX,FOLLOW"/>
+    </cc:interface>
+
+    <cc:implementation>
+        <title>#{cc.attrs.title}</title>
+        <meta http-equiv="Content-Type" content="#{cc.attrs.contentType}"/>
+        <meta name="description" content="#{cc.attrs.description}"/>
+        <meta name="robots" content="#{cc.attrs.robots}"/>
+        <link rel="icon" href="#{cc.attrs.faviconUrl}" type="image/x-icon"/>
+        <link rel="shortcut icon" href="#{cc.attrs.faviconUrl}" type="image/x-icon"/>
+        <cc:insertChildren/>
+    </cc:implementation>
+
+</ui:component>
+
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:cc="http://java.sun.com/jsf/composite">
+
+<ui:component>
+
+    <cc:interface>
+        <cc:attribute name="version" type="java.lang.String" required="false" default="1.7.1.0" shortDescription="Version, see http://code.jquery.com"/>
+    </cc:interface>
+
+    <cc:implementation>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/#{cc.attrs.version}/prototype.js"></script>
+    </cc:implementation>
+
+</ui:component>
+
+</html>

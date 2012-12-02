@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<facelet-taglib xmlns="http://java.sun.com/xml/ns/javaee"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd"
+                version="2.0">
+
+    <description>beetljeuice JSF component library</description>
+    <display-name>beetljejuice JSF components</display-name>
+
+    <namespace>http://art-of-coding.eu/beetlejuice</namespace>
+    <composite-library-name>beetlejuice</composite-library-name>
+
+    <tag>
+        <tag-name>head</tag-name>
+        <source>resources/beetlejuice/head.xhtml</source>
+    </tag>
+
+    <tag>
+        <tag-name>style-css</tag-name>
+        <source>resources/beetlejuice/style-css.xhtml</source>
+    </tag>
+
+    <tag>
+        <tag-name>ie-css</tag-name>
+        <source>resources/beetlejuice/ie-css.xhtml</source>
+    </tag>
+
+    <tag>
+        <tag-name>footer</tag-name>
+        <source>resources/beetlejuice/footer.xhtml</source>
+    </tag>
+
+    <tag>
+        <tag-name>jquery</tag-name>
+        <source>resources/beetlejuice/jquery.xhtml</source>
+        <attribute>
+            <name>version</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+    <tag>
+        <tag-name>prototype</tag-name>
+        <source>resources/beetlejuice/prototype.xhtml</source>
+        <attribute>
+            <name>version</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+    <tag>
+        <tag-name>scriptaculous</tag-name>
+        <source>resources/beetlejuice/scriptaculous.xhtml</source>
+        <attribute>
+            <name>version</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+    <tag>
+        <tag-name>google-webfont</tag-name>
+        <source>resources/beetlejuice/google-webfont.xhtml</source>
+        <attribute>
+            <name>version</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+    <tag>
+        <tag-name>spacer</tag-name>
+        <source>./resources/beetlejuice/spacer.xhtml</source>
+        <attribute>
+            <description>Height of spacer image</description>
+            <name>height</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>Width of spacer image</description>
+            <name>width</name>
+            <required>true</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+    </tag>
+
+    <tag>
+        <tag-name>logo</tag-name>
+        <source>./resources/beetlejuice/logo.xhtml</source>
+        <attribute>
+            <name>vendor</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <name>url</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <name>linkTitle</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <name>imageTitle</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <name>blackWhite</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+    <tag>
+        <tag-name>trusted-shops-logo</tag-name>
+        <source>resources/beetlejuice/trusted-shops-logo.xhtml</source>
+        <attribute>
+            <name>shopId</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <name>profileId</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <name>imageText</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <name>linkText</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+</facelet-taglib>

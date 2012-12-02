@@ -65,6 +65,7 @@
         <module>beetlejuice-spring</module>
         <module>beetlejuice-template</module>
         <module>beetlejuice-web</module>
+        <module>beetlejuice-web-jsfcomponents</module>
         <module>beetlejuice-web-primefaces</module>
     </modules>
     <build>

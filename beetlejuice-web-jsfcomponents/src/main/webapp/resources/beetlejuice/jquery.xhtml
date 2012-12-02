@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:cc="http://java.sun.com/jsf/composite">
+
+<ui:component>
+
+    <cc:interface>
+        <cc:attribute name="version" type="java.lang.String" required="false" default="1.8.3" shortDescription="Version, see http://code.jquery.com"/>
+        <cc:attribute name="variant" type="java.lang.String" required="false" default=".min" shortDescription="Variant, like .min, see http://code.jquery.com"/>
+    </cc:interface>
+
+    <cc:implementation>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-#{cc.attrs.version}#{cc.attrs.variant}.js"></script>
+    </cc:implementation>
+
+</ui:component>
+
+</html>
