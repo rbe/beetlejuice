@@ -340,7 +340,7 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
 
     /**
      * Build String with list of query parameters, used for logging.
-     * @param parameters
+     * @param parameters Map with key=named parameter, value.
      * @return StringBuilder.
      */
     private StringBuilder listQueryParameters(Map<String, Object> parameters) {
