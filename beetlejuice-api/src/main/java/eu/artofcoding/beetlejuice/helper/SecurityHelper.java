@@ -11,8 +11,7 @@
 
 package eu.artofcoding.beetlejuice.helper;
 
-import org.jboss.security.Base64Utils;
-
+import javax.xml.bind.DatatypeConverter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -43,9 +42,10 @@ public class SecurityHelper {
      * @param password
      * @return
      * @throws java.security.NoSuchAlgorithmException
+     *
      */
     public static byte[] makeMD5Password(String password) throws NoSuchAlgorithmException {
-        return makeHashedPassword("MD5",password);
+        return makeHashedPassword("MD5", password);
     }
 
     /**
@@ -57,7 +57,8 @@ public class SecurityHelper {
      */
     public static String makeBase64EncodedMD5Password(String password) throws NoSuchAlgorithmException {
         byte[] passwordHash = makeMD5Password(password);
-        return Base64Utils.tob64(passwordHash);
+        // JBoss PicketBox return Base64Utils.tob64(passwordHash);
+        return DatatypeConverter.printBase64Binary(passwordHash);
     }
 
     /**

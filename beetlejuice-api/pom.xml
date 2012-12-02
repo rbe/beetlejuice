@@ -37,11 +37,16 @@
             <version>${version.javax.enterprise.cdi-api}</version>
             <scope>provided</scope>
         </dependency>
+        <!--
+            PicketBox, was used for Base64 encoding.
+        -->
+        <!--
         <dependency>
             <groupId>org.picketbox</groupId>
             <artifactId>picketbox</artifactId>
             <version>${project.picketbox.version}</version>
         </dependency>
+        -->
     </dependencies>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
