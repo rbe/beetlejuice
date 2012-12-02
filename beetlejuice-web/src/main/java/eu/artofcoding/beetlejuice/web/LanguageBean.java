@@ -53,7 +53,7 @@ public class LanguageBean implements Serializable {
     public String getLocaleCode() {
         if (null == localeCode) {
             localeCode = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale().getLanguage();
-            System.out.println(this + ".getLocaleCode(): set locale (from request) to " + localeCode);
+            //System.out.println(this + ".getLocaleCode(): set locale (from request) to " + localeCode);
         }
         return localeCode;
     }
