@@ -36,7 +36,7 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
     /**
      * Persistence context.
      */
-    @PersistenceContext
+    //@PersistenceContext
     protected EntityManager entityManager;
 
     /**
@@ -50,6 +50,14 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
      */
     public GenericDAO(Class<T> entityClass) {
         this.entityClass = entityClass;
+    }
+
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     public Class<T> getEntityClass() {
