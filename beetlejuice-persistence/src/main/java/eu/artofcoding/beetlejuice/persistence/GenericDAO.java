@@ -187,15 +187,6 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         }
         // Build query
         TypedQuery<T> query = entityManager.createQuery(builder.toString(), entityClass);
-        // TODO populateQueryParameters
-        // Set parameters
-        /*
-        if (null != parameters && !parameters.isEmpty()) {
-            for (String k : parameters.keySet()) {
-                query.setParameter(k, parameters.get(k));
-            }
-        }
-        */
         populateQueryParameters(query, parameters);
         // Pagination: set first result and page size
         query.setFirstResult(firstResult);
@@ -232,15 +223,6 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         }
         // Build query
         TypedQuery<Long> query = entityManager.createQuery(builder.toString(), Long.class);
-        // TODO populateQueryParameters
-        // Set parameters
-        /*
-        if (null != parameters && !parameters.isEmpty()) {
-            for (String k : parameters.keySet()) {
-                query.setParameter(k, parameters.get(k));
-            }
-        }
-        */
         populateQueryParameters(query, parameters);
         // Execute query
         return query.getSingleResult();
