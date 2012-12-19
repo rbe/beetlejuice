@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>eu.artofcoding.beetlejuice</groupId>
+    <artifactId>beetlejuice-javafx</artifactId>
+    <name>beetlejuice JavaFX</name>
+    <url>http://www.art-of-coding.eu/beetlejuice/javafx/</url>
+    <version>1.0.0-SNAPSHOT</version>
+    <parent>
+        <groupId>eu.artofcoding.beetlejuice</groupId>
+        <artifactId>beetlejuice</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>..</relativePath>
+    </parent>
+    <packaging>jar</packaging>
+    <properties>
+    </properties>
+    <dependencies>
+        <!--
+            JavaFX.
+        -->
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>javafx</artifactId>
+            <version>2.0</version>
+            <scope>system</scope>
+            <systemPath>/Library/Java/JavaVirtualMachines/jdk1.7.0_10.jdk/Contents/Home/jre/lib/jfxrt.jar</systemPath>
+        </dependency>
+    </dependencies>
+    <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+        <plugins>
+        </plugins>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+    </build>
+</project>
