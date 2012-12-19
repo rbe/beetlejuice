@@ -13,7 +13,10 @@ package eu.artofcoding.beetlejuice.persistence;
 
 import eu.artofcoding.beetlejuice.api.persistence.*;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import java.math.BigInteger;
 import java.util.Iterator;
@@ -162,23 +165,24 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
             int keyCount = parameters.size();
             if (keyCount > 0) {
                 builder.append(SPACE).append(WHERE);
-                int i = 0;
+                int counter = 0;
                 for (String k : parameters.keySet()) {
                     Object o = parameters.get(k);
                     if (o instanceof QueryParameter) {
                         QueryParameter q = (QueryParameter) o;
                         int valueCount = q.getValues().length;
-                        for (Object v : q.getValues()) {
+                        Object[] values = q.getValues();
+                        for (int i = 0; i < values.length; i++) {
                             // " o.<property> LIKE :<named parameter>"
                             builder.append(SPACE).append(JPA_O_DOT).append(k).append(JPA_LIKE_COLON).append(k);
-                            if (i++ < valueCount - 1) {
+                            if (counter++ < valueCount - 1) {
                                 builder.append(SPACE).append(q.getConnector());
                             }
                         }
                     } else {
                         // " o.<property> LIKE :<named parameter>"
                         builder.append(SPACE).append(JPA_O_DOT).append(k).append(JPA_LIKE_COLON).append(k);
-                        if (i++ < keyCount - 1) {
+                        if (counter++ < keyCount - 1) {
                             builder.append(SPACE).append(clauseConnector);
                         }
                     }
