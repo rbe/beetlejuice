@@ -22,9 +22,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Customer of a store.
+ * StoreCustomer of a store.
  */
-public class Customer extends Base {
+public class StoreCustomer extends Base {
 
     private StoreIdent storeIdent = StoreIdent.NONE;
 
@@ -274,15 +274,15 @@ public class Customer extends Base {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Customer)) return false;
-        Customer customer = (Customer) o;
-        if (city != null ? !city.equals(customer.city) : customer.city != null) return false;
-        if (!customerIdent.equals(customer.customerIdent)) return false;
-        if (shippingAddress1 != null ? !shippingAddress1.equals(customer.shippingAddress1) : customer.shippingAddress1 != null)
+        if (!(o instanceof StoreCustomer)) return false;
+        StoreCustomer storeCustomer = (StoreCustomer) o;
+        if (city != null ? !city.equals(storeCustomer.city) : storeCustomer.city != null) return false;
+        if (!customerIdent.equals(storeCustomer.customerIdent)) return false;
+        if (shippingAddress1 != null ? !shippingAddress1.equals(storeCustomer.shippingAddress1) : storeCustomer.shippingAddress1 != null)
             return false;
-        if (shippingAddress2 != null ? !shippingAddress2.equals(customer.shippingAddress2) : customer.shippingAddress2 != null)
+        if (shippingAddress2 != null ? !shippingAddress2.equals(storeCustomer.shippingAddress2) : storeCustomer.shippingAddress2 != null)
             return false;
-        if (zipcode != null ? !zipcode.equals(customer.zipcode) : customer.zipcode != null) return false;
+        if (zipcode != null ? !zipcode.equals(storeCustomer.zipcode) : storeCustomer.zipcode != null) return false;
         return true;
     }
 
