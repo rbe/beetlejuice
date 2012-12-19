@@ -69,6 +69,7 @@
         <module>beetlejuice-web</module>
         <module>beetlejuice-web-jsfcomponents</module>
         <module>beetlejuice-web-primefaces</module>
+        <module>beetlejuice-webstorage-api</module>
     </modules>
     <build>
         <plugins>
