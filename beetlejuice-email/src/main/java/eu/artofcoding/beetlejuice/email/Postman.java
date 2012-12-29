@@ -118,4 +118,15 @@ public interface Postman extends Serializable {
      */
     void sendHtmlMail(String fromAddress, Set<String> recipient, String subject, String body) throws MessagingException;
 
+    /**
+     * Send an exception as email.
+     * @param fromAddress Sender address.
+     * @param recipient   Recipient address(es).
+     * @param subject     The subject.
+     * @param text        Additional text to display before showing stack trace.
+     * @param throwable   {@link Throwable} to send as mail.
+     * @throws MessagingException
+     */
+    void sendExceptionMail(String fromAddress, Set<String> recipient, String subject, String text, Throwable throwable) throws MessagingException;
+
 }

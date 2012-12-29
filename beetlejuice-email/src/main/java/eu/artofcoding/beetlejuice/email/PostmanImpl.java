@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import static eu.artofcoding.beetlejuice.api.MimeTypeConstants.APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT;
 import static eu.artofcoding.beetlejuice.api.MimeTypeConstants.S_UTF8;
 
 public class PostmanImpl implements Postman {
@@ -227,6 +228,22 @@ public class PostmanImpl implements Postman {
         sendMail(fromAddress, recipient, subject, body, /*"text/html; charset=UTF-8"*/MimeType.HTML);
     }
 
+    @Override
+    public void sendExceptionMail(String fromAddress, Set<String> recipient, String subject, String text, Throwable throwable) throws MessagingException {
+        // Exception
+        StringBuilder builder = new StringBuilder();
+        if (null != throwable) {
+            builder.append(throwable.getMessage()).append("\n");
+            for (StackTraceElement elt : throwable.getStackTrace()) {
+                builder.append("    at ").append(elt.getClassName()).append(".").append(elt.getMethodName());
+                builder.append("(").append(elt.getFileName()).append(":").append(elt.getLineNumber()).append("): ");
+                builder.append("\n");
+            }
+        }
+        String body = String.format("%s%n%nException:%n%s", text, builder.toString());
+        sendMail(fromAddress, recipient, subject, body, MimeType.HTML);
+    }
+    
     //</editor-fold>
 
 }
