@@ -70,6 +70,7 @@
         <module>beetlejuice-web-jsfcomponents</module>
         <module>beetlejuice-web-primefaces</module>
         <module>beetlejuice-webstorage-api</module>
+        <module>beetlejuice-osgi</module>
     </modules>
     <build>
         <plugins>
