@@ -15,6 +15,7 @@
     </parent>
     <packaging>jar</packaging>
     <properties>
+        <path.jdk.javafx>/Library/Java/JavaVirtualMachines/jdk1.7.0_10.jdk/Contents/Home</path.jdk.javafx>
     </properties>
     <dependencies>
         <!--
@@ -25,7 +26,7 @@
             <artifactId>javafx</artifactId>
             <version>2.0</version>
             <scope>system</scope>
-            <systemPath>/Library/Java/JavaVirtualMachines/jdk1.7.0_10.jdk/Contents/Home/jre/lib/jfxrt.jar</systemPath>
+            <systemPath>${path.jdk.javafx}/jre/lib/jfxrt.jar</systemPath>
         </dependency>
     </dependencies>
     <build>
