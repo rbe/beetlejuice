@@ -60,6 +60,7 @@
     <!-- Modules -->
     <modules>
         <module>beetlejuice-api</module>
+        <module>beetlejuice-xml</module>
         <module>beetlejuice-cdm</module>
         <module>beetlejuice-email</module>
         <module>beetlejuice-persistence</module>
