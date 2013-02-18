@@ -7,11 +7,12 @@
     <artifactId>beetlejuice-xml</artifactId>
     <name>beetlejuice XML</name>
     <url>http://www.art-of-coding.eu/beetlejuice/xml/</url>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
     <parent>
         <groupId>eu.artofcoding.beetlejuice</groupId>
         <artifactId>beetlejuice</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.1.0-SNAPSHOT</version>
+        <relativePath>..</relativePath>
     </parent>
     <packaging>jar</packaging>
     <properties>
@@ -23,7 +24,6 @@
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
-            <version>${version.javax.enterprise.cdi-api}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

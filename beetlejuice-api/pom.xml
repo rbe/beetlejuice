@@ -7,15 +7,15 @@
     <artifactId>beetlejuice-api</artifactId>
     <name>beetlejuice API</name>
     <url>http://www.art-of-coding.eu/beetlejuice/api/</url>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
     <parent>
         <groupId>eu.artofcoding.beetlejuice</groupId>
         <artifactId>beetlejuice</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.1.0-SNAPSHOT</version>
+        <relativePath>..</relativePath>
     </parent>
     <packaging>jar</packaging>
     <properties>
-        <project.picketbox.version>4.0.7.Final</project.picketbox.version>
     </properties>
     <dependencies>
         <!--
@@ -24,7 +24,6 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>${version.javaee-api}</version>
             <scope>provided</scope>
         </dependency>
         <!--
@@ -33,19 +32,8 @@
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
-            <version>${version.javax.enterprise.cdi-api}</version>
             <scope>provided</scope>
         </dependency>
-        <!--
-            PicketBox, was used for Base64 encoding.
-        -->
-        <!--
-        <dependency>
-            <groupId>org.picketbox</groupId>
-            <artifactId>picketbox</artifactId>
-            <version>${project.picketbox.version}</version>
-        </dependency>
-        -->
     </dependencies>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
