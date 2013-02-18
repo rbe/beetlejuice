@@ -27,6 +27,8 @@ public class ReturnLabel extends Base {
 
     private String base64;
 
+    private String filename;
+
     private transient Path path;
 
     //<editor-fold desc="Constructor">
@@ -53,6 +55,14 @@ public class ReturnLabel extends Base {
         return base64;
     }
 
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
     public Path getPath() {
         return path;
     }
@@ -62,8 +72,15 @@ public class ReturnLabel extends Base {
     public void saveBinary(Path path) throws IOException {
         this.path = path;
         byte[] b = DatatypeConverter.parseBase64Binary(base64);
-        Files.createDirectories(path.getParent());
-        Files.write(path, b, StandardOpenOption.CREATE);
+        if (null == b) {
+            throw new IllegalStateException("No bytes");
+        } else {
+            Path parent = path.getParent();
+            if (null != parent) {
+                Files.createDirectories(parent);
+            }
+            Files.write(path, b, StandardOpenOption.CREATE);
+        }
     }
 
 }
