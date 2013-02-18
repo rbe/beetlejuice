@@ -13,6 +13,7 @@ package eu.artofcoding.beetlejuice.web.jsf;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -74,6 +75,10 @@ public class FacesHelper {
         return map.get(key);
     }
 
+    public Flash getFlash() {
+        return facesContext.getExternalContext().getFlash();
+    }
+    
     /**
      * Add a JSF message for a certain component.
      * @param component ID of component to add message to.
