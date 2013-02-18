@@ -13,6 +13,8 @@ package eu.artofcoding.beetlejuice.cdm;
 
 import eu.artofcoding.beetlejuice.api.persistence.GenericEntity;
 
+import java.util.Calendar;
+
 /**
  * Base class for database entites.
  */
@@ -21,6 +23,8 @@ public class Base implements GenericEntity {
     private Long id;
 
     private Long version;
+
+    private Calendar lastModified;
 
     public Long getId() {
         return id;
@@ -36,6 +40,18 @@ public class Base implements GenericEntity {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public Calendar getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Calendar lastModified) {
+        this.lastModified = lastModified;
+    }
+
+    public void updateLastModified(Object object) {
+        setLastModified(Calendar.getInstance());
     }
 
 }
