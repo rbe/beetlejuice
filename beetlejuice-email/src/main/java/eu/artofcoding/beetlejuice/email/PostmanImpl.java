@@ -26,7 +26,6 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import static eu.artofcoding.beetlejuice.api.MimeTypeConstants.APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT;
 import static eu.artofcoding.beetlejuice.api.MimeTypeConstants.S_UTF8;
 
 public class PostmanImpl implements Postman {
@@ -35,18 +34,20 @@ public class PostmanImpl implements Postman {
 
     private transient Session session;
 
+    /**
+     * Support Postman#addPart.
+     */
+    private transient Multipart multipart;
+
     private String server;
 
     private int port;
 
     private MailAuth mailAuth;
 
-    private transient Multipart multipart;
-
     public PostmanImpl(Session session, MailAuth mailAuth) {
         this.session = session;
         this.mailAuth = mailAuth;
-        this.multipart = new MimeMultipart();
     }
 
     //<editor-fold desc="Server, port, ...">
@@ -89,6 +90,13 @@ public class PostmanImpl implements Postman {
 
     //<editor-fold desc="Message">
 
+    private Multipart getMultipart() {
+        if (null == multipart) {
+            multipart = new MimeMultipart();
+        }
+        return multipart;
+    }
+
     @Override
     public void addPart(Object content, MimeType mimeType, String filename) throws MessagingException {
         MimeBodyPart mimeBodyPart = new MimeBodyPart();
@@ -99,13 +107,13 @@ public class PostmanImpl implements Postman {
         // Add content
         if (mimeType == MimeType.HTML) {
             mimeBodyPart.setContent(content, String.format("%s; charset=%s", mimeType.getMimeType(), S_UTF8));
-        } else if (null != mimeType) /*if (mimeType== MimeType.PLAIN)*/ {
+        } else if (null != mimeType) /*if (mimeType == MimeType.PLAIN)*/ {
             mimeBodyPart.setContent(content, mimeType.getMimeType());
         } else {
             mimeBodyPart.setContent(content, MimeType.UNKNOWN.getMimeType());
         }
         // Add part to message
-        multipart.addBodyPart(mimeBodyPart);
+        getMultipart().addBodyPart(mimeBodyPart);
     }
 
     @Override
@@ -195,6 +203,8 @@ public class PostmanImpl implements Postman {
         // Set successfully-sent-flag
         email.setSentSuccessfully(true);
         email.setSentDate(new Timestamp(m.getSentDate().getTime()));
+        // Reset state
+        multipart = null;
     }
 
     @Override
@@ -243,7 +253,7 @@ public class PostmanImpl implements Postman {
         String body = String.format("%s%n%nException:%n%s", text, builder.toString());
         sendMail(fromAddress, recipient, subject, body, MimeType.HTML);
     }
-    
+
     //</editor-fold>
 
 }
