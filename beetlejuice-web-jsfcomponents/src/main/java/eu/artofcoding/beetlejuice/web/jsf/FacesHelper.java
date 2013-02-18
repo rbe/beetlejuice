@@ -37,6 +37,15 @@ public class FacesHelper {
         logger = Logger.getLogger(FacesHelper.class.getName());
     }
 
+    /**
+     * Get value for context parameter from web application deployment descriptor.
+     * @param parameter Name of parameter.
+     * @return The value of parameter.
+     */
+    public String getContextParam(String parameter) {
+        return facesContext.getExternalContext().getInitParameter(parameter);
+    }
+
     public HttpServletRequest getHttpServletRequest() {
         return (HttpServletRequest) facesContext.getExternalContext().getRequest();
     }
