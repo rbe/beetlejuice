@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 //@SessionScoped
 public class NavigationHelper implements Serializable {
 
-    private static final Logger logger = Logger.getLogger(NavigationHelper.class.getName());
 
     @Inject
     Event<NavigationEvent> events;
@@ -30,6 +29,10 @@ public class NavigationHelper implements Serializable {
     private String[] views = {};
 
     private int actualViewIndex = -1;
+
+    public NavigationHelper() {
+        logger = Logger.getLogger(NavigationHelper.class.getName());
+    }
 
     public String[] getViews() {
         return views;

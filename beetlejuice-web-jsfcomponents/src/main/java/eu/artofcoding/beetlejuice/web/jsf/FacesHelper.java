@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 
 public class FacesHelper {
 
-    private static final Logger logger = Logger.getLogger(FacesHelper.class.getName());
+    private Logger logger;
 
     private static final FacesHelper INSTANCE = new FacesHelper();
 
@@ -34,6 +34,7 @@ public class FacesHelper {
     }
 
     private FacesHelper() {
+        logger = Logger.getLogger(FacesHelper.class.getName());
     }
 
     public HttpServletRequest getHttpServletRequest() {

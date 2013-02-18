@@ -34,7 +34,7 @@ import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.*;
 @SuppressWarnings({"EjbInterceptorInspection"})
 public abstract class GenericDAO<T extends GenericEntity> implements GenericDAORemote<T> {
 
-    private static final Logger logger = Logger.getLogger(GenericDAO.class.getName());
+    private transient Logger logger;
 
     /**
      * Persistence context.
@@ -52,6 +52,7 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
      * @param entityClass Class of entity.
      */
     public GenericDAO(Class<T> entityClass) {
+        logger = Logger.getLogger(GenericDAO.class.getName());
         this.entityClass = entityClass;
     }
 
