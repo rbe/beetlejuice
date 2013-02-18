@@ -11,20 +11,18 @@
 
 package eu.artofcoding.beetlejuice.cdm.store;
 
-import java.io.Serializable;
+import eu.artofcoding.beetlejuice.cdm.Base;
 
-public enum StoreIdent implements Serializable {
-
-    NONE("00", "keine Firma"),
-    AKTIVSHOP("01", "aktivshop"),
-    AKTIVMED("02", "aktivmed"),
-    DIABETIKER_BEDARF("03", "diabetiker-bedarf");
+public class StoreIdent extends Base {
 
     private String name;
 
     private String ident;
+    
+    public StoreIdent() {
+    }
 
-    StoreIdent(String ident, String name) {
+    public StoreIdent(String ident, String name) {
         this.ident = ident;
         this.name = name;
     }
