@@ -1,20 +1,20 @@
 /*
  * beetlejuice
  * beetlejuice-cdm
- * Copyright (C) 2011-2012 art of coding UG, http://www.art-of-coding.eu/
+ * Copyright (C) 2011-2013 art of coding UG, http://www.art-of-coding.eu
  *
  * Alle Rechte vorbehalten. Nutzung unterliegt Lizenzbedingungen.
  * All rights reserved. Use is subject to license terms.
  *
- * rbe, 29.11.12 13:51
+ * rbe, 13.02.13 12:14
  */
 
-package eu.artofcoding.beetlejuice.cdm;
+package eu.artofcoding.beetlejuice.cdm.store;
 
+import eu.artofcoding.beetlejuice.cdm.Base;
+import eu.artofcoding.beetlejuice.cdm.Salutation;
 import eu.artofcoding.beetlejuice.cdm.accounting.BankAccount;
 import eu.artofcoding.beetlejuice.cdm.accounting.Invoice;
-import eu.artofcoding.beetlejuice.cdm.store.Article;
-import eu.artofcoding.beetlejuice.cdm.store.StoreIdent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class StoreCustomer extends Base {
 
-    private StoreIdent storeIdent = StoreIdent.NONE;
+    private StoreIdent storeIdent;
 
     private String agentIdent;
 
@@ -215,9 +215,14 @@ public class StoreCustomer extends Base {
      */
     public String getFullname() {
         // HERR -> Herr
-        String salutation1 = getSalutation().toString().substring(0, 1);
-        String salutation2 = getSalutation().toString().substring(1).toLowerCase();
-        return String.format("%s%s %s %s", salutation1, salutation2, getFirstname(), getLastname());
+        Salutation salutation = getSalutation();
+        if (null != salutation) {
+            String salutation1 = salutation.toString().substring(0, 1);
+            String salutation2 = salutation.toString().substring(1).toLowerCase();
+            return String.format("%s%s %s %s", salutation1, salutation2, getFirstname(), getLastname());
+        } else {
+            return String.format("%s %s", getFirstname(), getLastname());
+        }
     }
 
     /**
