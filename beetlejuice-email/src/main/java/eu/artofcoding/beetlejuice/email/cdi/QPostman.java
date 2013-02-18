@@ -11,6 +11,7 @@
 
 package eu.artofcoding.beetlejuice.email.cdi;
 
+import javax.enterprise.util.Nonbinding;
 import javax.inject.Qualifier;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -23,16 +24,16 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({FIELD, METHOD, PARAMETER, TYPE})
 public @interface QPostman {
 
-    boolean sessionProvided() default false;
+    @Nonbinding boolean sessionProvided() default false;
     
     TransportType transportType() default TransportType.SIMPLE;
 
-    String server() default "localhost";
+    @Nonbinding String server() default "localhost";
 
-    int port() default 25;
+    @Nonbinding int port() default 25;
 
-    String username() default "";
+    @Nonbinding String username() default "";
 
-    String password() default "";
+    @Nonbinding String password() default "";
 
 }
