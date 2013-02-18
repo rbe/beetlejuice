@@ -17,7 +17,6 @@ import java.io.Serializable;
 import java.util.logging.Logger;
 
 @Named("nav")
-//@SessionScoped
 public class NavigationHelper implements Serializable {
 
 
