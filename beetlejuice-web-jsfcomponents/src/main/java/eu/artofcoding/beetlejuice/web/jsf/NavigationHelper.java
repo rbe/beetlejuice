@@ -11,9 +11,7 @@
 
 package eu.artofcoding.beetlejuice.web.jsf;
 
-import javax.enterprise.event.Event;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.logging.Logger;
@@ -23,8 +21,10 @@ import java.util.logging.Logger;
 public class NavigationHelper implements Serializable {
 
 
-    @Inject
-    Event<NavigationEvent> events;
+    private transient Logger logger;
+
+//    @Inject
+//    private Event<NavigationEvent> events;
 
     private String[] views = {};
 
@@ -51,8 +51,13 @@ public class NavigationHelper implements Serializable {
     }
 
     /**
-     * Find index of actual Faces' view id in views array.
-     * Set this.actualViewIndex.
+     * Find index of actual Faces' view id in views array. Sets this.actualViewIndex.
+     * Use it e.g. in JSF pre-render-view event like this:
+     * <p>
+     * &lt;f:metadata><br/>
+     * &lt;f:event type="preRenderView" listener="#{bean.preRenderView}"/><br/>
+     * &lt;/f:metadata>
+     * </p>
      */
     public void findPageIndexByViewId() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -78,8 +83,8 @@ public class NavigationHelper implements Serializable {
         String outcome = views[actualViewIndex];
         // TODO Execute action depending on navigation case
         logger.info(String.format("Navigating to page %s", outcome));
-        // Fire NavigationEvent
-        events.fire(new NavigationEvent(outcome));
+//        // Fire NavigationEvent
+//        events.fire(new NavigationEvent(outcome));
         return outcome;
     }
 
@@ -91,8 +96,8 @@ public class NavigationHelper implements Serializable {
         String outcome = views[actualViewIndex];
         // TODO Execute action depending on navigation case
         logger.info(String.format("Navigating to page %s", outcome));
-        // Fire NavigationEvent
-        events.fire(new NavigationEvent(outcome));
+//        // Fire NavigationEvent
+//        events.fire(new NavigationEvent(outcome));
         return outcome;
     }
 
