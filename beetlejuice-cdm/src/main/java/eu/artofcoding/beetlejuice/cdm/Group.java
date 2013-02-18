@@ -11,7 +11,7 @@
 
 package eu.artofcoding.beetlejuice.cdm;
 
-public class Group {
+public class Group extends Base {
 
     String groupIdent;
 

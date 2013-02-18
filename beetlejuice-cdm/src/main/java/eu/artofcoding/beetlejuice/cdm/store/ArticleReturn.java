@@ -12,12 +12,13 @@
 package eu.artofcoding.beetlejuice.cdm.store;
 
 import eu.artofcoding.beetlejuice.api.BeetlejuiceConstant;
+import eu.artofcoding.beetlejuice.cdm.Base;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class ArticleReturn {
+public class ArticleReturn extends Base {
 
     /**
      * Article capable of being returned?

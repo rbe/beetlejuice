@@ -11,11 +11,10 @@
 
 package eu.artofcoding.beetlejuice.cdm.store;
 
+import eu.artofcoding.beetlejuice.cdm.Base;
 import eu.artofcoding.beetlejuice.cdm.Group;
 
-import java.io.Serializable;
-
-public class Article implements Serializable {
+public class Article extends Base {
 
     /**
      * Article ident, e.g. an ID or name.

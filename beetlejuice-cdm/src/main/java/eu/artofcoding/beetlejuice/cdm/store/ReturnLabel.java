@@ -11,14 +11,15 @@
 
 package eu.artofcoding.beetlejuice.cdm.store;
 
+import eu.artofcoding.beetlejuice.cdm.Base;
+
 import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
-import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-public class ReturnLabel implements Serializable {
+public class ReturnLabel extends Base {
 
     private String identCode;
 
