@@ -16,7 +16,7 @@
     </parent>
     <packaging>jar</packaging>
     <properties>
-        <path.jdk.javafx>/Library/Java/JavaVirtualMachines/jdk1.7.0_13.jdk/Contents/Home</path.jdk.javafx>
+        <path.jdk.javafx>/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home</path.jdk.javafx>
     </properties>
     <dependencies>
         <!--
