@@ -7,11 +7,11 @@
     <artifactId>beetlejuice-javafx</artifactId>
     <name>beetlejuice JavaFX</name>
     <url>http://www.art-of-coding.eu/beetlejuice/javafx/</url>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.2.0-SNAPSHOT</version>
     <parent>
         <groupId>eu.artofcoding.beetlejuice</groupId>
         <artifactId>beetlejuice</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
+        <version>1.2.0-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
     <packaging>jar</packaging>
