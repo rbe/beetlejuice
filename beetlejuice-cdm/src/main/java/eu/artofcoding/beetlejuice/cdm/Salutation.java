@@ -13,6 +13,6 @@ package eu.artofcoding.beetlejuice.cdm;
 
 public enum Salutation {
 
-    HERR, FRAU
+    HERR, FRAU, FIRMA, UNKNOWN
 
 }
