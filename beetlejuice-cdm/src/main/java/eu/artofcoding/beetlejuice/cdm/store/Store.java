@@ -18,7 +18,7 @@ import eu.artofcoding.beetlejuice.cdm.Salutation;
 import java.util.Calendar;
 
 /**
- * Store.
+ * A store.
  */
 public class Store extends Base {
 
