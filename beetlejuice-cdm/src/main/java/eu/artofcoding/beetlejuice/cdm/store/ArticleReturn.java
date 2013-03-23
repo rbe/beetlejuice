@@ -36,9 +36,14 @@ public class ArticleReturn extends Base {
     private boolean toBeReturned;
 
     /**
-     * How many to return?
+     * How many should be returned (by user)?
      */
     private float returnCount;
+
+    /**
+     * How many were already returned (by user)?
+     */
+    private float alreadyReturnedCount;
 
     /**
      * Reasons for returning this article, selected by customer.
@@ -77,6 +82,14 @@ public class ArticleReturn extends Base {
 
     public void setReturnCount(float returnCount) {
         this.returnCount = returnCount;
+    }
+
+    public float getAlreadyReturnedCount() {
+        return alreadyReturnedCount;
+    }
+
+    public void setAlreadyReturnedCount(float alreadyReturnedCount) {
+        this.alreadyReturnedCount = alreadyReturnedCount;
     }
 
     public Set<ReturnReason> getReturnReason() {
