@@ -55,7 +55,7 @@ public class Invoice implements Serializable {
     /**
      * Articles invoiced.
      */
-    private List<Article> articles = new ArrayList<>();
+    private List<Article> articles;
 
     /**
      * The return label.
@@ -143,6 +143,9 @@ public class Invoice implements Serializable {
     }
 
     public List<Article> getArticles() {
+        if (null == articles) {
+            articles = new ArrayList<>();
+        }
         return articles;
     }
 
@@ -161,7 +164,7 @@ public class Invoice implements Serializable {
     //</editor-fold>
 
     public void addArticle(Article article) {
-        articles.add(article);
+        getArticles().add(article);
     }
 
     /**
