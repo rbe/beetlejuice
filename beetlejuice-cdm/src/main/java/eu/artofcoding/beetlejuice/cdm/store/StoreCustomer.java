@@ -38,6 +38,8 @@ public class StoreCustomer extends Base {
 
     private String lastname;
 
+    private String fullname;
+
     private String shippingAddress1;
 
     private String shippingAddress1StreetNumber;
@@ -117,6 +119,29 @@ public class StoreCustomer extends Base {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getFullname() {
+        String _fn;
+        if (null == fullname) {
+            // Combine salutation, first name and last name.
+            // HERR -> Herr
+            Salutation salutation = getSalutation();
+            if (null != salutation) {
+                String salutation1 = salutation.toString().substring(0, 1);
+                String salutation2 = salutation.toString().substring(1).toLowerCase();
+                _fn = String.format("%s%s %s %s", salutation1, salutation2, getFirstname(), getLastname());
+            } else {
+                _fn = String.format("%s %s", getFirstname(), getLastname());
+            }
+        } else {
+            _fn = fullname;
+        }
+        return _fn;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getShippingAddress1() {
@@ -208,22 +233,6 @@ public class StoreCustomer extends Base {
     }
 
     //</editor-fold>
-
-    /**
-     * Combine salutation, first name and last name.
-     * @return String
-     */
-    public String getFullname() {
-        // HERR -> Herr
-        Salutation salutation = getSalutation();
-        if (null != salutation) {
-            String salutation1 = salutation.toString().substring(0, 1);
-            String salutation2 = salutation.toString().substring(1).toLowerCase();
-            return String.format("%s%s %s %s", salutation1, salutation2, getFirstname(), getLastname());
-        } else {
-            return String.format("%s %s", getFirstname(), getLastname());
-        }
-    }
 
     /**
      * Add an invoice.
