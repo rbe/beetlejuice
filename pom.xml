@@ -1,27 +1,17 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <!--
-        POM
-    -->
-    <groupId>eu.artofcoding.beetlejuice</groupId>
-    <artifactId>beetlejuice</artifactId>
-    <!--
-        Parent POM
-    -->
     <parent>
         <groupId>eu.artofcoding</groupId>
         <artifactId>aoc-parent</artifactId>
         <version>1.1.0</version>
     </parent>
-    <!--
-        Project Information
-    -->
+    <groupId>eu.artofcoding.beetlejuice</groupId>
+    <artifactId>beetlejuice</artifactId>
     <version>1.3.0-SNAPSHOT</version>
     <name>beetlejuice Parent POM</name>
-    <url>http://www.art-of-coding.eu/</url>
+    <url>http://www.art-of-coding.eu</url>
     <inceptionYear>2012</inceptionYear>
     <developers>
         <developer>
@@ -37,18 +27,13 @@
     -->
     <organization>
         <name>art of coding</name>
-        <url>http://www.art-of-coding.eu/</url>
+        <url>http://www.art-of-coding.eu</url>
     </organization>
-    <!--
-        Build Settings
-    -->
     <packaging>pom</packaging>
-    <!-- Properties -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.java.version>1.7</project.java.version>
     </properties>
-    <!-- Modules -->
     <modules>
         <module>beetlejuice-api</module>
         <module>beetlejuice-xml</module>
@@ -56,6 +41,7 @@
         <module>beetlejuice-cdm</module>
         <module>beetlejuice-email</module>
         <module>beetlejuice-persistence</module>
+        <module>beetlejuice-persistence-xml</module>
         <module>beetlejuice-spring</module>
         <module>beetlejuice-template</module>
         <module>beetlejuice-javafx</module>
@@ -64,10 +50,9 @@
         <module>beetlejuice-web-jsfcomponents</module>
         <module>beetlejuice-web-primefaces</module>
         <module>beetlejuice-webstorage-api</module>
+        <module>beetlejuice-contact</module>
+        <module>beetlejuice-tomcat</module>
     </modules>
-    <!--
-        Maven Profiles
-    -->
     <profiles>
         <!-- arquillian-junit -->
         <profile>
@@ -200,9 +185,6 @@
             </build>
         </profile>
     </profiles>
-    <!--
-        Dependencies
-    -->
     <dependencyManagement>
         <dependencies>
             <!--
@@ -288,6 +270,19 @@
                 <version>1.4</version>
             </dependency>
             <!--
+                BaseX
+            -->
+            <dependency>
+                <groupId>org.basex</groupId>
+                <artifactId>basex</artifactId>
+                <version>7.6</version>
+            </dependency>
+            <dependency>
+                <groupId>org.basex</groupId>
+                <artifactId>basex-api</artifactId>
+                <version>7.6</version>
+            </dependency>
+            <!--
                 JavaServer Faces
             -->
             <dependency>
@@ -308,14 +303,56 @@
                 <artifactId>freemarker</artifactId>
                 <version>2.3.19</version>
             </dependency>
+            <!-- ical4j -->
+            <dependency>
+                <groupId>org.mnode.ical4j</groupId>
+                <artifactId>ical4j</artifactId>
+                <version>1.0.4</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mnode.ical4j</groupId>
+                <artifactId>ical4j-vcard</artifactId>
+                <version>0.9.5</version>
+            </dependency>
+            <!-- Google GData -->
+            <dependency>
+                <groupId>com.google.gdata</groupId>
+                <artifactId>core</artifactId>
+                <version>1.47.1</version>
+            </dependency>
+            <!-- Apache Tomcat -->
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-core</artifactId>
+                <version>7.0.39</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-    <!--
-        Build
-    -->
     <build>
         <pluginManagement>
             <plugins>
+                <!-- buildnumber-maven-plugin -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>buildnumber-maven-plugin</artifactId>
+                    <version>1.2</version>
+                    <executions>
+                        <execution>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>create</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <doCheck>true</doCheck>
+                        <doUpdate>false</doUpdate>
+                        <format>${project.version}.{0,number}</format>
+                        <items>
+                            <item>buildNumber</item>
+                        </items>
+                    </configuration>
+                </plugin>
                 <!-- maven-compiler-plugin -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -323,15 +360,12 @@
                     <configuration>
                         <source>${project.java.version}</source>
                         <target>${project.java.version}</target>
-                        <verbose/>
+                        <verbose />
                     </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
     </build>
-    <!--
-        Distribution Management
-    -->
     <distributionManagement>
         <!-- art of coding's Public Maven Repository -->
         <repository>

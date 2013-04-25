@@ -3,32 +3,25 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>eu.artofcoding.beetlejuice</groupId>
-    <artifactId>beetlejuice-api</artifactId>
-    <name>beetlejuice API</name>
-    <url>http://www.art-of-coding.eu/beetlejuice/api/</url>
     <parent>
         <groupId>eu.artofcoding.beetlejuice</groupId>
         <artifactId>beetlejuice</artifactId>
         <version>1.3.0-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
+    <artifactId>beetlejuice-api</artifactId>
+    <name>beetlejuice API</name>
+    <url>http://www.art-of-coding.eu/beetlejuice/api/</url>
     <version>1.3.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>
     </properties>
     <dependencies>
-        <!--
-            Java EE
-        -->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!--
-            CDI
-        -->
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
