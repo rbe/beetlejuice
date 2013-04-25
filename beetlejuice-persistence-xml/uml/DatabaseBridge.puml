@@ -1,0 +1,113 @@
+@startuml
+
+namespace eu.artofcoding.beetlejuice.persistence <<Folder>> #dddddd {
+
+    note "This is a bridge" as N1
+
+    package persistence.bridge {
+        
+        class Database <<Bridge>>
+        class Database {
+            +void connect()
+            +void disconnect()
+            ..
+            +void createDatabase(String)
+            ..
+            +void create()
+            +void read()
+            +void update()
+            +void delete()
+        }
+        
+        package bridge.sql {
+            
+            class SQLDatabase --|> Database
+            note left: "Bla"
+            
+            class MySQLDatabase --|> SQLDatabase
+            class OracleSQLDatabase --|> SQLDatabase
+            
+            class SQLDatabase {
+            }
+            class MySQLDatabase {
+            }
+            
+        }
+        
+        package bridge.xml {
+            
+            class XMLDatabase --|> Database
+            note right: "Bla"
+            
+            class BaseXDatabase --|> XMLDatabase
+            class BerkeleyXMLDatabase --|> XMLDatabase
+            
+            class XMLDatabase {
+            }
+            class BaseXDatabase {
+            }
+            class BerkeleyXMLDatabase {
+            }
+            
+        }
+        
+        package bridge.impl #ffffff {
+        
+            class DatabaseImpl <<Bridge>>
+            class Database o--> DatabaseImpl : delegates
+            
+            package impl.sql {
+                
+                class SQLDatabaseImpl --|> DatabaseImpl
+                class MySQLDatabaseImpl --|> SQLDatabaseImpl
+                class OracleSQLDatabaseImpl --|> SQLDatabaseImpl
+                
+            }
+            
+            package impl.xml {
+                
+                class XMLDatabaseImpl --|> DatabaseImpl
+                class BaseXDatabaseImpl --|> XMLDatabaseImpl
+                class BerkeleyXMLDatabaseImpl --|> XMLDatabaseImpl
+                
+                class BaseXDatabaseImpl {
+                    +void createCollection()
+                    +void optimize()
+                }
+                
+                class BerkeleyXMLDatabaseImpl {
+                    +void createContainer()
+                    +void optimize()
+                }
+                
+            }
+            
+            class DatabaseImpl {
+            }
+        
+        }
+        
+        package bridge.factory {
+            
+            class SQLDatabaseFactory ..> MySQLDatabase : creates
+            class SQLDatabaseFactory ..> OracleSQLDatabase : creates
+            class SQLDatabaseFactory {
+                +BaseXDatabase getMySQLDatabase(name : String)
+            }
+        
+            class XMLDatabaseFactory ..> BaseXDatabase : creates
+            class XMLDatabaseFactory ..> BerkeleyXMLDatabase : creates
+            class XMLDatabaseFactory {
+                +BaseXDatabase getBaseXDatabase(name : String)
+            }
+            
+        }
+        
+        class Credentials
+        class Entity <<Object>>
+        
+    }
+
+}
+
+@enduml

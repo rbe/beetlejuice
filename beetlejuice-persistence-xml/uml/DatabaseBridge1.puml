@@ -1,0 +1,63 @@
+@startuml
+
+namespace eu.artofcoding.beetlejuice.persistence <<Folder>> #dddddd {
+
+    note "This is a bridge" as N1
+
+    package xml.bridge {
+        
+        class XMLDatabase <<Bridge>>
+        class XMLDatabase {
+            +void connect()
+            +void disconnect()
+            ..
+            +void createDatabase(String)
+            ..
+            +void create()
+            +void read()
+            +void update()
+            +void delete()
+        }
+            
+        class BaseXDatabase --|> XMLDatabase
+        class BerkeleyXMLDatabase --|> XMLDatabase
+        
+        class BaseXDatabase {
+        }
+        class BerkeleyXMLDatabase {
+        }
+        
+        package xml.bridge.impl #ffffff {
+        
+            class XMLDatabaseImpl <<Bridge>>
+            class XMLDatabase o--> XMLDatabaseImpl : delegates
+            
+            class BaseXDatabaseImpl --|> XMLDatabaseImpl
+            class BerkeleyXMLDatabaseImpl --|> XMLDatabaseImpl
+            
+            class BaseXDatabaseImpl {
+                +void createCollection()
+                +void optimize()
+            }
+            
+            class BerkeleyXMLDatabaseImpl {
+                +void createContainer()
+                +void optimize()
+            }
+        
+        }
+        
+        class XMLDatabaseFactory ..> BaseXDatabase : creates
+        class XMLDatabaseFactory ..> BerkeleyXMLDatabase : creates
+        class XMLDatabaseFactory {
+            +BaseXDatabase getBaseXDatabase(name : String)
+        }
+        
+        class Credentials
+        class Document <<Object>>
+        
+    }
+
+}
+
+@enduml
