@@ -7,11 +7,11 @@
     <artifactId>beetlejuice-web-primefaces</artifactId>
     <name>beetlejuice Web PrimeFaces</name>
     <url>http://www.art-of-coding.eu/beetlejuice/web/primefaces/</url>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.3.0-SNAPSHOT</version>
     <parent>
         <groupId>eu.artofcoding.beetlejuice</groupId>
         <artifactId>beetlejuice</artifactId>
-        <version>1.2.0-SNAPSHOT</version>
+        <version>1.3.0-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
     <packaging>jar</packaging>
