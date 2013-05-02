@@ -2,11 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>eu.artofcoding</groupId>
-        <artifactId>aoc-parent</artifactId>
-        <version>1.1.0</version>
-    </parent>
     <groupId>eu.artofcoding.beetlejuice</groupId>
     <artifactId>beetlejuice</artifactId>
     <version>1.3.0-SNAPSHOT</version>
@@ -188,17 +183,146 @@
     <dependencyManagement>
         <dependencies>
             <!--
-                OWASP
+                Testing
             -->
             <dependency>
-                <groupId>org.owasp.antisamy</groupId>
-                <artifactId>antisamy</artifactId>
-                <version>1.5.1</version>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>1.0.0.Final</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <!-- JUnit -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.11</version>
+            </dependency>
+            <!-- Arquillian JUnit -->
+            <dependency>
+                <groupId>org.jboss.arquillian.junit</groupId>
+                <artifactId>arquillian-junit-container</artifactId>
+                <version>1.0.3.Final</version>
+            </dependency>
+            <!-- TestNG -->
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>6.8</version>
+            </dependency>
+            <!-- Arquillian TestNG -->
+            <dependency>
+                <groupId>org.jboss.arquillian.testng</groupId>
+                <artifactId>arquillian-testng-container</artifactId>
+                <version>1.0.3.Final</version>
+            </dependency>
+            <!-- Arquillian JBoss AS -->
+            <dependency>
+                <groupId>org.jboss.as</groupId>
+                <artifactId>jboss-as-arquillian-container-managed</artifactId>
+                <version>7.1.1.Final</version>
+            </dependency>
+            <!-- Arquillian GlassFish -->
+            <dependency>
+                <groupId>org.jboss.arquillian.container</groupId>
+                <artifactId>arquillian-glassfish-embedded-3.1</artifactId>
+                <version>1.0.0.Final-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>org.owasp.esapi</groupId>
-                <artifactId>esapi</artifactId>
-                <version>2.0.1</version>
+                <groupId>org.jboss.arquillian.container</groupId>
+                <artifactId>arquillian-glassfish-managed-3.1</artifactId>
+                <version>1.0.0.CR3</version>
+            </dependency>
+            <!-- Arquillian Drone -->
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-drone-bom</artifactId>
+                <version>1.1.0.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-drone-impl</artifactId>
+                <version>1.1.0.Final</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-drone-selenium</artifactId>
+                <version>1.1.0.Final</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-drone-selenium-server</artifactId>
+                <version>1.1.0.Final</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- Selenium -->
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-java</artifactId>
+                <version>2.26.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-server</artifactId>
+                <version>2.26.0</version>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.mortbay.jetty</groupId>
+                        <artifactId>servlet-api-2.5</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!--
+                Java EE
+            -->
+            <dependency>
+                <groupId>javax</groupId>
+                <artifactId>javaee-api</artifactId>
+                <version>6.0</version>
+                <scope>provided</scope>
+            </dependency>
+            <!-- JBoss Java EE 6 -->
+            <dependency>
+                <groupId>org.jboss.spec</groupId>
+                <artifactId>jboss-javaee-6.0</artifactId>
+                <version>3.0.1.Final</version>
+                <type>pom</type>
+                <scope>provided</scope>
+            </dependency>
+            <!-- Arquillian Servlet -->
+            <dependency>
+                <groupId>org.jboss.arquillian.protocol</groupId>
+                <artifactId>arquillian-protocol-servlet</artifactId>
+                <version>1.0.3.Final</version>
+                <scope>test</scope>
+            </dependency>
+            <!--
+                CDI
+            -->
+            <!-- CDI API -->
+            <dependency>
+                <groupId>javax.enterprise</groupId>
+                <artifactId>cdi-api</artifactId>
+                <version>1.1.EDR1.2</version>
+                <scope>provided</scope>
+            </dependency>
+            <!-- Arquillian Weld -->
+            <dependency>
+                <groupId>org.jboss.arquillian.container</groupId>
+                <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
+                <version>1.0.0.CR5</version>
+            </dependency>
+            <!-- JBoss Weld -->
+            <dependency>
+                <groupId>org.jboss.weld</groupId>
+                <artifactId>weld-core</artifactId>
+                <version>1.1.10.Final</version>
             </dependency>
             <!--
                 Logging
@@ -206,6 +330,11 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
+                <version>1.7.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
                 <version>1.7.2</version>
             </dependency>
             <dependency>
@@ -325,6 +454,19 @@
                 <groupId>org.apache.tomcat.embed</groupId>
                 <artifactId>tomcat-embed-core</artifactId>
                 <version>7.0.39</version>
+            </dependency>
+            <!--
+                OWASP
+            -->
+            <dependency>
+                <groupId>org.owasp.antisamy</groupId>
+                <artifactId>antisamy</artifactId>
+                <version>1.5.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.owasp.esapi</groupId>
+                <artifactId>esapi</artifactId>
+                <version>2.0.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
