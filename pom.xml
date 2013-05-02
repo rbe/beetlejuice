@@ -46,7 +46,6 @@
         <module>beetlejuice-web-primefaces</module>
         <module>beetlejuice-webstorage-api</module>
         <module>beetlejuice-contact</module>
-        <module>beetlejuice-tomcat</module>
     </modules>
     <profiles>
         <!-- arquillian-junit -->
