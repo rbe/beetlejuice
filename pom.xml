@@ -535,6 +535,12 @@
             <name>JBoss Repository</name>
             <url>https://repository.jboss.org/nexus/content/repositories/thirdparty-releases</url>
         </repository>
+        <!-- BaseX.org -->
+        <repository>
+            <id>basex</id>
+            <name>BaseX Maven Repository</name>
+            <url>http://files.basex.org/maven</url>
+        </repository>
     </repositories>
     <distributionManagement>
         <!-- art of coding's Public Maven Repository -->
