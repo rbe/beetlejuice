@@ -1,0 +1,9 @@
+<web>
+    <!--
+        Beetlejuice Facelets.
+    -->
+    <context-param>
+        <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+        <param-value>META-INF/beetlejuice.taglib.xml</param-value>
+    </context-param>
+</web>
