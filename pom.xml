@@ -24,16 +24,33 @@
         <name>art of coding</name>
         <url>http://www.art-of-coding.eu</url>
     </organization>
+    <prerequisites>
+        <maven>3.1.1</maven>
+    </prerequisites>
     <packaging>pom</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.java.version>1.7</project.java.version>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.checkstyle.plugin>2.7</maven.checkstyle.plugin>
+        <maven.cobertura.plugin>2.5.1</maven.cobertura.plugin>
+        <maven.doxia.module.markdown.version>1.3</maven.doxia.module.markdown.version>
+        <maven.javadoc.plugin>2.9</maven.javadoc.plugin>
+        <maven.jxr.plugin>2.3</maven.jxr.plugin>
+        <maven.pmd.plugin>2.7.1</maven.pmd.plugin>
+        <maven.project.info.reports.plugin>2.6</maven.project.info.reports.plugin>
+        <maven.site.plugin>3.2</maven.site.plugin>
+        <maven.sonar.plugin>3.3.1</maven.sonar.plugin>
+        <maven.surefire.plugin>2.12.4</maven.surefire.plugin>
+        <maven.taglist.plugin>2.4</maven.taglist.plugin>
+        <maven.versions.plugin>1.3.1</maven.versions.plugin>
+        <version.java>1.7</version.java>
     </properties>
     <modules>
         <module>beetlejuice-api</module>
-        <module>beetlejuice-xml</module>
         <module>beetlejuice-osgi</module>
+        <module>beetlejuice-xml</module>
         <module>beetlejuice-cdm</module>
+        <module>beetlejuice-contact</module>
         <module>beetlejuice-email</module>
         <module>beetlejuice-persistence</module>
         <module>beetlejuice-persistence-xml</module>
@@ -44,10 +61,352 @@
         <module>beetlejuice-web-security</module>
         <module>beetlejuice-web-jsfcomponents</module>
         <module>beetlejuice-web-primefaces</module>
-        <module>beetlejuice-webstorage-api</module>
-        <module>beetlejuice-contact</module>
     </modules>
     <profiles>
+        <!-- distribution -->
+        <profile>
+            <id>distribution</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <!-- maven-dependency-plugin -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-dependency-plugin</artifactId>
+                            <version>2.8</version>
+                        </plugin>
+                        <!-- maven-assembly-plugin -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-assembly-plugin</artifactId>
+                            <version>2.4</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <!-- release -->
+        <profile>
+            <id>release</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <!-- maven-javadoc-plugin -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-javadoc-plugin</artifactId>
+                            <version>2.9.1</version>
+                        </plugin>
+                        <!-- maven-source-plugin -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-source-plugin</artifactId>
+                            <version>2.2.1</version>
+                        </plugin>
+                        <!-- maven-release-plugin -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-release-plugin</artifactId>
+                            <version>2.4.1</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <!-- maven-release-plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <configuration>
+                            <commitByProject>false</commitByProject>
+                            <autoVersionSubmodules>true</autoVersionSubmodules>
+                            <tagNameFormat>v@{project.version}</tagNameFormat>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!-- reporting -->
+        <profile>
+            <id>reporting</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <!-- maven-changelog-plugin -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-changelog-plugin</artifactId>
+                            <version>2.2</version>
+                        </plugin>
+                        <!-- maven-changes-plugin -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-changes-plugin</artifactId>
+                            <version>2.9</version>
+                        </plugin>
+                        <!-- maven-site-plugin, wagon-ssh -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-site-plugin</artifactId>
+                            <version>3.3</version>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.apache.maven.wagon</groupId>
+                                    <artifactId>wagon-ssh</artifactId>
+                                    <version>2.4</version>
+                                </dependency>
+                            </dependencies>
+                        </plugin>
+                        <!-- maven-project-info-reports-plugin -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-project-info-reports-plugin</artifactId>
+                            <version>2.7</version>
+                        </plugin>
+                        <!-- maven-surefire-report-plugin -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-surefire-report-plugin</artifactId>
+                            <version>2.15</version>
+                        </plugin>
+                        <!-- maven-pdf-plugin -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-pdf-plugin</artifactId>
+                            <version>1.2</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <!-- maven-changes-plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-changes-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>check-changes</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>changes-check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- maven-site-plugin, doxia-module-markdown -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-site-plugin</artifactId>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.apache.maven.doxia</groupId>
+                                <artifactId>doxia-module-markdown</artifactId>
+                                <version>1.4</version>
+                            </dependency>
+                        </dependencies>
+                        <configuration>
+                            <locales>en</locales>
+                            <port>9000</port>
+                            <tempWebappDirectory>${basedir}/target/site/temp</tempWebappDirectory>
+                        </configuration>
+                    </plugin>
+                    <!-- maven-pdf-plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-pdf-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>pdf</id>
+                                <phase>site</phase>
+                                <goals>
+                                    <goal>pdf</goal>
+                                </goals>
+                                <configuration>
+                                    <locales>en</locales>
+                                    <outputDirectory>${project.reporting.outputDirectory}</outputDirectory>
+                                    <includeReports>true</includeReports>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <reporting>
+                <plugins>
+                    <!-- maven-changelog-plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-changelog-plugin</artifactId>
+                        <version>2.2</version>
+                    </plugin>
+                    <!-- maven-changes-plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-changes-plugin</artifactId>
+                        <version>2.9</version>
+                        <configuration>
+                            <issueManagementSystems>
+                                <issueManagementSystem>changes.xml</issueManagementSystem>
+                            </issueManagementSystems>
+                            <!--
+                            <smtpHost>mail.yourhost.com</smtpHost>
+                            <smtpPort implementation="java.lang.Integer">25</smtpPort>
+                            <toAddresses>
+                                <toAddress implementation="java.lang.String">someones@email.com</toAddress>
+                                <toAddress implementation="java.lang.String">anothersomeone@email.com</toAddress>
+                            </toAddresses>
+                            <issueTypes>
+                                <add>Story</add>
+                                <fix>Defect, Malfunction</fix>
+                            </issueTypes>
+                            -->
+                        </configuration>
+                        <reportSets>
+                            <reportSet>
+                                <reports>
+                                    <report>changes-report</report>
+                                </reports>
+                            </reportSet>
+                        </reportSets>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+        <!-- localdisk -->
+        <profile>
+            <id>localdisk</id>
+            <repositories>
+                <repository>
+                    <id>local-snapshots</id>
+                    <name>local-snapshots</name>
+                    <url>${maven.local.snapshots}</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                </repository>
+                <repository>
+                    <id>local-releases</id>
+                    <name>local-releases</name>
+                    <url>${maven.local.releases}</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                </repository>
+            </repositories>
+            <distributionManagement>
+                <site>
+                    <id>localsite</id>
+                    <url>${maven.local.site}/${project.groupId}</url>
+                </site>
+                <snapshotRepository>
+                    <id>local-snapshots</id>
+                    <name>local-snapshots</name>
+                    <url>${maven.local.snapshots}</url>
+                </snapshotRepository>
+                <repository>
+                    <id>local-releases</id>
+                    <name>local-releases</name>
+                    <url>${maven.local.releases}</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+        <!-- bitbucket -->
+        <profile>
+            <id>bitbucket</id>
+            <distributionManagement>
+            </distributionManagement>
+        </profile>
+        <!-- github -->
+        <profile>
+            <id>github</id>
+            <properties>
+                <github.global.server>github</github.global.server>
+            </properties>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <!-- site-maven-plugin -->
+                        <plugin>
+                            <groupId>com.github.github</groupId>
+                            <artifactId>site-maven-plugin</artifactId>
+                            <version>0.8</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <!-- maven-deploy-plugin -->
+                    <plugin>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <version>2.7</version>
+                        <configuration>
+                            <altDeploymentRepository>
+                                internal.repo::default::file:///${project.build.outputDirectory}/target/mvn-repo
+                            </altDeploymentRepository>
+                        </configuration>
+                    </plugin>
+                    <!-- site-maven-plugin -->
+                    <plugin>
+                        <groupId>com.github.github</groupId>
+                        <artifactId>site-maven-plugin</artifactId>
+                        <executions>
+                            <!-- gh-pages -->
+                            <execution>
+                                <id>gh-pages</id>
+                                <goals>
+                                    <goal>site</goal>
+                                </goals>
+                                <phase>site</phase>
+                                <configuration>
+                                    <message>Creating site for ${project.version}</message>
+                                    <dryRun>false</dryRun>
+                                    <force>false</force>
+                                    <merge>false</merge>
+                                    <noJekyll>false</noJekyll>
+                                    <outputDirectory>target/site</outputDirectory>
+                                    <branch>refs/heads/gh-pages</branch>
+                                    <includes>
+                                        <include>**/*</include>
+                                    </includes>
+                                    <repositoryOwner>rbe</repositoryOwner>
+                                </configuration>
+                            </execution>
+                            <!-- mvn-repo -->
+                            <execution>
+                                <id>mvn-repo</id>
+                                <goals>
+                                    <goal>site</goal>
+                                </goals>
+                                <phase>deploy</phase>
+                                <configuration>
+                                    <message>Maven artifacts for ${project.version}</message>
+                                    <dryRun>false</dryRun>
+                                    <force>false</force>
+                                    <merge>false</merge>
+                                    <noJekyll>true</noJekyll>
+                                    <outputDirectory>target/mvn-repo</outputDirectory>
+                                    <branch>refs/heads/mvn-repo</branch>
+                                    <includes>
+                                        <include>**/*</include>
+                                    </includes>
+                                    <repositoryOwner>rbe</repositoryOwner>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <distributionManagement>
+                <repository>
+                    <id>github</id>
+                    <name>GitHub ${project.artifactId} Repository</name>
+                    <url>https://raw.github.com/rbe/${project.artifactId}/mvn-repo</url>
+                </repository>
+            </distributionManagement>
+        </profile>
         <!-- arquillian-junit -->
         <profile>
             <id>arquillian-junit</id>
@@ -207,7 +566,7 @@
             <dependency>
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
-                <version>6.8</version>
+                <version>6.8.7</version>
             </dependency>
             <!-- Arquillian TestNG -->
             <dependency>
@@ -262,13 +621,13 @@
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-java</artifactId>
-                <version>2.26.0</version>
+                <version>2.37.0</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-server</artifactId>
-                <version>2.26.0</version>
+                <version>2.37.0</version>
                 <scope>test</scope>
                 <exclusions>
                     <exclusion>
@@ -329,32 +688,32 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>1.7.2</version>
+                <version>1.7.5</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-simple</artifactId>
-                <version>1.7.2</version>
+                <version>1.7.5</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>jcl-over-slf4j</artifactId>
-                <version>1.7.2</version>
+                <version>1.7.5</version>
             </dependency>
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>1.0.7</version>
+                <version>1.0.13</version>
             </dependency>
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-core</artifactId>
-                <version>1.0.7</version>
+                <version>1.0.13</version>
             </dependency>
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-access</artifactId>
-                <version>1.0.7</version>
+                <version>1.0.13</version>
             </dependency>
             <dependency>
                 <groupId>log4j</groupId>
@@ -403,12 +762,12 @@
             <dependency>
                 <groupId>org.basex</groupId>
                 <artifactId>basex</artifactId>
-                <version>7.6</version>
+                <version>7.7.2</version>
             </dependency>
             <dependency>
                 <groupId>org.basex</groupId>
                 <artifactId>basex-api</artifactId>
-                <version>7.6</version>
+                <version>7.7.2</version>
             </dependency>
             <!--
                 JavaServer Faces
@@ -416,7 +775,7 @@
             <dependency>
                 <groupId>javax.faces</groupId>
                 <artifactId>javax.faces-api</artifactId>
-                <version>2.1</version>
+                <version>2.2</version>
                 <scope>provided</scope>
             </dependency>
             <!-- PrimeFaces -->
@@ -429,18 +788,18 @@
             <dependency>
                 <groupId>org.freemarker</groupId>
                 <artifactId>freemarker</artifactId>
-                <version>2.3.19</version>
+                <version>2.3.20</version>
             </dependency>
             <!-- ical4j -->
             <dependency>
                 <groupId>org.mnode.ical4j</groupId>
                 <artifactId>ical4j</artifactId>
-                <version>1.0.4</version>
+                <version>1.0.5.2</version>
             </dependency>
             <dependency>
                 <groupId>org.mnode.ical4j</groupId>
                 <artifactId>ical4j-vcard</artifactId>
-                <version>0.9.5</version>
+                <version>0.9.6.2</version>
             </dependency>
             <!-- Google GData -->
             <dependency>
@@ -452,7 +811,7 @@
             <dependency>
                 <groupId>org.apache.tomcat.embed</groupId>
                 <artifactId>tomcat-embed-core</artifactId>
-                <version>7.0.39</version>
+                <version>8.0.0-RC3</version>
             </dependency>
             <!--
                 OWASP
@@ -460,18 +819,80 @@
             <dependency>
                 <groupId>org.owasp.antisamy</groupId>
                 <artifactId>antisamy</artifactId>
-                <version>1.5.1</version>
+                <version>1.5.3</version>
             </dependency>
             <dependency>
                 <groupId>org.owasp.esapi</groupId>
                 <artifactId>esapi</artifactId>
-                <version>2.0.1</version>
+                <version>2.1.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
     <build>
         <pluginManagement>
             <plugins>
+                <!-- maven-clean-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
+                <!-- maven-deploy-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8</version>
+                </plugin>
+                <!-- maven-install-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
+                <!-- maven-site-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.3</version>
+                </plugin>
+                <!-- maven-resources-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.6</version>
+                </plugin>
+                <!-- maven-surefire-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.15</version>
+                </plugin>
+                <!-- versions-maven-plugin -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>2.1</version>
+                    <configuration>
+                        <generateBackupPoms>true</generateBackupPoms>
+                        <allowMajorUpdates>false</allowMajorUpdates>
+                        <allowMinorUpdates>true</allowMinorUpdates>
+                        <allowIncrementalUpdates>true</allowIncrementalUpdates>
+                        <allowSnapshots>false</allowSnapshots>
+                        <processDependencies>true</processDependencies>
+                        <processDependencyManagement>true</processDependencyManagement>
+                        <processPlugins>false</processPlugins>
+                        <updateDependencies>true</updateDependencies>
+                        <reportOutputFile>maven-versions-report.txt</reportOutputFile>
+                    </configuration>
+                </plugin>
+                <!-- maven-dependency-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.8</version>
+                    <configuration>
+                    </configuration>
+                </plugin>
                 <!-- buildnumber-maven-plugin -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -498,14 +919,87 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.1</version>
                     <configuration>
-                        <source>${project.java.version}</source>
-                        <target>${project.java.version}</target>
+                        <source>${version.java}</source>
+                        <target>${version.java}</target>
+                        <compilerArgs>
+                            <compilerArg>-Xlint:unchecked</compilerArg>
+                        </compilerArgs>
+                        <optimize>true</optimize>
                         <verbose />
+                    </configuration>
+                </plugin>
+                <!-- maven-jar-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.4</version>
+                    <configuration>
+                        <verbose>true</verbose>
                     </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <!-- maven-clean-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+            </plugin>
+            <!-- maven-deploy-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+            </plugin>
+            <!-- maven-install-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+            </plugin>
+            <!-- maven-site-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+            </plugin>
+            <!-- versions-maven-plugin -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+            </plugin>
+            <!-- maven-dependency-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+            <!-- maven-site-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.3</version>
+                <executions>
+                    <!-- used for multiproject builds -->
+                    <execution>
+                        <id>attach-descriptor</id>
+                        <goals>
+                            <goal>attach-descriptor</goal>
+                        </goals>
+                        <configuration>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <locales>en</locales>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.doxia</groupId>
+                        <artifactId>doxia-module-markdown</artifactId>
+                        <version>1.4</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
     </build>
     <repositories>
         <!-- java.net -->
@@ -542,12 +1036,9 @@
             <url>http://files.basex.org/maven</url>
         </repository>
     </repositories>
-    <distributionManagement>
-        <!-- art of coding's Public Maven Repository -->
-        <repository>
-            <id>public.maven.repository</id>
-            <name>Public Local Repository</name>
-            <url>${aoc.public.maven.repository}</url>
-        </repository>
-    </distributionManagement>
+    <scm>
+        <url>https://bitbucket.org/artofcoding/beetlejuice.git</url>
+        <connection>scm:git:ssh://git@bitbucket.org/artofcoding/beetlejuice.git</connection>
+        <developerConnection>scm:git:ssh://git@bitbucket.org/artofcoding/beetlejuice.git</developerConnection>
+    </scm>
 </project>

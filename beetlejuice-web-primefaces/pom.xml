@@ -71,8 +71,8 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>${project.java.version}</source>
-                    <target>${project.java.version}</target>
+                    <source>${version.java}</source>
+                    <target>${version.java}</target>
                     <verbose/>
                 </configuration>
             </plugin>
