@@ -11,25 +11,25 @@
 
 package eu.artofcoding.beetlejuice.xml;
 
-public class XmlException extends Exception {
+public class JaxbHelperException extends Exception {
 
-    public XmlException() {
+    public JaxbHelperException() {
         super();
     }
 
-    public XmlException(String message) {
+    public JaxbHelperException(String message) {
         super(message);
     }
 
-    public XmlException(String message, Throwable cause) {
+    public JaxbHelperException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public XmlException(Throwable cause) {
+    public JaxbHelperException(Throwable cause) {
         super(cause);
     }
 
-    protected XmlException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    protected JaxbHelperException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 

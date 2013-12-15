@@ -20,7 +20,7 @@ import java.io.*;
 public class JaxbHelper {
 
     @SuppressWarnings({"unchecked"})
-    public static <T> T unmarshal(Class<T> clazz, File file) throws XmlException {
+    public static <T> T unmarshal(Class<T> clazz, File file) throws JaxbHelperException {
         T odisee;
         try {
             // create a JAXBContext capable of handling classes generated into package
@@ -31,12 +31,12 @@ public class JaxbHelper {
             // objects composed of classes from the package.
             odisee = (T) unmarshaller.unmarshal(new FileInputStream(file));
         } catch (IOException | JAXBException e) {
-            throw new XmlException(e);
+            throw new JaxbHelperException(e);
         }
         return odisee;
     }
 
-    public static <T> void marshal(Class<T> clazz, T objectToMarshal, Writer writer) throws XmlException {
+    public static <T> void marshal(Class<T> clazz, T objectToMarshal, Writer writer) throws JaxbHelperException {
         try {
             // create a JAXBContext capable of handling classes generated into package
             JAXBContext jaxbContext = JAXBContext.newInstance(clazz.getPackage().getName());
@@ -45,14 +45,12 @@ public class JaxbHelper {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(objectToMarshal, writer);
             writer.flush();
-        } catch (JAXBException e) {
-            throw new XmlException(e);
-        } catch (IOException e) {
-            throw new XmlException(e);
+        } catch (JAXBException | IOException e) {
+            throw new JaxbHelperException(e);
         }
     }
 
-    public static <T> void marshal(Class<T> clazz, T objectToMarshal, OutputStream stream) throws XmlException {
+    public static <T> void marshal(Class<T> clazz, T objectToMarshal, OutputStream stream) throws JaxbHelperException {
         try {
             // create a JAXBContext capable of handling classes generated into package
             JAXBContext jaxbContext = JAXBContext.newInstance(clazz.getPackage().getName());
@@ -61,11 +59,11 @@ public class JaxbHelper {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(objectToMarshal, stream);
         } catch (JAXBException e) {
-            throw new XmlException(e);
+            throw new JaxbHelperException(e);
         }
     }
 
-    public static <T> void marshal(Class<T> clazz, T objectToMarshal, File file) throws XmlException {
+    public static <T> void marshal(Class<T> clazz, T objectToMarshal, File file) throws JaxbHelperException {
         try {
             // create a JAXBContext capable of handling classes generated into package
             JAXBContext jaxbContext = JAXBContext.newInstance(clazz.getPackage().getName());
@@ -74,7 +72,7 @@ public class JaxbHelper {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(objectToMarshal, new FileOutputStream(file));
         } catch (FileNotFoundException | JAXBException e) {
-            throw new XmlException(e);
+            throw new JaxbHelperException(e);
         }
     }
 

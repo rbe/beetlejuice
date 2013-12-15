@@ -50,9 +50,9 @@ public class XsltHelper {
      * @param xslt     Use XSLT for transformation - can be null for no transformation
      * @param encoding
      * @return
-     * @throws XmlHelperException
+     * @throws XsltHelperException
      */
-    public static String xsltTo(Node node, Source xslt, String encoding) throws XmlHelperException {
+    public static String xsltTo(Node node, Source xslt, String encoding) throws XsltHelperException {
         String s = null;
         try {
             Transformer myTransformer = null;
@@ -66,7 +66,7 @@ public class XsltHelper {
             myTransformer.transform(new DOMSource(node), new StreamResult(stringWriter));
             s = stringWriter.toString();
         } catch (TransformerException | TransformerFactoryConfigurationError e) {
-            throw new XmlHelperException(XmlHelper.EMPTY_STRING, e);
+            throw new XsltHelperException(XmlHelper.EMPTY_STRING, e);
         }
         return s;
     }
@@ -78,9 +78,9 @@ public class XsltHelper {
      * @param encoding
      * @return
      * @throws TransformerException
-     * @throws XmlHelperException
+     * @throws XsltHelperException
      */
-    public static String output(Node node, Source xslt, String encoding) throws TransformerException, XmlHelperException {
+    public static String output(Node node, Source xslt, String encoding) throws TransformerException, XsltHelperException {
         return xsltTo(node, xslt, encoding);
     }
 
@@ -117,9 +117,9 @@ public class XsltHelper {
      * @param xslt
      * @param encoding Charset.
      * @return
-     * @throws XmlHelperException
+     * @throws XsltHelperException
      */
-    public static String transform(InputStream in, InputStream xslt, String encoding) throws XmlHelperException {
+    public static String transform(InputStream in, InputStream xslt, String encoding) throws XsltHelperException {
         StringWriter writer = new StringWriter();
         try {
             Transformer myTransformer = TransformerFactory.newInstance().newTransformer(new StreamSource(xslt));
@@ -127,7 +127,7 @@ public class XsltHelper {
             myTransformer.setOutputProperty(OutputKeys.INDENT, XmlHelper.YES);
             myTransformer.transform(new StreamSource(in), new StreamResult(writer));
         } catch (TransformerException e) {
-            throw new XmlHelperException("Could not tranform XML", e);
+            throw new XsltHelperException("Could not tranform XML", e);
         }
         return writer.toString();
     }
