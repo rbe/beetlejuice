@@ -34,7 +34,7 @@
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>javax.mail-api</artifactId>
-            <version>1.4.5</version>
+            <version>1.5.0</version>
         </dependency>
         <!--
             Beetlejuice.
