@@ -244,14 +244,15 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         } else {
             // Build query from list of QueryParameters
             String selectClause = String.format("%s %s %s", SELECT_O_FROM, entityClass.getSimpleName(), JPA_O);
-            DynamicQuery<T> dynamicQuery = new DynamicQuery<T>(entityManager, entityClass, queryConfiguration, clauseConnector, orderBy);
+            DynamicQuery<T> dynamicQuery = new DynamicQuery<>(entityManager, entityClass, queryConfiguration, clauseConnector, orderBy);
             query = dynamicQuery.getQuery(selectClause);
         }
         // Pagination: set first result and page size
         query.setFirstResult(firstResult);
         query.setMaxResults(pageSize);
         // Execute query and return result list
-        List<T> entities = query.getResultList();
+        @SuppressWarnings({"unchecked"})
+        List<T> entities = (List<T>) query.getResultList();
         return entities;
     }
 
