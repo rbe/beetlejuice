@@ -11,16 +11,15 @@
 
 package eu.artofcoding.beetlejuice.osgi;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleReference;
-import org.osgi.framework.ServiceReference;
-
 public class OsgiHelper {
 
     public static <T> T getService(Class<T> type) {
+        /*
         BundleContext ctx = BundleReference.class.cast(type.getClassLoader()).getBundle().getBundleContext();
         ServiceReference<T> ref = ctx.getServiceReference(type);
         return ref != null ? type.cast(ctx.getService(ref)) : null;
+        */
+        return null;
     }
 
 }
