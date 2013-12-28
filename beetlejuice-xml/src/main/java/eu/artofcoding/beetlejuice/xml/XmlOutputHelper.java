@@ -68,24 +68,16 @@ public class XmlOutputHelper {
      * @param node
      * @param encoding
      * @return {@link String}
-     * @throws javax.xml.transform.TransformerException
-     *
-     * @throws eu.artofcoding.beetlejuice.xml.XmlHelperException
-     *
      */
-    public static String output(Node node, String encoding) throws TransformerException, XmlHelperException {
+    public static String output(Node node, String encoding) throws XsltHelperException {
         return XsltHelper.xsltTo(node, null, encoding);
     }
 
     /**
      * @param node
      * @return {@link String}
-     * @throws javax.xml.transform.TransformerException
-     *
-     * @throws eu.artofcoding.beetlejuice.xml.XmlHelperException
-     *
      */
-    public static String output(Node node) throws TransformerException, XmlHelperException {
+    public static String output(Node node) throws XsltHelperException {
         return XsltHelper.xsltTo(node, null, XmlHelper.ENCODING);
     }
 

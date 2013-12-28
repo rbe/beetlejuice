@@ -25,8 +25,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class FacesHelper {
+
+    private static final long serialVersionUID = 1L;
+
+    private Logger logger;
+
+    private static final FacesHelper INSTANCE = new FacesHelper();
+
+    private static FacesContext facesContext;
 
     /**
      * Get value for context parameter from web application deployment descriptor.

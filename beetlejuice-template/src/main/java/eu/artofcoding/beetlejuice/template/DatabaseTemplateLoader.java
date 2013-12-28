@@ -57,6 +57,7 @@ public class DatabaseTemplateLoader<T extends GenericDAORemote> implements Templ
     public Object findTemplateSource(String name) throws IOException {
         Map<String, Object> map = new HashMap<>();
         map.put("name", name);
+        @SuppressWarnings({"unchecked"})
         GenericEntity templateEntity = (GenericEntity) templateDAO.findOne(finder, map);
         return templateEntity;
     }
