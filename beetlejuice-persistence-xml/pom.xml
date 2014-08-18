@@ -5,14 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>eu.artofcoding.beetlejuice</groupId>
-        <artifactId>beetlejuice</artifactId>
-        <version>1.3.0-SNAPSHOT</version>
+        <artifactId>eu.artofcoding.beetlejuice</artifactId>
+        <version>LOCALBUILD</version>
         <relativePath>..</relativePath>
     </parent>
-    <artifactId>beetlejuice-persistence-xml</artifactId>
+    <artifactId>eu.artofcoding.beetlejuice.persistence.xml</artifactId>
     <name>beetlejuice XML Persistence</name>
     <url>http://www.art-of-coding.eu/beetlejuice/persistence/xml/</url>
-    <version>1.3.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
@@ -30,17 +29,8 @@
         </dependency>
         <dependency>
             <groupId>eu.artofcoding.beetlejuice</groupId>
-            <artifactId>beetlejuice-api</artifactId>
+            <artifactId>eu.artofcoding.beetlejuice.api</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
-    <build>
-        <sourceDirectory>src/main/java</sourceDirectory>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
-        <finalName>${project.artifactId}-${buildNumber}</finalName>
-    </build>
 </project>

@@ -9,7 +9,7 @@
  * rbe, 15.02.13 12:25
  */
 
-package eu.artofcoding.beetlejuice.web;
+package eu.artofcoding.beetlejuice.web.security;
 
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.Annotated;

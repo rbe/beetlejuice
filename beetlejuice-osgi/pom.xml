@@ -3,17 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>eu.artofcoding.beetlejuice</groupId>
-    <artifactId>beetlejuice-osgi</artifactId>
-    <name>beetlejuice OSGi</name>
-    <url>http://www.art-of-coding.eu/beetlejuice/osgi/</url>
-    <version>1.3.0-SNAPSHOT</version>
     <parent>
         <groupId>eu.artofcoding.beetlejuice</groupId>
-        <artifactId>beetlejuice</artifactId>
-        <version>1.3.0-SNAPSHOT</version>
+        <artifactId>eu.artofcoding.beetlejuice</artifactId>
+        <version>LOCALBUILD</version>
         <relativePath>..</relativePath>
     </parent>
+    <artifactId>eu.artofcoding.beetlejuice.osgi</artifactId>
+    <name>beetlejuice OSGi</name>
+    <url>http://www.art-of-coding.eu/beetlejuice/osgi/</url>
     <packaging>jar</packaging>
     <properties>
     </properties>

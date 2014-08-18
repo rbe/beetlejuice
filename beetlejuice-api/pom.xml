@@ -5,14 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>eu.artofcoding.beetlejuice</groupId>
-        <artifactId>beetlejuice</artifactId>
-        <version>1.3.0-SNAPSHOT</version>
+        <artifactId>eu.artofcoding.beetlejuice</artifactId>
+        <version>LOCALBUILD</version>
         <relativePath>..</relativePath>
     </parent>
-    <artifactId>beetlejuice-api</artifactId>
+    <artifactId>eu.artofcoding.beetlejuice.api</artifactId>
     <name>beetlejuice API</name>
     <url>http://www.art-of-coding.eu/beetlejuice/api/</url>
-    <version>1.3.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>
     </properties>

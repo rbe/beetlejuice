@@ -11,6 +11,8 @@
 
 package eu.artofcoding.beetlejuice.web;
 
+import eu.artofcoding.beetlejuice.web.security.Sanitizer;
+import eu.artofcoding.beetlejuice.web.security.WebSecurity;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;

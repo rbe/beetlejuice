@@ -9,8 +9,9 @@
  * rbe, 15.02.13 09:14
  */
 
-package eu.artofcoding.beetlejuice.web;
+package eu.artofcoding.beetlejuice.web.security;
 
+import eu.artofcoding.beetlejuice.web.BeetlejuiceWebException;
 import org.owasp.validator.html.*;
 
 import java.net.URL;

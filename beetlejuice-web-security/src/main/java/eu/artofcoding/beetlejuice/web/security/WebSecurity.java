@@ -9,7 +9,7 @@
  * rbe, 15.02.13 11:49
  */
 
-package eu.artofcoding.beetlejuice.web;
+package eu.artofcoding.beetlejuice.web.security;
 
 import javax.enterprise.util.Nonbinding;
 import javax.inject.Qualifier;

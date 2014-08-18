@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>eu.artofcoding.beetlejuice</groupId>
-        <artifactId>beetlejuice</artifactId>
-        <version>1.3.0-SNAPSHOT</version>
+        <artifactId>eu.artofcoding.beetlejuice</artifactId>
+        <version>LOCALBUILD</version>
         <relativePath>..</relativePath>
     </parent>
-    <artifactId>beetlejuice-web-jsfcomponents</artifactId>
+    <artifactId>eu.artofcoding.beetlejuice.web.jsf</artifactId>
     <name>beetlejuice Web JSF Components</name>
     <url>http://www.art-of-coding.eu/beetlejuice/web/</url>
     <packaging>jar</packaging>
@@ -35,12 +35,11 @@
         -->
         <dependency>
             <groupId>eu.artofcoding.beetlejuice</groupId>
-            <artifactId>beetlejuice-api</artifactId>
+            <artifactId>eu.artofcoding.beetlejuice.api</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
     <build>
-        <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
             <resource>
                 <targetPath>META-INF</targetPath>

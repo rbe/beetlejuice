@@ -9,7 +9,9 @@
  * rbe, 15.02.13 11:43
  */
 
-package eu.artofcoding.beetlejuice.web;
+package eu.artofcoding.beetlejuice.web.security;
+
+import eu.artofcoding.beetlejuice.web.BeetlejuiceWebException;
 
 import java.util.Locale;
 
