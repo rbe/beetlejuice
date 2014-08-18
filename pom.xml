@@ -410,6 +410,9 @@
         <!-- arquillian-junit -->
         <profile>
             <id>arquillian-junit</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <dependencies>
                 <!-- JUnit -->
                 <dependency>
@@ -446,6 +449,9 @@
         <!-- arquillian-weld-ee-embedded -->
         <profile>
             <id>arquillian-weld-ee-embedded</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.spec</groupId>
