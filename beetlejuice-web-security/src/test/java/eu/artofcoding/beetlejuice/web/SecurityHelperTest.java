@@ -12,21 +12,23 @@
 package eu.artofcoding.beetlejuice.web;
 
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.testng.Arquillian;
+import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.asset.FileAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.testng.annotations.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 import java.io.File;
 import java.util.Locale;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-public class SecurityHelperTest extends Arquillian {
+@RunWith(Arquillian.class)
+public class SecurityHelperTest {
 
     private static final String TEST_RESOURCES = "src/test/resources";
     private static final String WEB_ANTISAMY = "eu/artofcoding/beetlejuice/web/antisamy";
