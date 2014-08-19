@@ -14,12 +14,6 @@
             <email>ralf@art-of-coding.eu</email>
         </developer>
     </developers>
-    <!--
-    <contributors>
-        <contributor>
-        </contributor>
-    </contributors>
-    -->
     <organization>
         <name>art of coding</name>
         <url>http://www.art-of-coding.eu</url>
@@ -46,21 +40,21 @@
         <version.java>1.7</version.java>
     </properties>
     <modules>
-        <module>beetlejuice-api</module>
-        <module>beetlejuice-osgi</module>
-        <module>beetlejuice-xml</module>
-        <module>beetlejuice-cdm</module>
-        <module>beetlejuice-contact</module>
-        <module>beetlejuice-email</module>
-        <module>beetlejuice-persistence</module>
-        <module>beetlejuice-persistence-xml</module>
-        <module>beetlejuice-spring</module>
-        <module>beetlejuice-template</module>
-        <module>beetlejuice-javafx</module>
-        <module>beetlejuice-web</module>
-        <module>beetlejuice-web-security</module>
-        <module>beetlejuice-web-jsfcomponents</module>
-        <module>beetlejuice-web-primefaces</module>
+        <module>eu.artofcoding.beetlejuice.api</module>
+        <module>eu.artofcoding.beetlejuice.osgi</module>
+        <module>eu.artofcoding.beetlejuice.xml</module>
+        <module>eu.artofcoding.beetlejuice.cdm</module>
+        <module>eu.artofcoding.beetlejuice.contact</module>
+        <module>eu.artofcoding.beetlejuice.email</module>
+        <module>eu.artofcoding.beetlejuice.persistence</module>
+        <module>eu.artofcoding.beetlejuice.persistence.xml</module>
+        <module>eu.artofcoding.beetlejuice.spring</module>
+        <module>eu.artofcoding.beetlejuice.template</module>
+        <module>eu.artofcoding.beetlejuice.javafx</module>
+        <module>eu.artofcoding.beetlejuice.web</module>
+        <module>eu.artofcoding.beetlejuice.web.security</module>
+        <module>eu.artofcoding.beetlejuice.web.jsf</module>
+        <module>eu.artofcoding.beetlejuice.web.primefaces</module>
     </modules>
     <profiles>
         <!-- distribution -->
@@ -952,6 +946,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
+            </plugin>
+            <!-- maven-compiler-plugin -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${version.java}</source>
+                    <target>${version.java}</target>
+                    <verbose/>
+                </configuration>
             </plugin>
             <!-- maven-deploy-plugin -->
             <plugin>
