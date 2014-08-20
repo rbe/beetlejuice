@@ -144,6 +144,11 @@
                             <version>3.3</version>
                             <dependencies>
                                 <dependency>
+                                    <groupId>org.apache.maven.doxia</groupId>
+                                    <artifactId>doxia-module-markdown</artifactId>
+                                    <version>1.4</version>
+                                </dependency>
+                                <dependency>
                                     <groupId>org.apache.maven.wagon</groupId>
                                     <artifactId>wagon-ssh</artifactId>
                                     <version>2.4</version>
@@ -189,13 +194,15 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-site-plugin</artifactId>
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.apache.maven.doxia</groupId>
-                                <artifactId>doxia-module-markdown</artifactId>
-                                <version>1.4</version>
-                            </dependency>
-                        </dependencies>
+                        <executions>
+                            <!-- used for multiproject builds -->
+                            <execution>
+                                <id>attach-descriptor</id>
+                                <goals>
+                                    <goal>attach-descriptor</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                         <configuration>
                             <locales>en</locales>
                             <port>9000</port>
@@ -430,12 +437,14 @@
                 <dependency>
                     <groupId>org.testng</groupId>
                     <artifactId>testng</artifactId>
+                    <version>6.8.7</version>
                     <scope>test</scope>
                 </dependency>
                 <!-- Arquillian TestNG -->
                 <dependency>
                     <groupId>org.jboss.arquillian.testng</groupId>
                     <artifactId>arquillian-testng-container</artifactId>
+                    <version>1.0.3.Final</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
@@ -560,18 +569,6 @@
             <dependency>
                 <groupId>org.jboss.arquillian.junit</groupId>
                 <artifactId>arquillian-junit-container</artifactId>
-                <version>1.0.3.Final</version>
-            </dependency>
-            <!-- TestNG -->
-            <dependency>
-                <groupId>org.testng</groupId>
-                <artifactId>testng</artifactId>
-                <version>6.8.7</version>
-            </dependency>
-            <!-- Arquillian TestNG -->
-            <dependency>
-                <groupId>org.jboss.arquillian.testng</groupId>
-                <artifactId>arquillian-testng-container</artifactId>
                 <version>1.0.3.Final</version>
             </dependency>
             <!-- Arquillian JBoss AS -->
@@ -930,6 +927,18 @@
                         <verbose />
                     </configuration>
                 </plugin>
+                <!-- maven-javadoc-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.9.1</version>
+                </plugin>
+                <!-- maven-source-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.3</version>
+                </plugin>
                 <!-- maven-jar-plugin -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -975,33 +984,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-            </plugin>
-            <!-- maven-site-plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>3.3</version>
-                <executions>
-                    <!-- used for multiproject builds -->
-                    <execution>
-                        <id>attach-descriptor</id>
-                        <goals>
-                            <goal>attach-descriptor</goal>
-                        </goals>
-                        <configuration>
-                        </configuration>
-                    </execution>
-                </executions>
-                <configuration>
-                    <locales>en</locales>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.doxia</groupId>
-                        <artifactId>doxia-module-markdown</artifactId>
-                        <version>1.4</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>
