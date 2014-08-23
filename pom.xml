@@ -42,6 +42,7 @@
     <modules>
         <module>eu.artofcoding.beetlejuice.api</module>
         <module>eu.artofcoding.beetlejuice.osgi</module>
+        <module>eu.artofcoding.beetlejuice.emf</module>
         <module>eu.artofcoding.beetlejuice.xml</module>
         <module>eu.artofcoding.beetlejuice.cdm</module>
         <module>eu.artofcoding.beetlejuice.contact</module>
