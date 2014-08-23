@@ -10,11 +10,7 @@
         <relativePath>..</relativePath>
     </parent>
     <artifactId>eu.artofcoding.beetlejuice.spring</artifactId>
-    <name>beetlejuice Spring</name>
-    <url>http://www.art-of-coding.eu/beetlejuice/spring/</url>
     <packaging>jar</packaging>
-    <properties>
-    </properties>
     <!--
         Dependencies.
     -->

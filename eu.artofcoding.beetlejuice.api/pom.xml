@@ -10,11 +10,7 @@
         <relativePath>..</relativePath>
     </parent>
     <artifactId>eu.artofcoding.beetlejuice.api</artifactId>
-    <name>beetlejuice API</name>
-    <url>http://www.art-of-coding.eu/beetlejuice/api/</url>
     <packaging>jar</packaging>
-    <properties>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>javax</groupId>

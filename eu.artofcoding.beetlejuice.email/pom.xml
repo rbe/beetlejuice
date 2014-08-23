@@ -10,8 +10,6 @@
         <relativePath>..</relativePath>
     </parent>
     <artifactId>eu.artofcoding.beetlejuice.email</artifactId>
-    <name>beetlejuice Email</name>
-    <url>http://www.art-of-coding.eu/beetlejuice/email/</url>
     <packaging>jar</packaging>
     <dependencies>
         <!--

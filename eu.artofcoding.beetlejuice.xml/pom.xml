@@ -10,11 +10,7 @@
         <relativePath>..</relativePath>
     </parent>
     <artifactId>eu.artofcoding.beetlejuice.xml</artifactId>
-    <name>beetlejuice XML Helper</name>
-    <url>http://www.art-of-coding.eu/beetlejuice/xml/</url>
     <packaging>jar</packaging>
-    <properties>
-    </properties>
     <dependencies>
         <!--
             CDI

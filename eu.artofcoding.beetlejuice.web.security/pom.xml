@@ -10,10 +10,21 @@
         <relativePath>..</relativePath>
     </parent>
     <artifactId>eu.artofcoding.beetlejuice.web.security</artifactId>
-    <name>beetlejuice Web Security</name>
-    <url>http://www.art-of-coding.eu/beetlejuice/web-security/</url>
     <packaging>jar</packaging>
     <dependencies>
+        <!--
+            Beetlejuice
+        -->
+        <dependency>
+            <groupId>eu.artofcoding.beetlejuice</groupId>
+            <artifactId>eu.artofcoding.beetlejuice.api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>eu.artofcoding.beetlejuice</groupId>
+            <artifactId>eu.artofcoding.beetlejuice.web</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!--
             OWASP
         -->
@@ -37,19 +48,6 @@
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
             <scope>provided</scope>
-        </dependency>
-        <!--
-            Beetlejuice
-        -->
-        <dependency>
-            <groupId>eu.artofcoding.beetlejuice</groupId>
-            <artifactId>eu.artofcoding.beetlejuice.api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>eu.artofcoding.beetlejuice</groupId>
-            <artifactId>eu.artofcoding.beetlejuice.web</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

@@ -10,10 +10,16 @@
         <relativePath>..</relativePath>
     </parent>
     <artifactId>eu.artofcoding.beetlejuice.persistence</artifactId>
-    <name>beetlejuice Persistence</name>
-    <url>http://www.art-of-coding.eu/beetlejuice/persistence/</url>
     <packaging>jar</packaging>
     <dependencies>
+        <!--
+            Beetlejuice
+        -->
+        <dependency>
+            <groupId>eu.artofcoding.beetlejuice</groupId>
+            <artifactId>eu.artofcoding.beetlejuice.api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!--
             Java Persistence API
         -->
@@ -26,14 +32,6 @@
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
             <scope>provided</scope>
-        </dependency>
-        <!--
-            Beetlejuice
-        -->
-        <dependency>
-            <groupId>eu.artofcoding.beetlejuice</groupId>
-            <artifactId>eu.artofcoding.beetlejuice.api</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

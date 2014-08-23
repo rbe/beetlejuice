@@ -10,10 +10,16 @@
         <relativePath>..</relativePath>
     </parent>
     <artifactId>eu.artofcoding.beetlejuice.web</artifactId>
-    <name>beetlejuice Web</name>
-    <url>http://www.art-of-coding.eu/beetlejuice/web/</url>
     <packaging>jar</packaging>
     <dependencies>
+        <!--
+            Beetlejuice
+        -->
+        <dependency>
+            <groupId>eu.artofcoding.beetlejuice</groupId>
+            <artifactId>eu.artofcoding.beetlejuice.api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!--
             Java EE
         -->
@@ -30,14 +36,6 @@
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
             <scope>provided</scope>
-        </dependency>
-        <!--
-            Beetlejuice
-        -->
-        <dependency>
-            <groupId>eu.artofcoding.beetlejuice</groupId>
-            <artifactId>eu.artofcoding.beetlejuice.api</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

@@ -10,12 +10,13 @@
         <relativePath>..</relativePath>
     </parent>
     <artifactId>eu.artofcoding.beetlejuice.template</artifactId>
-    <name>beetlejuice Template Processor</name>
-    <url>http://www.art-of-coding.eu/beetlejuice/template/</url>
     <packaging>jar</packaging>
-    <properties>
-    </properties>
     <dependencies>
+        <dependency>
+            <groupId>eu.artofcoding.beetlejuice</groupId>
+            <artifactId>eu.artofcoding.beetlejuice.api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
@@ -29,11 +30,6 @@
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>eu.artofcoding.beetlejuice</groupId>
-            <artifactId>eu.artofcoding.beetlejuice.api</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

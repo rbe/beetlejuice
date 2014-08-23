@@ -10,12 +10,21 @@
         <relativePath>..</relativePath>
     </parent>
     <artifactId>eu.artofcoding.beetlejuice.web.primefaces</artifactId>
-    <name>beetlejuice Web PrimeFaces</name>
-    <url>http://www.art-of-coding.eu/beetlejuice/web/primefaces/</url>
     <packaging>jar</packaging>
-    <properties>
-    </properties>
     <dependencies>
+        <!--
+            Beetlejuice
+        -->
+        <dependency>
+            <groupId>eu.artofcoding.beetlejuice</groupId>
+            <artifactId>eu.artofcoding.beetlejuice.api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>eu.artofcoding.beetlejuice</groupId>
+            <artifactId>eu.artofcoding.beetlejuice.persistence</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!--
             Java EE
         -->
@@ -41,19 +50,6 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-        </dependency>
-        <!--
-            Beetlejuice
-        -->
-        <dependency>
-            <groupId>eu.artofcoding.beetlejuice</groupId>
-            <artifactId>eu.artofcoding.beetlejuice.api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>eu.artofcoding.beetlejuice</groupId>
-            <artifactId>eu.artofcoding.beetlejuice.persistence</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
     <repositories>

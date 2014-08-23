@@ -10,10 +10,13 @@
         <relativePath>..</relativePath>
     </parent>
     <artifactId>eu.artofcoding.beetlejuice.persistence.xml</artifactId>
-    <name>beetlejuice XML Persistence</name>
-    <url>http://www.art-of-coding.eu/beetlejuice/persistence/xml/</url>
     <packaging>jar</packaging>
     <dependencies>
+        <dependency>
+            <groupId>eu.artofcoding.beetlejuice</groupId>
+            <artifactId>eu.artofcoding.beetlejuice.api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
@@ -26,11 +29,6 @@
         <dependency>
             <groupId>org.basex</groupId>
             <artifactId>basex-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>eu.artofcoding.beetlejuice</groupId>
-            <artifactId>eu.artofcoding.beetlejuice.api</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

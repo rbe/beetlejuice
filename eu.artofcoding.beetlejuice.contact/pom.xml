@@ -8,7 +8,6 @@
         <version>LOCALBUILD</version>
     </parent>
     <artifactId>eu.artofcoding.beetlejuice.contact</artifactId>
-    <name>beetlejuice Contact</name>
     <dependencies>
         <dependency>
             <groupId>org.mnode.ical4j</groupId>

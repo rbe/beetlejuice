@@ -10,11 +10,7 @@
         <relativePath>..</relativePath>
     </parent>
     <artifactId>eu.artofcoding.beetlejuice.osgi</artifactId>
-    <name>beetlejuice OSGi</name>
-    <url>http://www.art-of-coding.eu/beetlejuice/osgi/</url>
     <packaging>jar</packaging>
-    <properties>
-    </properties>
     <dependencies>
         <!--
             OSGi
@@ -28,15 +24,4 @@
             <artifactId>org.osgi.compendium</artifactId>
         </dependency>
     </dependencies>
-    <build>
-        <sourceDirectory>src/main/java</sourceDirectory>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
-        <plugins>
-        </plugins>
-        <finalName>${project.artifactId}-${project.version}</finalName>
-    </build>
 </project>
