@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>eu.artofcoding.beetlejuice</groupId>
-        <artifactId>eu.artofcoding.beetlejuice.</artifactId>
+        <artifactId>eu.artofcoding.beetlejuice</artifactId>
         <version>LOCALBUILD</version>
+        <relativePath>..</relativePath>
     </parent>
     <artifactId>eu.artofcoding.beetlejuice.tomcat</artifactId>
-    <name>beetlejuice Tomcat</name>
     <dependencies>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
