@@ -16,7 +16,10 @@ import eu.artofcoding.beetlejuice.entity.Attachment;
 import eu.artofcoding.beetlejuice.entity.Email;
 import eu.artofcoding.beetlejuice.entity.MimeType;
 
-import javax.mail.*;
+import javax.mail.Address;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -37,7 +40,7 @@ public class PostmanImpl implements Postman {
     /**
      * Support Postman#addPart.
      */
-    private transient Multipart multipart;
+    private transient javax.mail.Multipart multipart;
 
     private String server;
 
@@ -84,7 +87,7 @@ public class PostmanImpl implements Postman {
     }
 
     @Override
-    public void setSession(Session session) {
+    public void setSession(javax.mail.Session session) {
         this.session = session;
     }
 
@@ -134,7 +137,7 @@ public class PostmanImpl implements Postman {
         m.setFrom(from);
         // To
         for (String toAddress : email.getToAddress().split(BeetlejuiceConstant.COMMA)) {
-            m.addRecipient(Message.RecipientType.TO, new InternetAddress(toAddress));
+            m.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(toAddress));
         }
         // Subject
         m.setSubject(email.getSubject());
@@ -167,7 +170,7 @@ public class PostmanImpl implements Postman {
         m.setFrom(from);
         // To
         for (String to : toAddress) {
-            m.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            m.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(to));
         }
         // Subject
         m.setSubject(subject);
@@ -199,7 +202,7 @@ public class PostmanImpl implements Postman {
         // Set header
         m.setHeader("X-Mailer", "beetlejuice Postman");
         // Send mail
-        Transport.send(m);
+        javax.mail.Transport.send(m);
         // Set successfully-sent-flag
         email.setSentSuccessfully(true);
         email.setSentDate(new Timestamp(m.getSentDate().getTime()));
