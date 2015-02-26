@@ -14,9 +14,33 @@ package eu.artofcoding.beetlejuice.api.persistence;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.*;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.AND;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.COLON;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.COMMA;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.DOT;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.EQUAL_SIGN;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.INNER_JOIN;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.IS_NOT_NULL;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.JPA_LOWER;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.JPA_O;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.JPA_O_DOT;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.LEFT_PARANTHESIS;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.LIKE;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.OR;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.ORDER_BY;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.QUESTION_MARK;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.RIGHT_PARANTHESIS;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.SPACE;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.WHERE;
 
 /**
  * @param <T> Type of entity.
@@ -170,12 +194,12 @@ public class DynamicQuery<T> {
             builder.append(SPACE).append(LEFT_PARANTHESIS);
             for (int i = 0, queryParametersSize = queryParameters.size(); i < queryParametersSize; i++) {
                 // Create named parameter and add it to parameter-map
-                String paramName = String.format("value%d", valueCountIdx);
+                String paramName = String.format("%d", valueCountIdx + 1);
                 parameters.put(paramName, values[valueCountIdx]);
                 // "LOWER(<parameter name>) = LIKE :<paramName>"
                 QueryParameter q = queryParameters.get(i);
                 builder.append(JPA_LOWER).append(LEFT_PARANTHESIS).append(JPA_O_DOT).append(q.getParameterName()).append(RIGHT_PARANTHESIS)
-                        .append(SPACE).append(LIKE).append(SPACE).append(COLON).append(paramName);
+                        .append(SPACE).append(LIKE).append(SPACE).append(QUESTION_MARK).append(paramName);
                 // Add connector
                 if (i < queryParametersSize - 1) {
                     builder.append(SPACE).append(OR).append(SPACE);
@@ -284,7 +308,7 @@ public class DynamicQuery<T> {
         if (queryConfiguration.isNativeQuery()) {
             StringBuilder builder = buildQuery(selectClause);
             query = entityManager.createNativeQuery(builder.toString(), entityClass);
-            bindQueryParameter(query);
+            bindNativeQueryParameter(query);
         }
         return query;
     }
@@ -314,7 +338,7 @@ public class DynamicQuery<T> {
         if (queryConfiguration.isNativeQuery()) {
             StringBuilder builder = buildQuery(selectClause);
             countQuery = entityManager.createNativeQuery(builder.toString());
-            bindQueryParameter(countQuery);
+            bindNativeQueryParameter(countQuery);
         }
         return countQuery;
     }
@@ -405,6 +429,25 @@ public class DynamicQuery<T> {
                     query.setParameter(k, String.format("%%%s%%", val));
                 } else {
                     query.setParameter(k, val);
+                }
+            }
+        }
+    }
+
+    /**
+     * Bind QueryParameter to previously generated JPA query.
+     * @param query {@link Query}, the JPA query.
+     */
+    private void bindNativeQueryParameter(Query query) {
+        if (parameters.size() > 0) {
+            for (String k : parameters.keySet()) {
+                int p = Integer.valueOf(k);
+                Object val = parameters.get(k);
+                if (val instanceof String) {
+                    // TODO Make wildcards configurable for LIKE
+                    query.setParameter(p, String.format("%%%s%%", val));
+                } else {
+                    query.setParameter(p, val);
                 }
             }
         }

@@ -11,14 +11,17 @@
 
 package eu.artofcoding.beetlejuice.persistence;
 
-import eu.artofcoding.beetlejuice.api.persistence.*;
+import eu.artofcoding.beetlejuice.api.persistence.DynamicQuery;
+import eu.artofcoding.beetlejuice.api.persistence.GenericDAORemote;
+import eu.artofcoding.beetlejuice.api.persistence.GenericEntity;
+import eu.artofcoding.beetlejuice.api.persistence.QueryConfiguration;
+import eu.artofcoding.beetlejuice.api.persistence.QueryParameter;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
-import java.math.BigInteger;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +29,16 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.*;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.BEETLEJUICE_BOOL_FALSE;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.BEETLEJUICE_BOOL_TRUE;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.EQUAL_SIGN;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.JPA_LIKE_COLON;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.JPA_O;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.JPA_O_DOT;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.JPA_SELECT_COUNT_O_FROM;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.SELECT_O_FROM;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.SPACE;
+import static eu.artofcoding.beetlejuice.api.BeetlejuiceConstant.WHERE;
 
 /**
  * @param <T> Subtype {@link eu.artofcoding.beetlejuice.api.persistence.GenericEntity} to act as DAO for.
@@ -264,7 +276,9 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
             // Build query from list of QueryParameters
             String selectClause = String.format("SELECT COUNT(*) FROM %s o", queryConfiguration.getTableName());
             // Execute query
-            count = ((BigInteger) dynamicQuery.getNativeCountQuery(selectClause).getSingleResult()).longValue();
+            final Query nativeCountQuery = dynamicQuery.getNativeCountQuery(selectClause);
+            final Long singleResult = (Long) nativeCountQuery.getSingleResult();
+            count = singleResult;
         } else {
             // Build query from list of QueryParameters
             String selectClause = String.format("%s%s %s", JPA_SELECT_COUNT_O_FROM, entityClass.getSimpleName(), JPA_O);
