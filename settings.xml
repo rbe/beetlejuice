@@ -64,6 +64,7 @@
                     <name>BaseX Maven Repository</name>
                     <url>http://files.basex.org/maven</url>
                 </repository>
+                <!-- EMF -->
                 <repository>
                     <id>clojars.org</id>
                     <url>http://clojars.org/repo</url>
