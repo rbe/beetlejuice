@@ -17,6 +17,7 @@ import eu.artofcoding.beetlejuice.entity.Email;
 import eu.artofcoding.beetlejuice.entity.MimeType;
 
 import javax.mail.Address;
+import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Session;
@@ -136,8 +137,14 @@ public class PostmanImpl implements Postman {
         Address from = new InternetAddress(email.getFromAddress());
         m.setFrom(from);
         // To
-        for (String toAddress : email.getToAddress().split(BeetlejuiceConstant.COMMA)) {
-            m.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(toAddress));
+        String[] splitToAddress = email.getToAddress().split(BeetlejuiceConstant.COMMA);
+        for (int i = 0; i < splitToAddress.length; i++) {
+            String toAddress = splitToAddress[i];
+            if (i == 0) {
+                m.addRecipient(RecipientType.TO, new InternetAddress(toAddress));
+            } else {
+                m.addRecipient(RecipientType.CC, new InternetAddress(toAddress));
+            }
         }
         // Subject
         m.setSubject(email.getSubject());
