@@ -882,7 +882,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>sonar-maven-plugin</artifactId>
-                    <version>2.4</version>
+                    <version>2.6</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -936,9 +936,11 @@
             </plugin>
         </plugins>
     </build>
+    <!--
     <scm>
         <url>https://bitbucket.org/artofcoding/beetlejuice.git</url>
         <connection>scm:git:ssh://git@bitbucket.org/artofcoding/beetlejuice.git</connection>
         <developerConnection>scm:git:ssh://git@bitbucket.org/artofcoding/beetlejuice.git</developerConnection>
     </scm>
+    -->
 </project>
