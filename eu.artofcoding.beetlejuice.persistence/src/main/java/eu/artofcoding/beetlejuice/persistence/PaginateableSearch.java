@@ -15,6 +15,7 @@ import eu.artofcoding.beetlejuice.api.persistence.GenericEntity;
 import eu.artofcoding.beetlejuice.api.persistence.QueryConfiguration;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -150,7 +151,7 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
         this.queryParameterMap = null;
         this.queryConfiguration = queryConfiguration;
         this.clauseConnector = clauseConnector;
-        this.orderBy = orderBy;
+        this.orderBy = Arrays.copyOf(orderBy, orderBy.length);
         // Execute query (first page)
         offset = 0;
         if (queryConfiguration.isNativeQuery()) {

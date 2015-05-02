@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -115,7 +116,7 @@ public class DynamicQuery<T> {
         this.entityClass = entityClass;
         this.queryConfiguration = queryConfiguration;
         this.clauseConnector = clauseConnector;
-        this.orderBy = orderBy;
+        this.orderBy = Arrays.copyOf(orderBy, orderBy.length);
     }
 
     //</editor-fold>

@@ -14,11 +14,11 @@ package eu.artofcoding.beetlejuice.web.jsf;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 @Named("nav")
 public class NavigationHelper implements Serializable {
-
 
     private transient Logger logger;
 
@@ -38,7 +38,7 @@ public class NavigationHelper implements Serializable {
     }
 
     public void setViews(String[] views) {
-        this.views = views;
+        this.views = Arrays.copyOf(views, views.length);
     }
 
     public int getActualViewIndex() {

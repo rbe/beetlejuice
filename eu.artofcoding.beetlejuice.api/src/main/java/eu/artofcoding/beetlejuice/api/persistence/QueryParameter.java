@@ -12,6 +12,7 @@
 package eu.artofcoding.beetlejuice.api.persistence;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class QueryParameter implements Serializable {
 
@@ -27,7 +28,7 @@ public class QueryParameter implements Serializable {
 
     public QueryParameter(String parameterName, Object[] values, String operator, String connector) {
         this.parameterName = parameterName;
-        this.values = values;
+        this.values = Arrays.copyOf(values, values.length);
         this.operator = operator;
         this.connector = connector;
     }
@@ -45,7 +46,7 @@ public class QueryParameter implements Serializable {
     }
 
     public void setValues(Object[] values) {
-        this.values = values;
+        this.values = Arrays.copyOf(values, values.length);
     }
 
     public int getValuesCount() {
