@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  */
 public abstract class AbstractCrudBean<T extends GenericEntity> implements Serializable {
 
-    private static final Logger logger = Logger.getLogger(AbstractCrudBean.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(AbstractCrudBean.class.getName());
 
     protected String name;
 
@@ -35,14 +35,14 @@ public abstract class AbstractCrudBean<T extends GenericEntity> implements Seria
 
     protected Class<T> entityClass;
 
+    protected GenericDAORemote<T> genericDAO;
+
+    protected AbstractPrimefacesLazyDataModel<T> primefacesLazyDataModel;
+
     /**
      * An ID got from HTTP reuqest, used with preRenderView().
      */
     private Long idFromRequest;
-
-    protected GenericDAORemote<T> genericDAO;
-
-    protected AbstractPrimefacesLazyDataModel<T> primefacesLazyDataModel;
 
     protected AbstractCrudBean(String name, Class<T> entityClass) {
         this.name = name;
@@ -70,10 +70,8 @@ public abstract class AbstractCrudBean<T extends GenericEntity> implements Seria
         if (null == entity) {
             try {
                 entity = entityClass.newInstance();
-            } catch (InstantiationException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            } catch (InstantiationException | IllegalAccessException e) {
+                throw new RuntimeException(e);
             }
         }
         return entity;
@@ -100,22 +98,18 @@ public abstract class AbstractCrudBean<T extends GenericEntity> implements Seria
     }
 
     protected GenericDAOResult persist() throws Exception {
-        try {
-            Long id = entity.getId();
-            // Entities' ID is null or 0
-            if (null == id || id == 0) { // null == id || (null != id && id == 0)
-                genericDAO.create(entity);
-                return GenericDAOResult.OK;
-            }
-            // Entities' ID is > 0
-            else if (id > 0) { // null != id && id > 0
-                entity = genericDAO.update(entity);
-                return GenericDAOResult.OK;
-            } else {
-                return GenericDAOResult.ERROR;
-            }
-        } catch (Exception e) {
-            throw e;
+        Long id = entity.getId();
+        // Entities' ID is null or 0
+        if (null == id || id == 0) {
+            genericDAO.create(entity);
+            return GenericDAOResult.OK;
+        }
+        // Entities' ID is > 0
+        else if (id > 0) {
+            entity = genericDAO.update(entity);
+            return GenericDAOResult.OK;
+        } else {
+            return GenericDAOResult.ERROR;
         }
     }
 
@@ -141,7 +135,7 @@ public abstract class AbstractCrudBean<T extends GenericEntity> implements Seria
         } else if (null != idFromRequest && idFromRequest == 0) {
             entity = entityClass.newInstance();
         }
-        logger.info("preRenderView: Got ID from request=" + idFromRequest + " entity=" + entity);
+        LOGGER.info("preRenderView: Got ID from request=" + idFromRequest + " entity=" + entity);
     }
 
     /**
@@ -150,10 +144,6 @@ public abstract class AbstractCrudBean<T extends GenericEntity> implements Seria
      */
     public void onRowDblselect(SelectEvent event) {
         FacesContext context = FacesContext.getCurrentInstance();
-        /*
-        Flash flash = context.getExternalContext().getFlash();
-        flash.put(name, event.getObject());
-        */
         ConfigurableNavigationHandler handler = (ConfigurableNavigationHandler) context.getApplication().getNavigationHandler();
         handler.performNavigation("edit_" + name);
     }
@@ -165,7 +155,7 @@ public abstract class AbstractCrudBean<T extends GenericEntity> implements Seria
      */
     protected String navigate(String navCase) {
         String destination = navCase + "_" + name;
-        logger.info("navigate: Navigation case is " + destination);
+        LOGGER.info("navigate: Navigation case is " + destination);
         return destination;
     }
 

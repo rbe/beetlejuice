@@ -24,11 +24,9 @@ public class EncodingFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        //System.out.println("EncodingFilter.doFilter 1: request="+servletRequest.getCharacterEncoding()+" response="+servletResponse.getCharacterEncoding());
         servletRequest.setCharacterEncoding(ENCODING);
         servletResponse.setCharacterEncoding(ENCODING);
         filterChain.doFilter(servletRequest, servletResponse);
-        //System.out.println("EncodingFilter.doFilter 2: request="+servletRequest.getCharacterEncoding()+" response="+servletResponse.getCharacterEncoding());
     }
 
     @Override

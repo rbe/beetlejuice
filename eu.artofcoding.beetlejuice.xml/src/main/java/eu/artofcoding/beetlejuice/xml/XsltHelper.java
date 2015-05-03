@@ -21,7 +21,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.StringWriter;
 
-public class XsltHelper {
+public final class XsltHelper {
 
     /**
      * Non-transforming, non-validating Transformer

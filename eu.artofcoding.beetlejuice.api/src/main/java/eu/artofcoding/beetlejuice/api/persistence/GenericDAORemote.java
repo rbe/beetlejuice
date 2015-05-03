@@ -31,7 +31,7 @@ public interface GenericDAORemote<T extends Serializable> {
      * @param entity Entity to persist.
      * @return T The entity.
      */
-    T create(T entity) throws Exception;
+    T create(T entity);
 
     /**
      * Update an entity.

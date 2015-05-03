@@ -28,13 +28,10 @@ import javax.mail.internet.MimeMultipart;
 import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import static eu.artofcoding.beetlejuice.api.MimeTypeConstants.S_UTF8;
 
 public class PostmanImpl implements Postman {
-
-    private static final Logger logger = Logger.getLogger(PostmanImpl.class.getName());
 
     private transient Session session;
 

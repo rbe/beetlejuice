@@ -1,10 +1,12 @@
 package eu.artofcoding.beetlejuice.helper;
 
-import javax.jms.*;
+import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
+import javax.jms.JMSException;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
+import javax.jms.Topic;
 
-/**
- *
- */
 public class JmsHelper {
 
     /**
@@ -28,9 +30,15 @@ public class JmsHelper {
     private MessageProducer messageProducer;
 
     /**
+     * Private constructor, use one of the factory methods.
+     */
+    private JmsHelper() {
+    }
+
+    /**
      * Factory method to create a JmsHelper for a topic. After usage close with {@link #close()}.
      * @param connectionFactory The JMS connection factory, e.g. got from container through @Resource annotation.
-     * @param topic The topic, e.g. got from container through @Resource annotation
+     * @param topic             The topic, e.g. got from container through @Resource annotation
      * @return A JmsHelper.
      * @throws javax.jms.JMSException
      */
@@ -44,12 +52,6 @@ public class JmsHelper {
         jmsHelper.messageProducer = jmsHelper.session.createProducer(topic);
         // Return helper
         return jmsHelper;
-    }
-
-    /**
-     * Private constructor, use one of the factory methods.
-     */
-    private JmsHelper() {
     }
 
     public Connection getConnection() {

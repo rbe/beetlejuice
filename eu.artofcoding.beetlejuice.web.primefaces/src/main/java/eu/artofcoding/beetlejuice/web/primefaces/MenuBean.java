@@ -16,9 +16,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
 public class MenuBean implements Serializable {
 
     private CategoryMenuModel menuModel = new CategoryMenuModel();
@@ -31,7 +28,7 @@ public class MenuBean implements Serializable {
             computers.setChildren(computerChildren);
             menuModel.setCategory(computers);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

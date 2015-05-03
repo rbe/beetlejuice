@@ -26,14 +26,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
 public class CategoryMenuModel implements MenuModel, ActionListener, Serializable {
 
     private static final long serialVersionUID = -1;
+
     protected Category category;
+
     protected List<UIComponent> contents = new ArrayList<>();
+
     protected static UIViewRoot uiViewRoot = new UIViewRoot();
 
     public Category getCategory() {

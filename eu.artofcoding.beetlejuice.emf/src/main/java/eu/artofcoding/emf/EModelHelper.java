@@ -16,13 +16,11 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 
-public class EModelHelper {
+public final class EModelHelper {
 
     private static final EModelHelper E_HELPER = new EModelHelper();
 
     private final EcoreFactory eCoreFactory = EcoreFactory.eINSTANCE;
-
-    private final EcorePackage eCorePackage = EcorePackage.eINSTANCE;
 
     private EModelHelper() {
     }

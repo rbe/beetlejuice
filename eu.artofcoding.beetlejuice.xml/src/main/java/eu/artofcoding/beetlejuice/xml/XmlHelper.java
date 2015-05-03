@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
 import java.util.Collections;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -162,7 +163,7 @@ public final class XmlHelper {
      * @return Returns a sorted string vector.
      * @throws XmlHelperException
      */
-    public static Vector<String> getVectorFromXML(URL xmlUrl, String xpathSearch, String id, String value, boolean addIdToValue) throws XmlHelperException {
+    public static List<String> getVectorFromXML(URL xmlUrl, String xpathSearch, String id, String value, boolean addIdToValue) throws XmlHelperException {
         Document document = XmlHelper.createDocument(xmlUrl);
         return getVectorFromXML(document, xpathSearch, id, value, addIdToValue);
     }
@@ -176,7 +177,7 @@ public final class XmlHelper {
      * @param addIdToValue Add the id-key value to the result string if true.
      * @return Returns a string vector.
      */
-    public static Vector<String> getVectorFromXML(Document document, String xpathSearch, String id, String value, boolean addIdToValue) {
+    public static List<String> getVectorFromXML(Document document, String xpathSearch, String id, String value, boolean addIdToValue) {
         return generateVectorFromXML(document, xpathSearch, id, value, addIdToValue, false);
     }
 
@@ -190,7 +191,7 @@ public final class XmlHelper {
      * @return Returns a sorted string vector.
      * @throws XmlHelperException
      */
-    public static Vector<String> getSortedVectorFromXML(URL xmlUrl, String xpathSearch, String id, String value, boolean addIdToValue) throws XmlHelperException {
+    public static List<String> getSortedVectorFromXML(URL xmlUrl, String xpathSearch, String id, String value, boolean addIdToValue) throws XmlHelperException {
         Document document = XmlHelper.createDocument(xmlUrl);
         return getSortedVectorFromXML(document, xpathSearch, id, value, addIdToValue);
     }
@@ -204,7 +205,7 @@ public final class XmlHelper {
      * @param addIdToValue Add the id-key value to the result string if true.
      * @return Returns a sorted string vector.
      */
-    public static Vector<String> getSortedVectorFromXML(Document document, String xpathSearch, String id, String value, boolean addIdToValue) {
+    public static List<String> getSortedVectorFromXML(Document document, String xpathSearch, String id, String value, boolean addIdToValue) {
         return generateVectorFromXML(document, xpathSearch, id, value, addIdToValue, true);
     }
 
@@ -217,7 +218,7 @@ public final class XmlHelper {
      * @param addIdToValue Add the id-key value to the result string if true.
      * @return Returns a string vector.
      */
-    private static Vector<String> generateVectorFromXML(Document document, String xpathSearch, String id, String value, boolean addIdToValue, boolean sorted) {
+    private static List<String> generateVectorFromXML(Document document, String xpathSearch, String id, String value, boolean addIdToValue, boolean sorted) {
         Vector<String> vector = null;
         try {
             //            XPath xpath = XPathFactory.newInstance().newXPath();
@@ -260,8 +261,6 @@ public final class XmlHelper {
         String result = EMPTY_STRING;
         try {
             Document document = XmlHelper.createDocument(xmlUrl);
-            //            XPath xpath = XPathFactory.newInstance().newXPath();
-            //            result = (String) xpath.evaluate(xpathSearch, document, javax.xml.xpath.XPathConstants.STRING);
             result = xpathToString(xpathSearch, document);
         } catch (XPathExpressionException e) {
             logger.log(Level.SEVERE, null, e);
@@ -277,8 +276,6 @@ public final class XmlHelper {
     public static String getValueFromKey(Document document, String xpathSearch) {
         String result = EMPTY_STRING;
         try {
-            //            XPath xpath = XPathFactory.newInstance().newXPath();
-            //            result = (String) xpath.evaluate(xpathSearch, document, javax.xml.xpath.XPathConstants.STRING);
             result = xpathToString(xpathSearch, document);
         } catch (XPathExpressionException e) {
             logger.log(Level.SEVERE, null, e);

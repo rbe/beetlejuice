@@ -83,16 +83,25 @@ public class TemplateEntity implements GenericEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         TemplateEntity that = (TemplateEntity) o;
-
-        if (id != that.id) return false;
-        if (content != null ? !content.equals(that.content) : that.content != null) return false;
-        if (templateName != null ? !templateName.equals(that.templateName) : that.templateName != null) return false;
-        if (templateType != null ? !templateType.equals(that.templateType) : that.templateType != null) return false;
-
+        if (id != that.id) {
+            return false;
+        }
+        if (content != null ? !content.equals(that.content) : that.content != null) {
+            return false;
+        }
+        if (templateName != null ? !templateName.equals(that.templateName) : that.templateName != null) {
+            return false;
+        }
+        if (templateType != null ? !templateType.equals(that.templateType) : that.templateType != null) {
+            return false;
+        }
         return true;
     }
 

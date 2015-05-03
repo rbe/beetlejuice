@@ -20,13 +20,12 @@ public class WebSecurityFactory {
 
     @Produces
     @WebSecurity
-    public Sanitizer create(InjectionPoint injectionPoint) {
-        Annotated annotated = injectionPoint.getAnnotated();
-        WebSecurity webSecurity = annotated.getAnnotation(WebSecurity.class);
-        String antisamyXml = webSecurity.antisamyXml();
-        URL antisamyXmlUrl = WebSecurity.class.getResource(String.format("antisamy/%s", antisamyXml));
-        AntisamySanitizerImpl htmlSanitizer = new AntisamySanitizerImpl(antisamyXmlUrl);
-        return htmlSanitizer;
+    public Sanitizer create(final InjectionPoint injectionPoint) {
+        final Annotated annotated = injectionPoint.getAnnotated();
+        final WebSecurity webSecurity = annotated.getAnnotation(WebSecurity.class);
+        final String antisamyXml = webSecurity.antisamyXml();
+        final URL antisamyXmlUrl = WebSecurity.class.getResource(String.format("antisamy/%s", antisamyXml));
+        return new AntisamySanitizerImpl(antisamyXmlUrl);
     }
 
 }

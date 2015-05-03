@@ -17,22 +17,26 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class GravatarHelper {
+public final class GravatarHelper {
+
+    private GravatarHelper() {
+        throw new AssertionError();
+    }
 
     /**
      * Generate URL for image of a Gravatar avatar.
      * @param email E-mail address.
-     * @param size  Size of image, standars is 80 x 80 px.
+     * @param size  Size of image.
      * @return URL for Gravatar image.
      */
-    public static String getImageURL(String email, int size) {
+    public static String getImageURL(final String email, final int size) {
         if (null != email && email.length() > 0) {
-            email = email.trim().toLowerCase();
+            final String checkedEmail = email.trim().toLowerCase();
             try {
-                MessageDigest md = MessageDigest.getInstance("MD5");
-                byte[] hash = md.digest(email.getBytes());
-                BigInteger i = new BigInteger(1, hash);
-                String gravatarHash = String.format("%1$032x", i);
+                final MessageDigest md = MessageDigest.getInstance("MD5");
+                final byte[] hash = md.digest(checkedEmail.getBytes());
+                final BigInteger i = new BigInteger(1, hash);
+                final String gravatarHash = String.format("%1$032x", i);
                 return String.format("http://www.gravatar.com/avatar/%s.jpg?size=%d", gravatarHash, size);
             } catch (NoSuchAlgorithmException e) {
                 throw new RuntimeException(e);
@@ -42,7 +46,12 @@ public class GravatarHelper {
         }
     }
 
-    public static String getImageURL(String email) throws BeetlejuiceException {
+    /**
+     * Generate URL for image of a Gravatar avatar. Size of image is 80 x 80 px.
+     * @param email E-mail address.
+     * @return URL for Gravatar image.
+     */
+    public static String getImageURL(final String email) throws BeetlejuiceException {
         return getImageURL(email, 80);
     }
 

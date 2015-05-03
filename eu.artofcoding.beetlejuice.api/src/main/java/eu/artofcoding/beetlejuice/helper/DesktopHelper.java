@@ -14,13 +14,17 @@ package eu.artofcoding.beetlejuice.helper;
 import java.io.File;
 import java.io.IOException;
 
-public class DesktopHelper {
+public final class DesktopHelper {
 
     private static final String OS = System.getProperty("os.name").toLowerCase();
 
+    private DesktopHelper() {
+        throw new AssertionError();
+    }
+
     public static void open(File file) throws IOException {
         if (isWindows()) {
-            //Runtime.getRuntime().exec(String.format("rundll32 url.dll,FileProtocolHandler %s", file.getAbsolutePath()));
+            // TODO Windows version? Runtime.getRuntime().exec(String.format("rundll32 url.dll,FileProtocolHandler %s", file.getAbsolutePath()));
             Runtime.getRuntime().exec(String.format("rundll32 SHELL32.DLL,ShellExec_RunDLL %s", file.getAbsolutePath()));
         } else {
             java.awt.Desktop.getDesktop().open(file);

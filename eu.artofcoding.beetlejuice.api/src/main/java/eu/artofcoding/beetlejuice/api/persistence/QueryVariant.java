@@ -13,6 +13,6 @@ package eu.artofcoding.beetlejuice.api.persistence;
 
 public enum QueryVariant {
 
-    Variant1, Variant2
+    VARIANT_1, VARIANT_2
 
 }

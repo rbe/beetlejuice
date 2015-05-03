@@ -22,9 +22,6 @@ public class NavigationHelper implements Serializable {
 
     private transient Logger logger;
 
-//    @Inject
-//    private Event<NavigationEvent> events;
-
     private String[] views = {};
 
     private int actualViewIndex = -1;
@@ -60,8 +57,8 @@ public class NavigationHelper implements Serializable {
      */
     public void findPageIndexByViewId() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        String _viewId = facesContext.getViewRoot().getViewId();
-        String[] splitByXhtml = _viewId.split(".xhtml");
+        String viewRootViewId = facesContext.getViewRoot().getViewId();
+        String[] splitByXhtml = viewRootViewId.split(".xhtml");
         String[] splitBySlash = splitByXhtml[0].split("/");
         String viewId = splitBySlash[splitBySlash.length - 1];
         for (int i = 0; i < views.length; i++) {
@@ -82,8 +79,6 @@ public class NavigationHelper implements Serializable {
         String outcome = views[actualViewIndex];
         // TODO Execute action depending on navigation case
         logger.info(String.format("Navigating to page %s", outcome));
-//        // Fire NavigationEvent
-//        events.fire(new NavigationEvent(outcome));
         return outcome;
     }
 
@@ -95,8 +90,6 @@ public class NavigationHelper implements Serializable {
         String outcome = views[actualViewIndex];
         // TODO Execute action depending on navigation case
         logger.info(String.format("Navigating to page %s", outcome));
-//        // Fire NavigationEvent
-//        events.fire(new NavigationEvent(outcome));
         return outcome;
     }
 

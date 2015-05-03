@@ -3,29 +3,36 @@ package eu.artofcoding.beetlejuice.api.cdi;
 import javax.enterprise.inject.spi.Annotated;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.InjectionPoint;
+import java.util.logging.Logger;
 
-public class CdiHelper {
+public final class CdiHelper {
+    
+    private static final Logger LOGGER = Logger.getLogger(CdiHelper.class.getName());
+
+    private CdiHelper() {
+        throw new AssertionError();
+    }
 
     public void dumpInjectionPoint(InjectionPoint injectionPoint) {
-        System.out.println("annotated " + injectionPoint.getAnnotated());
-        System.out.println("bean " + injectionPoint.getBean());
-        System.out.println("member " + injectionPoint.getMember());
-        System.out.println("qualifiers " + injectionPoint.getQualifiers());
-        System.out.println("type " + injectionPoint.getType());
-        System.out.println("isDelegate " + injectionPoint.isDelegate());
-        System.out.println("isTransient " + injectionPoint.isTransient());
+        LOGGER.info("annotated " + injectionPoint.getAnnotated());
+        LOGGER.info("bean " + injectionPoint.getBean());
+        LOGGER.info("member " + injectionPoint.getMember());
+        LOGGER.info("qualifiers " + injectionPoint.getQualifiers());
+        LOGGER.info("type " + injectionPoint.getType());
+        LOGGER.info("isDelegate " + injectionPoint.isDelegate());
+        LOGGER.info("isTransient " + injectionPoint.isTransient());
         Bean<?> bean = injectionPoint.getBean();
-        System.out.println("bean.beanClass " + bean.getBeanClass());
-        System.out.println("bean.injectionPoints " + bean.getInjectionPoints());
-        System.out.println("bean.name " + bean.getName());
-        System.out.println("bean.qualifiers " + bean.getQualifiers());
-        System.out.println("bean.scope " + bean.getScope());
-        System.out.println("bean.stereotypes " + bean.getStereotypes());
-        System.out.println("bean.types " + bean.getTypes());
+        LOGGER.info("bean.beanClass " + bean.getBeanClass());
+        LOGGER.info("bean.injectionPoints " + bean.getInjectionPoints());
+        LOGGER.info("bean.name " + bean.getName());
+        LOGGER.info("bean.qualifiers " + bean.getQualifiers());
+        LOGGER.info("bean.scope " + bean.getScope());
+        LOGGER.info("bean.stereotypes " + bean.getStereotypes());
+        LOGGER.info("bean.types " + bean.getTypes());
         Annotated annotated = injectionPoint.getAnnotated();
-        System.out.println("annotated.annotations " + annotated.getAnnotations());
-        System.out.println("annotated.annotations " + annotated.getBaseType());
-        System.out.println("annotated.typeClosure " + annotated.getTypeClosure());
+        LOGGER.info("annotated.annotations " + annotated.getAnnotations());
+        LOGGER.info("annotated.annotations " + annotated.getBaseType());
+        LOGGER.info("annotated.typeClosure " + annotated.getTypeClosure());
     }
 
 }

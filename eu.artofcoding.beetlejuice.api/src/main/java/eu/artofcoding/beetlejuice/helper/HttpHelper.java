@@ -18,26 +18,14 @@ import java.net.HttpURLConnection;
 import java.net.PasswordAuthentication;
 import java.net.URL;
 
-public class HttpHelper {
+public final class HttpHelper {
 
-    public static class UserAuthenticator extends Authenticator {
-
-        String user;
-        String pass;
-
-        public UserAuthenticator(String user, String pass) {
-            this.user = user;
-            this.pass = pass;
-        }
-
-        protected PasswordAuthentication getPasswordAuthentication() {
-            return new PasswordAuthentication(user, pass.toCharArray());
-        }
-
+    private HttpHelper() {
+        throw new AssertionError();
     }
 
-    public static byte[] post(URL url, String username, String password, String body) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+    public static byte[] post(final URL url, String username, final String password, final String body) throws IOException {
+        final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         if (null != username) {
             Authenticator.setDefault(new UserAuthenticator(username, password));
         }
@@ -48,14 +36,31 @@ public class HttpHelper {
         connection.setRequestProperty("Content-Type", "text/xml");
         connection.setRequestProperty("Content-Length", String.valueOf(body.length()));
         // Write request
-        OutputStreamWriter streamWriter = new OutputStreamWriter(connection.getOutputStream());
+        final OutputStreamWriter streamWriter = new OutputStreamWriter(connection.getOutputStream());
         streamWriter.write(body);
         streamWriter.flush();
         // Read response
-        byte[] response = StreamHelper.convertToBytes(connection.getInputStream());
+        final byte[] response = StreamHelper.convertToBytes(connection.getInputStream());
         streamWriter.close();
         connection.disconnect();
         return response;
+    }
+
+    public static class UserAuthenticator extends Authenticator {
+
+        private String user;
+
+        private String pass;
+
+        public UserAuthenticator(final String user, final String pass) {
+            this.user = user;
+            this.pass = pass;
+        }
+
+        protected PasswordAuthentication getPasswordAuthentication() {
+            return new PasswordAuthentication(user, pass.toCharArray());
+        }
+
     }
 
 }

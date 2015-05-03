@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class EInstanceHelper {
+public final class EInstanceHelper {
 
     private static final Map<EFactory, EInstanceHelper> eMAP = new ConcurrentHashMap<>();
 
@@ -39,8 +39,7 @@ public class EInstanceHelper {
 
     public EObject createEObject(EPackage ePackage, String classifier) {
         final EClass eClass = (EClass) ePackage.getEClassifier(classifier);
-        final EObject eObject = eFactory.create(eClass);
-        return eObject;
+        return eFactory.create(eClass);
     }
 
     public EAttribute createEAttribute(EObject eObject, String name, Object value) {
@@ -52,16 +51,14 @@ public class EInstanceHelper {
 
     public EAttribute getEAttribute(EObject eObject, String name) {
         final EClass eClass = eObject.eClass();
-        final EAttribute feature = (EAttribute) eClass.getEStructuralFeature(name);
-        return feature;
+        return (EAttribute) eClass.getEStructuralFeature(name);
     }
 
     public <T> T getEAttributeValue(EObject eObject, String name, Class<T> klass) {
         final EClass eClass = eObject.eClass();
         final EAttribute feature = (EAttribute) eClass.getEStructuralFeature(name);
         final Object value = eObject.eGet(feature);
-        final T cast = klass.cast(value);
-        return cast;
+        return klass.cast(value);
     }
 
     public EObject load(String ePackageURL, EPackage ePackage, Path path) {
@@ -74,8 +71,7 @@ public class EInstanceHelper {
         URI fileUri = URI.createURI(path.toUri().toString());
         Resource resource = resourceSet.getResource(fileUri, true);
         // Read serialized instance
-        EObject eObject = resource.getContents().get(0);
-        return eObject;
+        return resource.getContents().get(0);
     }
 
     public void save(EObject eObject, Path path) {

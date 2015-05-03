@@ -1,4 +1,4 @@
-package eu.artofcoding.beetlejuice.email;/*
+/*
  * beetlejuice
  * beetlejuice-email
  * Copyright (C) 2011-2012 art of coding UG, http://www.art-of-coding.eu/
@@ -9,18 +9,20 @@ package eu.artofcoding.beetlejuice.email;/*
  * rbe, 24.11.12 12:39
  */
 
+package eu.artofcoding.beetlejuice.email;
+
 import javax.mail.internet.InternetAddress;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-/**
- * User: rbe
- * Date: 24.11.12
- * Time: 12:39
- */
-public class PostmanHelper {
+public final class PostmanHelper {
+
+    private PostmanHelper() {
+        throw new AssertionError();
+    }
+
     /**
      * Filter a list of addresses: get rid of duplicates
      * @param address Array of {@link javax.mail.internet.InternetAddress}.
@@ -44,4 +46,5 @@ public class PostmanHelper {
         }
         return addr.toArray(new InternetAddress[addr.size()]);
     }
+
 }

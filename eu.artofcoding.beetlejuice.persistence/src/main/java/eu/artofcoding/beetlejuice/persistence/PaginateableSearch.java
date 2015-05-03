@@ -257,9 +257,7 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
                 selectedEntityTotalIndex = currentPageIndex * pageSize + indexOnCurrentPage;
             }
         }
-        // TODO Entity not found on current page
-        if (null == selectedEntity) {
-        }
+        // TODO Entity not found on current page: if (null == selectedEntity) {}
         return selectedEntity;
     }
 
@@ -303,12 +301,12 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
     }
 
     public void gotoNextPage() {
-        int _offset = offset + pageSize;
+        int nextOffset = offset + pageSize;
         // Out of bounds...
-        if (_offset > totalRowCount) {
+        if (nextOffset > totalRowCount) {
             outOfBoundsNext();
         } else {
-            int pageNumber = _offset / pageSize;
+            int pageNumber = nextOffset / pageSize;
             gotoPage(pageNumber);
             // Position pointer on first entity on current page (we're coming from the bottom of the previous page)
             pointToFirstEntityOnCurrentPage();
@@ -319,7 +317,7 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
         indexOnCurrentPage++;
         selectedEntityTotalIndex++;
         // Check page: go to next page?
-        if (indexOnCurrentPage == pageSize || pointerIsAtLastEntity()) { // selectedEntityTotalIndex > totalRowCount
+        if (indexOnCurrentPage == pageSize || pointerIsAtLastEntity()) {
             gotoNextPage();
         }
         selectedEntity = currentPage.get(indexOnCurrentPage);
@@ -344,9 +342,9 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
     }
 
     public void gotoPreviousPage() {
-        int _offset = offset - pageSize;
+        int previousOffset = offset - pageSize;
         // Out of bounds...
-        if (_offset < 0) {
+        if (previousOffset < 0) {
             if (selectedEntityTotalIndex < 0) {
                 if (turnAroundMode) {
                     // Position pointer on last entity on last page (turn around)
@@ -357,7 +355,7 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
                 }
             }
         } else {
-            int pageNumber = _offset / pageSize;
+            int pageNumber = previousOffset / pageSize;
             gotoPage(pageNumber);
             // Position pointer on last entity on page (we're coming from the top of the next page)
             pointToLastEntityOnCurrentPage();

@@ -170,11 +170,11 @@ public class DynamicQuery<T> {
     private void buildQueryVariant2(StringBuilder builder) {
         List<QueryParameter> queryParameters = queryConfiguration.getQueryParameters();
         // Count values
-        Set<Object> _values = new HashSet<Object>();
+        Set<Object> countValues = new HashSet<>();
         for (QueryParameter queryParameter : queryParameters) {
-            Collections.addAll(_values, queryParameter.getValues());
+            Collections.addAll(countValues, queryParameter.getValues());
         }
-        Object[] values = _values.toArray(new Object[_values.size()]);
+        Object[] values = countValues.toArray(new Object[countValues.size()]);
         int valueCount = values.length;
         // IDs for inner join, where condition
         List<String> ids = new ArrayList<String>();
@@ -269,10 +269,10 @@ public class DynamicQuery<T> {
             int size = queryParameters.size();
             if (size > 0) {
                 switch (queryConfiguration.getQueryVariant()) {
-                    case Variant1:
+                    case VARIANT_1:
                         buildQueryVariant1(builder);
                         break;
-                    case Variant2:
+                    case VARIANT_2:
                         buildQueryVariant2(builder);
                         break;
                 }

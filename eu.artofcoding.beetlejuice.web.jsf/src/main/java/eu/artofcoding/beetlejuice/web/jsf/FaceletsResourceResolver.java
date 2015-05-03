@@ -16,9 +16,11 @@ public class FaceletsResourceResolver extends ResourceResolver {
 
     @Override
     public URL resolveUrl(String path) {
-        URL url = parent.resolveUrl(path); // Resolves from WAR.
+        // Resolves from war
+        URL url = parent.resolveUrl(path);
         if (url == null) {
-            url = getClass().getResource(basePath + path); // Resolves from JAR.
+            // Resolves from jar
+            url = getClass().getResource(basePath + path);
         }
         return url;
     }

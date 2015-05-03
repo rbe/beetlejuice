@@ -11,7 +11,11 @@
 
 package eu.artofcoding.beetlejuice.api;
 
-public class BeetlejuiceConstant {
+public final class BeetlejuiceConstant {
+
+    private BeetlejuiceConstant() {
+        throw new AssertionError();
+    }
 
     public static final String SPACE = " ";
     public static final String COMMA = ",";

@@ -13,10 +13,11 @@ package eu.artofcoding.beetlejuice.helper;
 
 import javax.servlet.ServletContext;
 
-/**
- *
- */
-public class JeeHelper {
+public final class JeeHelper {
+
+    private JeeHelper() {
+        throw new AssertionError();
+    }
 
     /**
      * Log a message and associated exception to the servlet context application log.
@@ -31,7 +32,6 @@ public class JeeHelper {
                 servletContext.log(message);
             }
         } else {
-            System.out.println(message);
             throwable.printStackTrace(System.out);
         }
     }

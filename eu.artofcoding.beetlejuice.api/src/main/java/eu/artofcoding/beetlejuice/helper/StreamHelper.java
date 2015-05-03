@@ -11,11 +11,19 @@
 
 package eu.artofcoding.beetlejuice.helper;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
-public class StreamHelper {
+public final class StreamHelper {
 
     private static final int BUF_SIZE = 128 * 1024;
+
+    private StreamHelper() {
+        throw new AssertionError();
+    }
 
     public static byte[] convertToBytes(InputStream stream) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream(BUF_SIZE);

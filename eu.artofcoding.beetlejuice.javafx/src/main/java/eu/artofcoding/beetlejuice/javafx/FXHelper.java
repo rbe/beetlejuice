@@ -19,7 +19,11 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
-public class FXHelper {
+public final class FXHelper {
+
+    private FXHelper() {
+        throw new AssertionError();
+    }
 
     public static FXMLLoader getLoader(String... name) {
         String url = String.format("/fxml/%s.fxml", name[0]);

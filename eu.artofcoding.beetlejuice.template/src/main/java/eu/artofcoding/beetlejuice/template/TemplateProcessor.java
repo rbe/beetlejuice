@@ -63,8 +63,6 @@ public class TemplateProcessor implements Serializable {
         templateLoaders = new ArrayList<>();
         // Create FreeMarker configuration
         configuration = new Configuration();
-        // Specify how templates will see the data-model. This is an advanced topic...
-        //configuration.setObjectWrapper(new DefaultObjectWrapper());
     }
 
     public Configuration getConfiguration() {
@@ -81,7 +79,6 @@ public class TemplateProcessor implements Serializable {
         if (null != templateURL) {
             List<FileTemplateLoader> fileTemplateLoaders = new ArrayList<>(templateURL.length);
             for (URL url : templateURL) {
-                System.out.println("adding " + url.toURI().toASCIIString());
                 fileTemplateLoaders.add(new FileTemplateLoader(new File(url.toURI())));
             }
             templateLoaders.addAll(fileTemplateLoaders);
@@ -166,22 +163,5 @@ public class TemplateProcessor implements Serializable {
             throw new TemplateException("Cannot render template", e, null);
         }
     }
-
-    /*
-    public static void main(String[] args) throws Exception {
-        // Create the root hash
-        final Map<String, Object> root = new HashMap<String, Object>();
-        root.put("user", "Big Joe");
-        root.put("registrationUrl", "http://www.example.com/registration/complete/abc123");
-        //
-        URL[] templateDirectory = new URL[]{TemplateProcessor.class.getResource(".")};
-        TemplateProcessor templateProcessor = new TemplateProcessor();
-        templateProcessor.addTemplateLoader(templateDirectory);
-        System.out.println("o=" + templateProcessor.renderTemplateToString("test_de.ftl", root));
-        final OutputStreamWriter out = new OutputStreamWriter(System.out, Charset.forName("UTF-8"));
-        templateProcessor.renderTemplate("test_de.ftl", root, out);
-        out.flush();
-    }
-    */
 
 }

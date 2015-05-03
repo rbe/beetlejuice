@@ -17,7 +17,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
 
-public class JaxbHelper {
+public final class JaxbHelper {
 
     @SuppressWarnings({"unchecked"})
     public static <T> T unmarshal(Class<T> clazz, File file) throws JaxbHelperException {

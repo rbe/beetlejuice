@@ -1,6 +1,4 @@
 /*
- * optinman
- * optinman-api
  * Copyright (C) 2011-2012 art of coding UG, http://www.art-of-coding.eu
  *
  * Alle Rechte vorbehalten. Nutzung unterliegt Lizenzbedingungen.
@@ -15,30 +13,16 @@ import eu.artofcoding.beetlejuice.api.persistence.GenericEntity;
 import eu.artofcoding.beetlejuice.entity.TemplateEntity;
 import freemarker.cache.TemplateLoader;
 
-import javax.inject.Named;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
-/* http://freemarker.sourceforge.net/docs/api/freemarker/cache/StringTemplateLoader.html
-StringTemplateLoader stringLoader = new StringTemplateLoader();
-String firstTemplate = "firstTemplate";
-stringLoader.putTemplate(firstTemplate, freemarkerTemplate);
-// It's possible to add more than one template (they might include each other)
-// String secondTemplate = "<#include \"greetTemplate\"><@greet/> World!";
-// stringLoader.putTemplate("greetTemplate", secondTemplate);
-Configuration cfg = new Configuration();
-cfg.setTemplateLoader(stringLoader);
-Template template = cfg.getTemplate(firstTemplate);
- */
-
 /**
  * Connect FreeMarker's TemplateProcessor with our database through an EJB/DAO.
  * http://nurkiewicz.blogspot.de/2010/01/writing-custom-freemarker-template.html
  */
-@Named
 public class DatabaseTemplateLoader<T extends GenericDAORemote> implements TemplateLoader {
 
     private T templateDAO;

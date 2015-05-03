@@ -15,8 +15,8 @@ import java.io.Serializable;
 
 public interface GenericEntity extends Serializable {
 
-    public Long getId();
+    Long getId();
 
-    public Long getVersion();
+    Long getVersion();
 
 }

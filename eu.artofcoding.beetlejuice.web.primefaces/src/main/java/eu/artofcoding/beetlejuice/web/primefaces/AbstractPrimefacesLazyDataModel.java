@@ -21,9 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-/**
- * @param <T>
- */
 public abstract class AbstractPrimefacesLazyDataModel<T extends GenericEntity> extends LazyDataModel<T> {
 
     private static final Logger logger = Logger.getLogger(AbstractPrimefacesLazyDataModel.class.getName());
@@ -56,14 +53,12 @@ public abstract class AbstractPrimefacesLazyDataModel<T extends GenericEntity> e
             String value = filter.get(k);
             map.put(k, value);
         }
-        List<T> entities = genericDAO.dynamicFindWith(map, BeetlejuiceConstant.AND, first, pageSize);
-        return entities;
+        return genericDAO.dynamicFindWith(map, BeetlejuiceConstant.AND, first, pageSize);
     }
 
     @Override
     public int getRowCount() {
-        int count = (int) genericDAO.countAll();
-        return count;
+        return (int) genericDAO.countAll();
     }
 
 }

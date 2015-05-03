@@ -21,7 +21,7 @@ import java.lang.reflect.Field;
 
 public class Slf4jPostProcessor implements BeanPostProcessor {
 
-    private static final Logger logger = LoggerFactory.getLogger(Slf4jPostProcessor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Slf4jPostProcessor.class);
 
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         return bean;
@@ -32,12 +32,10 @@ public class Slf4jPostProcessor implements BeanPostProcessor {
             @SuppressWarnings("unchecked")
             public void doWith(Field field) throws IllegalArgumentException, IllegalAccessException {
                 ReflectionUtils.makeAccessible(field);
-                // Check if the field is annoted with @Slf4j
                 if (field.getAnnotation(Slf4j.class) != null) {
-                    logger.debug("Injecting Logger into " + beanName + "/" + bean.getClass());
-                    //Slf4j slf4jAnnotation = field.getAnnotation(Slf4j.class);
-                    Logger logger = LoggerFactory.getLogger(bean.getClass());
-                    field.set(bean, logger);
+                    LOGGER.debug("Injecting Logger into " + beanName + "/" + bean.getClass());
+                    final Logger loggerToInject = LoggerFactory.getLogger(bean.getClass());
+                    field.set(bean, loggerToInject);
                 }
             }
         });

@@ -13,11 +13,11 @@ package eu.artofcoding.beetlejuice.cdm;
 
 public class Group extends Base {
 
-    String groupIdent;
+    private String groupIdent;
 
-    String groupName;
+    private String groupName;
 
-    Group parent;
+    private Group parent;
 
     public Group(String groupIdent, String groupName) {
         this.groupIdent = groupIdent;

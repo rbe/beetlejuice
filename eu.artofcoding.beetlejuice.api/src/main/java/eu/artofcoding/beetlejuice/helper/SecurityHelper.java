@@ -18,10 +18,11 @@ import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**
- *
- */
-public class SecurityHelper {
+public final class SecurityHelper {
+
+    private SecurityHelper() {
+        throw new AssertionError();
+    }
 
     /**
      * Make a hashed password.
@@ -33,8 +34,7 @@ public class SecurityHelper {
     public static byte[] makeHashedPassword(String algorithm, String password) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance(algorithm);
         byte[] passwordBytes = password.getBytes();
-        byte[] hash = md.digest(passwordBytes);
-        return hash;
+        return md.digest(passwordBytes);
     }
 
     /**
@@ -57,31 +57,7 @@ public class SecurityHelper {
      */
     public static String makeBase64EncodedMD5Password(String password) throws NoSuchAlgorithmException {
         byte[] passwordHash = makeMD5Password(password);
-        // JBoss PicketBox return Base64Utils.tob64(passwordHash);
         return DatatypeConverter.printBase64Binary(passwordHash);
-    }
-
-    /**
-     * Provide a CLI interface to generate passwords.
-     * @param args
-     * @throws java.io.IOException
-     * @throws java.security.NoSuchAlgorithmException
-     *
-     */
-    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
-        String password;
-        if (args.length == 1) {
-            password = args[0];
-        } else {
-            System.out.print("Enter password: ");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            password = reader.readLine();
-        }
-        byte[] md5PasswordHash = makeMD5Password(password);
-        String md5PasswordString = new String(md5PasswordHash);
-        System.out.println("MD5 password hash: " + md5PasswordString);
-        String base64PasswordHash = makeBase64EncodedMD5Password(password);
-        System.out.println("Base64 encoded password hash: " + base64PasswordHash);
     }
 
 }

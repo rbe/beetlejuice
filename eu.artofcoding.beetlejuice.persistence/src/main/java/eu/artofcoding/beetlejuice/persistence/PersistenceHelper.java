@@ -11,7 +11,11 @@
 
 package eu.artofcoding.beetlejuice.persistence;
 
-public class PersistenceHelper {
+public final class PersistenceHelper {
+
+    private PersistenceHelper() {
+        throw new AssertionError();
+    }
 
     public static String escape(String str) {
         if (null != str && str.length() > 0) {

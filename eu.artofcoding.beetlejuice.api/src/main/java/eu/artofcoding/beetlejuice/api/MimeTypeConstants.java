@@ -1,6 +1,10 @@
 package eu.artofcoding.beetlejuice.api;
 
-public class MimeTypeConstants {
+public final class MimeTypeConstants {
+
+    private MimeTypeConstants() {
+        throw new AssertionError();
+    }
 
     public static final String APPLICATON_OCTET_STREAM = "application/octet-stream".intern();
     public static final String APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT = "application/vnd.oasis.opendocument.text".intern();

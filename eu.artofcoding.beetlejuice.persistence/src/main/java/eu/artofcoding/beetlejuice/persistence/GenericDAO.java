@@ -88,14 +88,13 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
 
     @Override
     public T update(T entity) {
-        T _entity = entityManager.merge(entity);
-        return _entity;
+        return entityManager.merge(entity);
     }
 
     @Override
     public boolean delete(T entity) {
-        T _entity = entityManager.merge(entity);
-        entityManager.remove(entity);
+        T mergedEntity = entityManager.merge(entity);
+        entityManager.remove(mergedEntity);
         return true;
     }
 
@@ -209,8 +208,7 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
         query.setFirstResult(firstResult);
         query.setMaxResults(pageSize);
         // Execute query and return result list
-        List<T> entities = query.getResultList();
-        return entities;
+        return query.getResultList();
     }
 
     @Override
@@ -277,8 +275,7 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
             String selectClause = String.format("SELECT COUNT(*) FROM %s o", queryConfiguration.getTableName());
             // Execute query
             final Query nativeCountQuery = dynamicQuery.getNativeCountQuery(selectClause);
-            final Long singleResult = (Long) nativeCountQuery.getSingleResult();
-            count = singleResult;
+            count = (Long) nativeCountQuery.getSingleResult();
         } else {
             // Build query from list of QueryParameters
             String selectClause = String.format("%s%s %s", JPA_SELECT_COUNT_O_FROM, entityClass.getSimpleName(), JPA_O);
@@ -306,8 +303,7 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
             populateQueryParameters(query, parameters);
         }
         // Execute query and get size of result
-        int size = query.getResultList().size();
-        return size;
+        return query.getResultList().size();
     }
 
     @Override
