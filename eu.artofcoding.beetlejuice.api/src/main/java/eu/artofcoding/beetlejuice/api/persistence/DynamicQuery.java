@@ -400,7 +400,6 @@ public class DynamicQuery<T> {
                 op = null != q.getOperator() ? q.getOperator() : EQUAL_SIGN;
                 // "<entityAlias>.<property> = :<named parameter>) OP :<named parameter>"
                 builder.append(entityAlias).append(DOT).append(q.getParameterName()).
-                        append(RIGHT_PARANTHESIS).
                         append(SPACE).append(op).append(SPACE).append(COLON).append(paramName);
             }
             // " OP "
