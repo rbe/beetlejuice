@@ -12,9 +12,6 @@
     <artifactId>eu.artofcoding.beetlejuice.xml</artifactId>
     <packaging>jar</packaging>
     <dependencies>
-        <!--
-            CDI
-        -->
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
