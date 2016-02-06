@@ -13,9 +13,9 @@ import java.util.Map;
 /**
  * Java client for BaseX.
  * Works with BaseX 7.0 and later
- * <p/>
+ * <p></p>
  * Documentation: http://docs.basex.org/wiki/Clients
- * <p/>
+ * <p></p>
  * (C) BaseX Team 2005-12, BSD License
  */
 public class BaseXClient {
