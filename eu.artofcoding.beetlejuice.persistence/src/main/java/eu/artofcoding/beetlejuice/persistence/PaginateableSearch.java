@@ -110,7 +110,7 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
 
     /**
      * Constructor.
-     * @param dao DAO to use for queries, <code>instanceof GenericDAO&lt;T></code>.
+     * @param dao DAO to use for queries, <code>instanceof GenericDAO&lt;T&gt;</code>.
      */
     public PaginateableSearch(GenericDAO<T> dao) {
         this.dao = dao;
