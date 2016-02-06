@@ -50,8 +50,8 @@ public class NavigationHelper implements Serializable {
      * Find index of actual Faces' view id in views array. Sets this.actualViewIndex.
      * Use it e.g. in JSF pre-render-view event like this:
      * <p>
-     * &lt;f:metadata&gt;<br></br>
-     * &lt;f:event type="preRenderView" listener="#{bean.preRenderView}"/&gt;<br></br>
+     * &lt;f:metadata&gt;<br>
+     * &lt;f:event type="preRenderView" listener="#{bean.preRenderView}"/&gt;<br>
      * &lt;/f:metadata&gt;
      * </p>
      */

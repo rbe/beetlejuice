@@ -121,10 +121,10 @@ public abstract class AbstractCrudBean<T extends GenericEntity> implements Seria
      * Process pre-render-view event.
      * E.g. use it to provide a request to managed bean:
      * <p>
-     * &lt;f:metadata><br/>
-     * &lt;f:viewParam name="id" value="#{bean.idFromRequest}"/><br/>
-     * &lt;f:event type="preRenderView" listener="#{bean.preRenderView}"/><br/>
-     * &lt;/f:metadata>
+     * &lt;f:metadata&gt;<br>
+     * &lt;f:viewParam name="id" value="#{bean.idFromRequest}"/><br>
+     * &lt;f:event type="preRenderView" listener="#{bean.preRenderView}"/><br>
+     * &lt;/f:metadata&gt;
      * </p>
      * @throws IllegalAccessException ... when calling entityClass.newInstance().
      * @throws InstantiationException ... when calling entityClass.newInstance().
