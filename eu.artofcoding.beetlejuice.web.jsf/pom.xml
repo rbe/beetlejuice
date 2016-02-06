@@ -61,14 +61,13 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <!--
+                           <!--
                            <bundleName>beetlejuice-web-jsfcomponents</bundleName>
                            <bundleSymbolicName>eu.artofcoding.beetlejuice</bundleSymbolicName>
                            <bundleDescription>art-of-coding.eu's JSF Components</bundleDescription>
                            -->
                         </manifest>
                     </archive>
-                    <verbose>true</verbose>
                 </configuration>
             </plugin>
         </plugins>
