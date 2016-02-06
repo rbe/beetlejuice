@@ -28,7 +28,7 @@
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>javax.mail-api</artifactId>
-            <version>1.5.0</version>
+            <version>1.5.5</version>
             <scope>provided</scope>
         </dependency>
         <!--
