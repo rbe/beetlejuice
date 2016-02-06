@@ -81,17 +81,17 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
     private int currentPageIndex;
 
     /**
-     * List with entities on current page, size <= pageSize.
+     * List with entities on current page, size &lt;= pageSize.
      */
     private List<T> currentPage;
 
     /**
-     * Index of selected entity, 0 <= index < pageSize.
+     * Index of selected entity, 0 &lt;= index &lt; pageSize.
      */
     private int indexOnCurrentPage;
 
     /**
-     * Index of selected entity, 0 <= index < totalRowCount.
+     * Index of selected entity, 0 &lt;= index &lt; totalRowCount.
      */
     private int selectedEntityTotalIndex;
 

@@ -29,7 +29,7 @@ import java.util.Map;
  * This template processor acts as a facade to FreeMarker template engine.
  * <pre>
  * // Create the root hash
- * Map<String, Object> root = new HashMap<String, Object>();
+ * Map&lt;String, Object&gt; root = new HashMap&lt;String, Object&gt;();
  * root.put("user", "Big Joe");
  * root.put("registrationUrl", "http://www.example.com/registration/complete/abc123");
  * // Locate directory with template
@@ -131,7 +131,7 @@ public class TemplateProcessor implements Serializable {
     /**
      * Render template (UTF-8), output will be accessible through provided Writer instance.
      * @param templateName Name of template.
-     * @param root         Data for FreeMarker, e.g. Map<String, Object> or SimpleHash.
+     * @param root         Data for FreeMarker, e.g. Map&lt;String, Object&gt; or SimpleHash.
      * @param out          {@link Writer}
      * @throws TemplateException
      */
@@ -149,7 +149,7 @@ public class TemplateProcessor implements Serializable {
     /**
      * Render a template, see {@link #renderTemplate(String, java.util.Locale, java.lang.Object, java.io.Writer)} and return a String.
      * @param templateName Name of template.
-     * @param root         Data for FreeMarker, e.g. Map<String, Object> or SimpleHash.
+     * @param root         Data for FreeMarker, e.g. Map&lt;String, Object&gt; or SimpleHash.
      * @return String
      * @throws TemplateException
      */
