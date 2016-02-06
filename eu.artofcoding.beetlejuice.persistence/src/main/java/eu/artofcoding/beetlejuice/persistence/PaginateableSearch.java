@@ -56,7 +56,7 @@ public class PaginateableSearch<T extends GenericEntity> implements Serializable
     /**
      * Turn-around mode?
      * Decides about how pages are turned at beginning or end, e.g.:
-     * last page + 1 -> first page or last page.
+     * last page + 1 to first page or last page.
      */
     private boolean turnAroundMode;
 
