@@ -169,7 +169,7 @@ public class Invoice implements Serializable {
 
     /**
      * Get all articles which were marked/should be returned.
-     * @return List&lt;Article> with to-be-returned articles of this invoice.
+     * @return List&lt;Article&gt; with to-be-returned articles of this invoice.
      */
     public List<Article> getReturnArticles() {
         List<Article> _articles = new ArrayList<>(10);

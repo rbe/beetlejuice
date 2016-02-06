@@ -67,7 +67,7 @@ public class StoreCustomer extends Base {
     private String loginFailedReason;
 
     /**
-     * Map invoice number -> invoice data.
+     * Map invoice number to invoice data.
      */
     private Map<String, Invoice> invoices = new HashMap<>();
 
@@ -273,7 +273,7 @@ public class StoreCustomer extends Base {
 
     /**
      * Get all articles which should be returned.
-     * @return List&lt;Article> with all to-be-returned articles.
+     * @return List&lt;Article&gt; with all to-be-returned articles.
      */
     public List<Article> getReturnArticles() {
         List<Article> articles = new ArrayList<>(10);

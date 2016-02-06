@@ -17,7 +17,7 @@ import eu.artofcoding.beetlejuice.cdm.Base;
  * http://de.wikipedia.org/wiki/Steuernummer
  * Zitat:
  * <ul>
- * <li></li>Die Länge der Steuernummer variiert beim Standardschema der Länder zwischen 10 und 11 Ziffern
+ * <li>Die Länge der Steuernummer variiert beim Standardschema der Länder zwischen 10 und 11 Ziffern
  * und beträgt für das Bundesschema einheitlich 13 Ziffern.</li>
  * <li>Dabei stellen (F)FF die letzten zwei bzw. drei Ziffern der vierstelligen Bundesfinanzamtsnummer dar.</li>
  * <li>Außerdem steht BBB(B) für die Bezirksnummer innerhalb des Bereiches des jeweiligen Finanzamtes.</li>
