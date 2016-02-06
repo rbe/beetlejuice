@@ -122,8 +122,8 @@ public abstract class AbstractCrudBean<T extends GenericEntity> implements Seria
      * E.g. use it to provide a request to managed bean:
      * <p>
      * &lt;f:metadata&gt;<br>
-     * &lt;f:viewParam name="id" value="#{bean.idFromRequest}"/><br>
-     * &lt;f:event type="preRenderView" listener="#{bean.preRenderView}"/><br>
+     * &lt;f:viewParam name="id" value="#{bean.idFromRequest}"/&gt;<br>
+     * &lt;f:event type="preRenderView" listener="#{bean.preRenderView}"/&gt;<br>
      * &lt;/f:metadata&gt;
      * </p>
      * @throws IllegalAccessException ... when calling entityClass.newInstance().
