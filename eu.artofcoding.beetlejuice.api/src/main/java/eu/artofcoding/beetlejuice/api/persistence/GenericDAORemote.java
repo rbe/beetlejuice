@@ -36,12 +36,14 @@ public interface GenericDAORemote<T extends Serializable> {
     /**
      * Update an entity.
      * @param entity Entity to update.
+     * @return The updated entity.
      */
     T update(T entity);
 
     /**
      * Delete an entity.
      * @param entity Entity to delete.
+     * @return boolean
      */
     boolean delete(T entity);
 
@@ -92,7 +94,7 @@ public interface GenericDAORemote<T extends Serializable> {
     T findOne(String namedQuery);
 
     /**
-     * Dynamically create a query with WHERE ... <clauseConnector> ... clauses of all parameters and paginate result.
+     * Dynamically create a query with WHERE ... &lt;clauseConnector&gt; ... clauses of all parameters and paginate result.
      * Values of parameters are used with LIKE operator.
      * @param parameters      Map with name and value of parameter(s) for query.
      * @param clauseConnector Connect different conditions via AND or OR.
