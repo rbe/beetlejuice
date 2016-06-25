@@ -298,12 +298,12 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
     @Override
     public int countNamedQuery(String namedQuery, Map<String, Object> parameters) {
         // Build query
-        TypedQuery<T> query = entityManager.createNamedQuery(namedQuery, entityClass);
+        TypedQuery<Long> query = entityManager.createNamedQuery(namedQuery, Long.class);
         if (parameters != null && !parameters.isEmpty()) {
             populateQueryParameters(query, parameters);
         }
         // Execute query and get size of result
-        return query.getResultList().size();
+        return query.getSingleResult().intValue();
     }
 
     @Override
