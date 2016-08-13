@@ -299,8 +299,20 @@ public abstract class GenericDAO<T extends GenericEntity> implements GenericDAOR
     public int countNamedQuery(String namedQuery, Map<String, Object> parameters) {
         // Build query
         TypedQuery<Long> query = entityManager.createNamedQuery(namedQuery, Long.class);
+        populateQueryParameters(query, parameters);
+        // Execute query and get size of result
+        return query.getSingleResult().intValue();
+    }
+
+    @Override
+    public int countNamedNativeQuery(String namedQuery, List<Object> parameters) {
+        // Build query
+        TypedQuery<Long> query = entityManager.createNamedQuery(namedQuery, Long.class);
         if (parameters != null && !parameters.isEmpty()) {
-            populateQueryParameters(query, parameters);
+            for (int i = 0; i < parameters.size(); i++) {
+                final Object value = parameters.get(i);
+                query.setParameter(i + 1, value);
+            }
         }
         // Execute query and get size of result
         return query.getSingleResult().intValue();

@@ -151,6 +151,8 @@ public interface GenericDAORemote<T extends Serializable> {
      */
     int countNamedQuery(String namedQuery, Map<String, Object> parameters);
 
+    int countNamedNativeQuery(String namedQuery, List<Object> parameters);
+
     /**
      * Method that will populate parameters if they are passed not null and empty.
      * @param query      Previously created {@link javax.persistence.Query}.
