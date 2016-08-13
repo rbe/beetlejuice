@@ -218,11 +218,11 @@ public class PostmanImpl implements Postman {
     public void sendMail(String fromAddress, Set<String> recipient, String subject, String body, MimeType contentType) throws MessagingException {
         // Create Email entity instance and populate it with data
         Email email = new Email();
-        email.setFromAddress(fromAddress);
+        email.setFromAddress(new InternetAddress(fromAddress).toString());
         StringBuilder toAddressBuilder = new StringBuilder();
         for (Iterator<String> iterator = recipient.iterator(); iterator.hasNext(); ) {
             String to = iterator.next();
-            toAddressBuilder.append(to);
+            toAddressBuilder.append(new InternetAddress(to));
             if (iterator.hasNext()) {
                 toAddressBuilder.append(BeetlejuiceConstant.COMMA);
             }
