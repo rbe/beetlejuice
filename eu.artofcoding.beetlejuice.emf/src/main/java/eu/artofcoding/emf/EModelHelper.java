@@ -130,7 +130,7 @@ public final class EModelHelper {
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new XSD2EcoreResourceFactoryImpl());
         XSDEcoreBuilder xsdEcoreBuilder = new XSDEcoreBuilder();
-        URI xsdFileUri = URI.createFileURI(sourcename.toUri().toString());
+        URI xsdFileUri = URI.createFileURI(sourcename.toUri().toString().replaceAll("file://", ""));
         Collection<EObject> eCorePackages = xsdEcoreBuilder.generate(xsdFileUri);
         URI ecoreFileUri = URI.createFileURI(targetname.toUri().toString());
         Resource resource = resourceSet.createResource(ecoreFileUri);
