@@ -52,6 +52,7 @@
         <module>eu.artofcoding.beetlejuice.template</module>
         <module>eu.artofcoding.beetlejuice.javafx</module>
         <module>eu.artofcoding.beetlejuice.web</module>
+        <module>eu.artofcoding.beetlejuice.web.jwt</module>
         <module>eu.artofcoding.beetlejuice.web.security</module>
         <module>eu.artofcoding.beetlejuice.web.jsf</module>
         <module>eu.artofcoding.beetlejuice.web.primefaces</module>
